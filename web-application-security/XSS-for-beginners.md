@@ -19,6 +19,7 @@ Title: 反射型XSS攻击流程
 服务器->>受害者: 响应
 ```
 ![反射xss](./static/xss_reflection.png)
+
 2、持久型跨站脚本(Persistent Cross-site Scripting)。攻击者事先将恶意Javascript代码上传或储存到漏洞服务器上，只要受害者浏览包含此恶意代码的页面就会中招。一般出现在留言、评论等交互处。
 ```seq
 Title: 持久型XSS攻击流程
@@ -44,6 +45,7 @@ Title: 持久型XSS攻击流程
 </html>
 ```
 ![持久xss](./static/xss_persistent.png)
+
 通常，这个欢迎网页的请求是这样的：
 `http://www.test.com/welcome.html?name=lihua`
 然而，如果这个请求是这样的：
@@ -102,6 +104,7 @@ ale rt('XSS')>
 
 参考资料：
 《XSS跨站脚本攻击剖析与防御》
-[freebuf/black-hole](http://www.freebuf.com/author/black-hole)
-[XSS_Filter_Evasion_Cheat_Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet)
 
+[freebuf/black-hole](http://www.freebuf.com/author/black-hole)
+
+[XSS_Filter_Evasion_Cheat_Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet)
