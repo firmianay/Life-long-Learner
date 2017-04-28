@@ -27,6 +27,7 @@ Title: 持久型XSS攻击流程
 受害者->服务器: 请求
 服务器->>受害者: 响应
 ```
+![持久xss](./static/xss_persistent.png)
 
 3、DOM XSS。前面两种XSS一般出现在服务器端代码中，而DOM-Based XSS是基于DOM文档对象模型，受客户端浏览器代码的影响。这一漏洞的前提是，一个网页以不安全的方式使用`document.location`、`document.URL`、`document.referrer`等对象获取数据。
 举个例子，有如下HTML代码：
@@ -44,8 +45,6 @@ Title: 持久型XSS攻击流程
   </body>
 </html>
 ```
-![持久xss](./static/xss_persistent.png)
-
 通常，这个欢迎网页的请求是这样的：
 `http://www.test.com/welcome.html?name=lihua`
 然而，如果这个请求是这样的：
@@ -53,6 +52,7 @@ Title: 持久型XSS攻击流程
 这就导致了XSS，弹出了cookie。
 
 4、最后贴一张比较图。
+
 ![xss](./static/xss.png)
 
 ### 0x02 XSS构造剖析
@@ -100,8 +100,6 @@ ale rt('XSS')>
 拼凑法：`<scr<script>rip>alalertert</scr</script>rip>`
 
 ### 0x03 结尾
-这个坑就先填到这儿，以后技术有提高再来补充。。。
-
 参考资料：
 《XSS跨站脚本攻击剖析与防御》
 
