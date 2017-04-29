@@ -16,6 +16,11 @@ Programming
 ---
 1. (-)[Python Challenge Writeup](./programming/python-challenge-writeup.md)
 
+SEED Labs
+---
+1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
+
+
 ## LICENSE
 ```
 MIT LICENSE.
