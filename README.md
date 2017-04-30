@@ -8,6 +8,10 @@ Items marked with `(-)` are still works in progress.
 
 Items marked with `(el)` means external links.
 
+Machine Learning Foundations (NTU)
+---
+1. (-)[Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
+
 Web Application Security
 ---
 1. [XSS for beginners](./web-application-security/XSS-for-beginners.md)
@@ -26,6 +30,6 @@ SEED Labs
 ```
 MIT LICENSE.
 COPYRIGHT (C) 2017 firmy
-```  
+```
 ---
 Started on 2017/04/27 by Firmy Yang
