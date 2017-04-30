@@ -19,6 +19,7 @@ Programming
 SEED Labs
 ---
 1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
+2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
 
 
 ## LICENSE
