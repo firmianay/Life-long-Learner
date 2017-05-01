@@ -11,6 +11,7 @@ Items marked with `(el)` means external links.
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
+2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
 
 Web Application Security
 ---
