@@ -13,3 +13,19 @@ You can use `chart.apis.google.com` to render LaTeX formulas as PNG. It work nic
 ![](http://chart.apis.google.com/chart?cht=tx&chl=m=\frac{m_0}{\sqrt{1-{\frac{v^2}{c^2}}}})
 ```
 ![](http://chart.apis.google.com/chart?cht=tx&chl=m=\frac{m_0}{\sqrt{1-{\frac{v^2}{c^2}}}})
+
+Sometimes you have to encode the url:
+```
+wrong:
+![](http://chart.apis.google.com/chart?cht=tx&chl=\begin{bmatrix}x_1&x_2&x_3\end{bmatrix})
+```
+![](http://chart.apis.google.com/chart?cht=tx&chl=\begin{bmatrix}x_1&x_2&x_3\end{bmatrix})
+
+```
+true:
+![](http://chart.apis.google.com/chart?cht=tx&chl=%5Cbegin%7Bbmatrix%7Dx_1%26x_2%26x_3%5Cend%7Bbmatrix%7D)
+```
+![](http://chart.apis.google.com/chart?cht=tx&chl=%5Cbegin%7Bbmatrix%7Dx_1%26x_2%26x_3%5Cend%7Bbmatrix%7D)
+
+## Useful website:
+[Interactive LaTeX Editor](https://arachnoid.com/latex/index.html)
