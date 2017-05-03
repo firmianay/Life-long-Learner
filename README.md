@@ -29,9 +29,16 @@ SEED Labs
 2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
 3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
 
+Reverse Engineering for Beginners
+---
+
 Tips
 ---
 1. [LaTex in GitHub](./tips/LaTex-in-github.md)
+
+Use Linux
+---
+1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
 
 ## LICENSE
 ```
