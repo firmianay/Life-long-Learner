@@ -37,6 +37,7 @@ next we need formular:
 ![f2][9] (2)
 
 3. Prove that the number of iterations is limited.
+
 From (1) we can see:
 
 ![f3][10]
