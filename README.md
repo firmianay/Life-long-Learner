@@ -13,6 +13,7 @@ Machine Learning Foundations (NTU)
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
 2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
 3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
+4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 
 Web Application Security
 ---
