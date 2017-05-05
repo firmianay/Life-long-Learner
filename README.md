@@ -14,6 +14,7 @@ Machine Learning Foundations (NTU)
 2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
 3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
 4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
+5. (-)[Homework 1](./ML-foundations/hw1_Sol.md)
 
 Web Application Security
 ---
@@ -28,6 +29,7 @@ SEED Labs
 1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
 2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
 3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
+4. [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
 
 Reverse Engineering for Beginners
 ---
