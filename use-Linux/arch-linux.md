@@ -36,7 +36,7 @@ Server = https://mirrors.xdlinux.info/archlinux/$repo/os/$arch
 ==> ERROR: Makepkg was unable to build lib32-libmng.
 ==> Restart building lib32-libmng ? [y/N]
 ==> -------------------------------------
-==> 
+==>
 ```
 
 Solution:
@@ -49,3 +49,33 @@ vim ~/.gnupg/gpg.conf
 # Add line "truct-model always" to the end of the file.
 ```
 
+### file owned by xxxx
+```sh
+[firmy@MiWiFi-R1CL-srv ~]$ yaourt -Syu
+:: Synchronizing package databases...
+ core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
+ extra is up to date        0.0   B  0.00B/s 00:00 [----------------------]   0%
+ community is up to date    0.0   B  0.00B/s 00:00 [----------------------]   0%
+ multilib is up to date     0.0   B  0.00B/s 00:00 [----------------------]   0%
+ archlinuxcn is up to date  0.0   B  0.00B/s 00:00 [----------------------]   0%
+error: file owned by 'lsb-release' and 'manjaro-release': 'etc/lsb-release'
+error: file owned by 'firefox' and 'manjaro-browser-settings': 'usr/lib/firefox/distribution/distribution.ini'
+```
+
+Solution:
+```sh
+# The issue is related tp packages first installed by pacman and later trying to install same packages with yaourt
+# If update with pacman, there is no error
+[firmy@MiWiFi-R1CL-srv ~]$ sudo pacman -Syu
+[sudo] password for firmy:
+:: Synchronizing package databases...
+ core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
+ extra is up to date        0.0   B  0.00B/s 00:00 [----------------------]   0%
+ community is up to date    0.0   B  0.00B/s 00:00 [----------------------]   0%
+ multilib is up to date     0.0   B  0.00B/s 00:00 [----------------------]   0%
+ archlinuxcn is up to date  0.0   B  0.00B/s 00:00 [----------------------]   0%
+:: Starting full system upgrade...
+ there is nothing to do
+
+# So, first uninstall with pacman the pakages pacman -R and install with yaourt -S
+```
