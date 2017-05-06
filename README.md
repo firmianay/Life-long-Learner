@@ -33,6 +33,7 @@ SEED Labs
 
 Reverse Engineering for Beginners
 ---
+1. [Noise in stack](./RE4B/noise-in-stack.md)
 
 Tips
 ---
