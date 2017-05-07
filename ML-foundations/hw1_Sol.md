@@ -72,17 +72,143 @@ Obviously, the different values of ![f][3] depends on ![c][9].
 
 ### Question 15
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def perceptron(X, Y, theta, speed=1):
+    num = 0; prevpos = 0
+    while(True):
+        yhat = np.sign(X.dot(theta))
+        yhat[np.where(yhat == 0)] = -1
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        if not index[index >= prevpos].any():
+            prevpos = 0
+        pos = index[index >= prevpos][0]
+        prevpos = pos
+        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        num += 1
+    return num
+
+X, Y = loadData('./static/homework/hw1_15_train.dat')
+col, row = X.shape
+w0 = np.zeros((row, 1))
+num = perceptron(X, Y, w0)
+print(num)
+```
+```python
+In [1]: %timeit %run 15.py
+39
+...
+39
+39
+100 loops, best of 3: 7.74 ms per loop
 ```
 
 ### Question 16
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def perceptron(X, Y, theta, speed=1):
+    num = 0; prevpos = 0
+    while(True):
+        yhat = np.sign(X.dot(theta))
+        yhat[np.where(yhat == 0)] = -1
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        if not index[index >= prevpos].any():
+            prevpos = 0
+        pos = index[index >= prevpos][0]
+        prevpos = pos
+        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        num += 1
+    return num
+
+X, Y = loadData('./static/homework/hw1_15_train.dat')
+col, row = X.shape
+total = 0
+for i in range(2000):
+    w0 = np.zeros((row,1))
+    randpos = np.random.permutation(col)
+    Xrnd = X[randpos, :]
+    Yrnd = Y[randpos, :]
+    num = perceptron(Xrnd, Yrnd, w0)
+    total += num
+print(total/2000)
+```
+```python
+In [2]: %timeit %run 16.py
+39.5295
+39.8125
+39.9565
+39.57
+1 loop, best of 3: 4.22 s per loop
 ```
 
 ### Question 17
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def perceptron(X, Y, theta, speed=1):
+    num = 0; prevpos = 0
+    while(True):
+        yhat = np.sign(X.dot(theta))
+        yhat[np.where(yhat == 0)] = -1
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        if not index[index >= prevpos].any():
+            prevpos = 0
+        pos = index[index >= prevpos][0]
+        prevpos = pos
+        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        num += 1
+    return num
+
+X, Y = loadData('./static/homework/hw1_15_train.dat')
+col, row = X.shape
+total = 0
+for i in range(2000):
+    w0 = np.zeros((row,1))
+    randpos = np.random.permutation(col)
+    Xrnd = X[randpos, :]
+    Yrnd = Y[randpos, :]
+    num = perceptron(Xrnd, Yrnd, w0, 0.5)
+    total += num
+print(total/2000)
+```
+```python
+In [3]: %timeit %run 17.py
+40.2405
+40.0065
+39.9915
+39.664
+1 loop, best of 3: 4.21 s per loop
 ```
 
 ### Question 18
