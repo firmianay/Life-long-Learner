@@ -43,6 +43,10 @@ Use Linux
 ---
 1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
 
+Diary
+---
+1. [2016.1.18](./diary/2016-1-18.md)
+
 ## LICENSE
 ```
 MIT LICENSE.
