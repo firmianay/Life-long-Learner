@@ -82,10 +82,10 @@ def loadData(filename):
     Y = data[:, -1]
     return X, Y
 
-def perceptron(X, Y, theta, speed=1):
+def perceptron(X, Y, w, speed=1):
     num = 0; prevpos = 0
     while(True):
-        yhat = np.sign(X.dot(theta))
+        yhat = np.sign(X.dot(w))
         yhat[np.where(yhat == 0)] = -1
         index = np.where(yhat != Y)[0]
         if not index.any():
@@ -94,12 +94,13 @@ def perceptron(X, Y, theta, speed=1):
             prevpos = 0
         pos = index[index >= prevpos][0]
         prevpos = pos
-        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
         num += 1
     return num
 
 X, Y = loadData('./static/homework/hw1_15_train.dat')
 col, row = X.shape
+
 w0 = np.zeros((row, 1))
 num = perceptron(X, Y, w0)
 print(num)
@@ -125,10 +126,10 @@ def loadData(filename):
     Y = data[:, -1]
     return X, Y
 
-def perceptron(X, Y, theta, speed=1):
+def perceptron(X, Y, w, speed=1):
     num = 0; prevpos = 0
     while(True):
-        yhat = np.sign(X.dot(theta))
+        yhat = np.sign(X.dot(w))
         yhat[np.where(yhat == 0)] = -1
         index = np.where(yhat != Y)[0]
         if not index.any():
@@ -137,12 +138,13 @@ def perceptron(X, Y, theta, speed=1):
             prevpos = 0
         pos = index[index >= prevpos][0]
         prevpos = pos
-        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
         num += 1
     return num
 
 X, Y = loadData('./static/homework/hw1_15_train.dat')
 col, row = X.shape
+
 total = 0
 for i in range(2000):
     w0 = np.zeros((row,1))
@@ -174,10 +176,10 @@ def loadData(filename):
     Y = data[:, -1]
     return X, Y
 
-def perceptron(X, Y, theta, speed=1):
+def perceptron(X, Y, w, speed=1):
     num = 0; prevpos = 0
     while(True):
-        yhat = np.sign(X.dot(theta))
+        yhat = np.sign(X.dot(w))
         yhat[np.where(yhat == 0)] = -1
         index = np.where(yhat != Y)[0]
         if not index.any():
@@ -186,12 +188,13 @@ def perceptron(X, Y, theta, speed=1):
             prevpos = 0
         pos = index[index >= prevpos][0]
         prevpos = pos
-        theta += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
         num += 1
     return num
 
 X, Y = loadData('./static/homework/hw1_15_train.dat')
 col, row = X.shape
+
 total = 0
 for i in range(2000):
     w0 = np.zeros((row,1))
@@ -213,17 +216,185 @@ In [3]: %timeit %run 17.py
 
 ### Question 18
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def mistake(yhat, y):
+    row, col = y.shape
+    return np.sum(yhat != y)/row
+
+def pocket(X, Y, w, iternum, speed=1):
+    yhat = np.sign(X.dot(w))
+    yhat[np.where(yhat == 0)] = -1
+    errOld = mistake(yhat, Y)
+    wBest = np.zeros(w.shape)
+    for i in range(iternum):
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        pos = index[np.random.permutation(len(index))[0]]
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        yhat = np.sign(X.dot(w))
+        yhat[np.where(yhat == 0)] = -1
+        errNow = mistake(yhat, Y)
+        if errNow < errOld:
+            wBest = w.copy()
+            errOld = errNow
+    return wBest, w
+
+X, Y = loadData('./static/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+col, row = X.shape
+
+total = 0
+for i in range(2000):
+    w0 = np.zeros((row, 1))
+    randpos = np.random.permutation(col)
+    Xrnd = X[randpos, :]
+    Yrnd = Y[randpos, :]
+    w, wBad = pocket(Xrnd, Yrnd, w0, 50)
+    yhat = np.sign(Xtest.dot(w))
+    yhat[np.where(yhat == 0)] = -1
+    err = mistake(yhat, Ytest)
+    total += err
+print(total/2000)
+```
+```python
+In [1]: %timeit %run 18.py
+0.133199
+0.13218
+0.132887
+0.134125
+1 loop, best of 3: 10.1 s per loop
 ```
 
 ### Question 19
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def mistake(yhat, y):
+    row, col = y.shape
+    return np.sum(yhat != y)/row
+
+def pocket(X, Y, w, iternum, speed=1):
+    yhat = np.sign(X.dot(w))
+    yhat[np.where(yhat == 0)] = -1
+    errOld = mistake(yhat, Y)
+    wBest = np.zeros(w.shape)
+    for i in range(iternum):
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        pos = index[np.random.permutation(len(index))[0]]
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        yhat = np.sign(X.dot(w))
+        yhat[np.where(yhat == 0)] = -1
+        errNow = mistake(yhat, Y)
+        if errNow < errOld:
+            wBest = w.copy()
+            errOld = errNow
+    return wBest, w
+
+X, Y = loadData('./static/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+col, row = X.shape
+
+total = 0
+for i in range(2000):
+    w0 = np.zeros((row, 1))
+    randpos = np.random.permutation(col)
+    Xrnd = X[randpos, :]
+    Yrnd = Y[randpos, :]
+    w, wBad = pocket(Xrnd, Yrnd, w0, 50)
+    yhat = np.sign(Xtest.dot(wBad))
+    yhat[np.where(yhat == 0)] = -1
+    err = mistake(yhat, Ytest)
+    total += err
+print(total/2000)
+```
+```python
+In [2]: %timeit %run 19.py
+0.353636
+0.358305
+0.352031
+0.357387
+1 loop, best of 3: 10.3 s per loop
 ```
 
 ### Question 20
 ```python
+import numpy as np
 
+def loadData(filename):
+    data = np.loadtxt(filename)
+    data = np.matrix(data)
+    col, row = data.shape
+    X = np.c_[np.ones((col, 1)), data[:, 0:-1]]
+    Y = data[:, -1]
+    return X, Y
+
+def mistake(yhat, y):
+    row, col = y.shape
+    return np.sum(yhat != y)/row
+
+def pocket(X, Y, w, iternum, speed=1):
+    yhat = np.sign(X.dot(w))
+    yhat[np.where(yhat == 0)] = -1
+    errOld = mistake(yhat, Y)
+    wBest = np.zeros(w.shape)
+    for i in range(iternum):
+        index = np.where(yhat != Y)[0]
+        if not index.any():
+            break
+        pos = index[np.random.permutation(len(index))[0]]
+        w += speed*Y[pos, 0]*X[pos:pos+1, :].T
+        yhat = np.sign(X.dot(w))
+        yhat[np.where(yhat == 0)] = -1
+        errNow = mistake(yhat, Y)
+        if errNow < errOld:
+            wBest = w.copy()
+            errOld = errNow
+    return wBest, w
+
+X, Y = loadData('./static/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+col, row = X.shape
+
+total = 0
+for i in range(2000):
+    w0 = np.zeros((row, 1))
+    randpos = np.random.permutation(col)
+    Xrnd = X[randpos, :]
+    Yrnd = Y[randpos, :]
+    w, wBad = pocket(Xrnd, Yrnd, w0, 100)
+    yhat = np.sign(Xtest.dot(w))
+    yhat[np.where(yhat == 0)] = -1
+    err = mistake(yhat, Ytest)
+    total += err
+print(total/2000)
+```
+```python
+In [3]: %timeit %run 20.py
+0.115668
+0.115639
+0.11581
+0.115895
+1 loop, best of 3: 19.8 s per loop
 ```
 
 
