@@ -33,6 +33,7 @@ SEED Labs
 
 Reverse Engineering for Beginners
 ---
+0. [Auto script for learner](./RE4B/auto.sh)
 1. [Noise in stack](./RE4B/noise-in-stack.md)
 
 Tips
