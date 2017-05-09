@@ -18,3 +18,6 @@ gcc -m32 $1 -S -o "x86.s"
 
 gcc $1 -S -masm=intel -o "x64_intel.s"
 gcc -m32 $1 -S -masm=intel -o "x86_intel.s"
+
+gcc $1 -S -O2 -o "x64_O2.s"
+gcc -m32 $1 -S -O2 -o "x86_O2.s"
