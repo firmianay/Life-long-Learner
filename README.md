@@ -44,6 +44,10 @@ Use Linux
 ---
 1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
 
+Linux Kernel Development
+---
+1. [Chapter 1: Introduction to the Linux Kernel](./linux-kernel-development/chapter-1.md)
+
 Diary
 ---
 1. [2016.1.18](./diary/2016-1-18.md)
