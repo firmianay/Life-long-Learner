@@ -48,6 +48,7 @@ Linux Kernel Development
 ---
 1. [Chapter 1: Introduction to the Linux Kernel](./linux-kernel-development/chapter-1.md)
 2. [Chapter 2: Getting Started with the Kernel](./linux-kernel-development/chapter-2.md)
+3. [Chapter 3: Process Management](./linux-kernel-development/chapter-3.md)
 
 Diary
 ---
