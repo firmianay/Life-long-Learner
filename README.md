@@ -50,6 +50,10 @@ Linux Kernel Development
 2. [Chapter 2: Getting Started with the Kernel](./linux-kernel-development/chapter-2.md)
 3. [Chapter 3: Process Management](./linux-kernel-development/chapter-3.md)
 
+Paper Review
+---
+0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
+
 Diary
 ---
 1. [2016.1.18](./diary/2016-1-18.md)
