@@ -64,7 +64,7 @@ All process schedulers must account for the time that a process runs.
 
 ##### The Scheduler Entity Structure
 CFS uses the `scheduler entity structure`, `struct sched_entity`, defined in `<linux/sched.h>`, to keep track of process accounting:
-```
+```c
 struct sched_entity {
     struct load_weight load;
     struct rb_node run_node;
@@ -89,7 +89,7 @@ The scheduler entity structure is embedded in the `process descriptor`, `struct 
 The `vruntime` variable stores the `virtual runtime` of a process, which is the actual runtime (the amount of time spent running) normalized (or weighted) by the number of runnable processes. The virtual runtime's units are nanoseconds and therefore `vruntime` is decoupled from the timer tick.
 
 The function `update_curr()`, defined in `kernel/sched_fair.c`, manages this accounting:
-```
+```c
 static void update_curr(struct cfs_rq *cfs_rq)
 {
 	struct sched_entity *curr = cfs_rq->curr;
@@ -121,7 +121,7 @@ static void update_curr(struct cfs_rq *cfs_rq)
 }
 ```
 `update_curr()` calculates the execution time of the current process and stores that value in `delta_exec`. It then passes that runtime to `__update_curr()`, which weights the time by the number of runnable processes. The current process's `vruntime` is then incremented by the weighted value:
-```
+```c
 /*
  * Update the current task's runtime statistics. Skip current tasks that
  * are not in our scheduling class.
@@ -153,7 +153,7 @@ CFS uses a `red-black` tree to manage the list of runnable processes and efficie
 The process that CFS wants to run next, which is the process with the smallest `vruntime`, is the leftmost node in the tree. CFS's process selection algorithm is thus summed up as "run the process represented by the leftmost node in the rbtree."
 
 The function that performs this selection is `__pick_next_entity()`, defined in `kernel/sched_fair.c`:
-```
+```c
 static struct sched_entity *__pick_next_entity(struct cfs_rq *cfs_rq)
 {
 	struct rb_node *left = cfs_rq->rb_leftmost;
@@ -167,7 +167,7 @@ static struct sched_entity *__pick_next_entity(struct cfs_rq *cfs_rq)
 
 ##### Adding Processes to the Tree
 CFS adds processes to the rbtree and caches the leftmost node, when a process becomes runnable (wakes up) or is first created via `fork()`. Adding processes to the tree is performed by `enqueue_entity()`:
-```
+```c
 static void
 enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 {
@@ -196,7 +196,7 @@ enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 }
 ```
 This function updates the runtime and other statistics and then invokes `__enqueue_entity()` to perform the actual heavy lifting of inserting the entry into the red-black tree.
-```
+```c
 /*
  * Enqueue an entity into the rb-tree:
  */
@@ -241,7 +241,7 @@ This function traverses the tree in the `while()` loop to search for a matching 
 
 ##### Removing Processes from the Tree
 CFS removes processes from the red-black tree when a process blocks (becomes unrunnable) or terminates (ceases to exist):
-```
+```c
 static void
 dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int sleep)
 {
@@ -269,7 +269,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int sleep)
 ```
 
 Similarly, the real work is performed by a helper function, `__dequeue_entity()`:
-```
+```c
 static void __dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
 {
 	if (cfs_rq->rb_leftmost == &se->run_node) {
@@ -286,7 +286,7 @@ Removing a process from the tree is much simpler because the rbtree implementati
 
 ### The Scheduler Entry Point
 The main entry point into the process schedule is the function `schedule()`, defined in `kernel/sched.c`. `schedule()` is generic to scheduler classes. It finds the highest priority scheduler class with a runnable process and asks it what to run next. The only important part of the function is its invocation of `pick_next_task()`, defined in `kernel/sched.c`, which goes through each scheduler class, starting with the highest priority, and selects the highest priority process in the highest priority class:
-```
+```c
 /*
  * Pick up the highest-prio task:
  */
@@ -329,7 +329,7 @@ pick_next_task(struct rq *rq)
 A wait queue is a simple list of processes waiting for an event to occur.
 
 Wait queues are represented in the kernel by `wake_queue_head_t`. They are created statically via `DECLARE_WAITQUEUE()` or dynamically via `init_waitqueue_head()`. Processes put themselves on a wait queue and mark themselves not runnable. When the event associated with the wait queue occurs, the processes on the queue are awakened.
-```
+```c
 /* `q' is the wait queue we wish to sleep on */
 DEFINE_WAIT(wait);
 
@@ -352,7 +352,7 @@ The task performs the following steps to add itself to a wait queue:
 6. After the condition is true, the task sets itself to `TASK_RUNNING` and removes itself from the wait queue via `finish_wait()`.
 
 The function `inotify_read()` in `fs/notify/inotify/inotify_user.c`, which handles reading from the inotify file descriptor, is a straightforward example of using wait queues:
-```
+```c
 static ssize_t inotify_read(struct file *file, char __user *buf,
 			    size_t count, loff_t *pos)
 {
