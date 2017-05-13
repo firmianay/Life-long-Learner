@@ -223,8 +223,7 @@ This function copies at most `len` bytes from the queue pointed at by `fifo` to 
 
 If you want to “peek” at data within the queue without removing it:
 ```
-unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len,
-unsigned offset);
+unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len, unsigned offset);
 ```
 This works the same as `kfifo_out()`, except that the out offset is not incremented, and thus the dequeued data is available to read on a subsequent call to `kfifo_out()`. The parameter `offset` specifies an index into the queue; specify zero to read from the head of the queue, as `kfifo_out()` does.
 
@@ -260,3 +259,100 @@ To destroy a kfifo allocated with `kfifo_alloc()`, call `kfifo_free()`:
 ```
 void kfifo_free(struct kfifo *fifo);
 ```
+
+
+## Maps
+The relationship between a key and its value is called a `mapping`. Maps support at least three operations:
+- Add (key, value)
+- Remove (key)
+- value = Lookup (key)
+
+The Linux kernel's map is designed for one specify use case: mapping a unique identification number (UID) to a pointer.
+
+Linux's implementation also piggybacks an `allocate` operation on top of the `add` operation. This allocate operation not only adds a UID/value pair to the map but also generates the UID.
+
+The idr data structure is used for mapping user-space UIDs.
+
+### Initializing an idr
+Setting up an idr is easy. First you statically define or dynamically allocate an `idr` structure. Then you call `idr_init()`:
+```
+void idr_init(struct idr *idp);
+```
+
+### Allocating a New UID
+1. Tell he idr that you want to allocate a new UID, allowing it to resize the backing tree as necessary.
+2. Actually request the new UID.
+
+This complication exists to allow you to perform the initial resizing, which may require a memory allocation, without a lock.
+
+The first function, to resize the backing tree, is `idr_pre_get()`:
+```
+int idr_pre_get(struct idr *idp, gfp_t gfp_mask);
+```
+This function will, if needed to fulfill a new UID allocation, resize the idr pointed at by `idp`. If a resize is needed, the memory allocation will use the gfp flags `gfp_mask`. You do not need to synchronize concurrent access to this call. `idr_pre_get()` returns one on success and zero on error.
+
+The second function, to actually obtain a new UID and add it to the idr, is `idr_get_new()`:
+```
+int idr_get_new(struct idr *idp, void *ptr, int *id);
+```
+This function uses the idr pointed at by idp to allocate a new UID and associate it with the pointer `ptr`. On success, the function returns zero and stores the new UID in `id`. On error, it returns a nonzero error code: `-EAGAIN` if you need to (again) call `idr_pre_get()` and `-ENOSPC` if the idr is full.
+
+The function `idr_get_new_above()` enables the caller to specify a minimum UID value to return:
+```
+int idr_get_new_above(struct idr *idp, void *ptr, int starting_id, int *id);
+```
+This works the same as `idr_get_new()`, except that the new UID is guaranteed to be equal to or greater than `starting_id`. Using this variant of the function allows idr users to ensure that a UID is never reused, allowing the value to be unique not only among currently allocated IDs but across the entirety of a system’s uptime.
+
+### Looking Up a UID
+The caller provides the UID, and the idr returns the associated pointer:
+```
+void *idr_find(struct idr *idp, int id);
+```
+A successful call to this function returns the pointer associated with the UID `id` in the idr pointed at by `idp`. On error, the function returns `NULL`.
+
+### Removing a UID
+```
+void idr_remove(struct idr *idp, int id);
+```
+A successful call to `idr_remove()` removes the UID `id` from the idr pointed at by `idp`. Unfortunately, `idr_remove()` has no way to signify error.
+
+### Destroying an idr
+```
+void idr_destroy(struct idr *idp);
+```
+A successful call to `idr_destroy()` deallocates only unused memory associated with the idr pointed at by `idp`. It does not free any memory currently in use by allocated UIDs. Generally, kernel code wouldn’t destroy its idr facility until it was shutting down or unloading, and it wouldn’t unload until it had no more users, but to force the removal of all UIDs, you can call `idr_remove_all()`:
+```
+void idr_remove_all(struct idr *idp);
+```
+You would call `idr_remove_all()` on the idr pointed at by `idp` before calling `idr_destroy()`, ensuring that all idr memory was freed.
+
+
+## Binary Trees
+### Self-Balancing Binary Search Trees
+A `balanced binary search tree` is a binary search tree in which the depth of all leaves differs by at most one. A `self-balancing binary search tree` is a binary search tree that attempts,as part of its normal operations,to remain (semi) balanced.
+
+##### Red-Black Trees
+A red-black tree is a type of self-balancing binary search tree. Linux’s primary binary tree data structure is the red-black tree. Red-black trees have a special color attribute, which is
+either red or black. Red-black trees remain semi-balanced by enforcing that the following six properties remain true:
+1. All nodes are either red or black.
+2. Leaf nodes are black.
+3. Leaf nodes do not contain data.
+4. All non-leaf nodes have two children.
+5. If a node is red, both of its children are black.
+6. The path from a node to one of its leaves contains the same number of black nodes as the shortest path to any of its other leaves.
+
+##### rbtrees
+The Linux implementation of red-black trees is called `rbtrees`. They are defined in `lib/rbtree.c` and declared in `<linux/rbtree.h>`.
+
+The root of an rbtree is represented by the `rb_root` structure. To create a new tree, we allocate a new `rb_root` and initialize it to the special value `RB_ROOT`:
+```
+struct rb_root root = RB_ROOT;
+```
+Individual nodes in an rbtree are represented by the `rb_node` structure. Given an `rb_node`, we can move to its left or right child by following pointers off the node of the same name. The rbtree implementation does not provide search and insert routines.
+
+
+## What Data Structure to Use, When
+- `linked-list`: If your primary access method is iterating over all your data.
+- `queue`: If your code follows the producer/consumer pattern, use a queue, particularly if you want (or can cope with) a fixed-size buffer.
+- `map`: If you need to map a UID to an object.
+- `red-black tree`: If you need to store a large amount of data and look it up efficiently.
