@@ -51,6 +51,7 @@ Linux Kernel Development
 3. [Chapter 3: Process Management](./linux-kernel-development/chapter-3.md)
 4. [Chapter 4: Process Scheduling](./linux-kernel-development/chapter-4.md)
 5. [Chapter 5: System Calls](./linux-kernel-development/chapter-5.md)
+6. (-) [Chapter 6: Kernel Data Structures](./linux-kernel-development/chapter-6.md)
 
 Paper Review
 ---
