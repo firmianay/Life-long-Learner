@@ -53,6 +53,7 @@ Linux Kernel Development
 5. [Chapter 5: System Calls](./linux-kernel-development/chapter-5.md)
 6. [Chapter 6: Kernel Data Structures](./linux-kernel-development/chapter-6.md)
 7. [Chapter 7: Interrupts and Interrupt Handlers](./linux-kernel-development/chapter-7.md)
+8. [Chapter 8: Bottom Halves and Deferring Work](./linux-kernel-development/chapter-8.md)
 
 Paper Review
 ---
