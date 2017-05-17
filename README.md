@@ -54,6 +54,7 @@ Linux Kernel Development
 6. [Chapter 6: Kernel Data Structures](./linux-kernel-development/chapter-6.md)
 7. [Chapter 7: Interrupts and Interrupt Handlers](./linux-kernel-development/chapter-7.md)
 8. [Chapter 8: Bottom Halves and Deferring Work](./linux-kernel-development/chapter-8.md)
+9. [Chapter 9: An Introduction to Kernel Synchronization](./linux-kernel-development/chapter-9.md)
 
 Paper Review
 ---
