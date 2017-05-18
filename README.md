@@ -38,7 +38,8 @@ Reverse Engineering for Beginners
 
 Tips
 ---
-1. [LaTex in GitHub](./tips/LaTex-in-github.md)
+1. (-) [Infosec Favorites](./tips/infosec-favorites.md)
+2. [LaTex in GitHub](./tips/LaTex-in-github.md)
 
 Use Linux
 ---
