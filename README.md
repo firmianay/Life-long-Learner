@@ -55,11 +55,13 @@ Linux Kernel Development
 7. [Chapter 7: Interrupts and Interrupt Handlers](./linux-kernel-development/chapter-7.md)
 8. [Chapter 8: Bottom Halves and Deferring Work](./linux-kernel-development/chapter-8.md)
 9. [Chapter 9: An Introduction to Kernel Synchronization](./linux-kernel-development/chapter-9.md)
-10. (-) [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
+10. [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
 
 Paper Review
 ---
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
+1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
+](./paper-review/MaMaDroid:_Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
 
 Diary
 ---
