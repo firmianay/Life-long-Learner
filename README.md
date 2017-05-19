@@ -57,6 +57,7 @@ Linux Kernel Development
 8. [Chapter 8: Bottom Halves and Deferring Work](./linux-kernel-development/chapter-8.md)
 9. [Chapter 9: An Introduction to Kernel Synchronization](./linux-kernel-development/chapter-9.md)
 10. [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
+11. [Chapter 11: Timers and Time Management](./linux-kernel-development/chapter-11.md)
 
 Paper Review
 ---
