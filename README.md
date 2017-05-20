@@ -58,6 +58,7 @@ Linux Kernel Development
 9. [Chapter 9: An Introduction to Kernel Synchronization](./linux-kernel-development/chapter-9.md)
 10. [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
 11. [Chapter 11: Timers and Time Management](./linux-kernel-development/chapter-11.md)
+12. (-) [Chapter 12: Memory Management](./linux-kernel-development/chapter-12.md)
 
 Paper Review
 ---
