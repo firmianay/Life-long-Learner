@@ -248,3 +248,121 @@ void vfree(const void *addr)
 ```
 
 ## Slab Layer
+To facilitate frequent allocations and deallocations of data, programmers often introduce `free lists`. A free list contains a block of available, already allocated, data structures:
+- When code requires a new instance of a data structure, it can grab one of the structures off the free list rather than allocate the sufficient amount of memory and set it up for the data structure.
+- When the data structure is no longer needed, it is returned to the free list instead of deallocated.
+
+In this sense, the free list acts as an object cache, caching a frequently used type of object.
+
+A main problem with free lists in the kernel is that there exists no global control. When available memory is low, there is no way for the kernel to communicate to every free list that it should shrink the sizes of its cache to free up memory. So, the Linux kernel provides the `slab layer`, which acts as generic data structure-caching layer.
+
+The slab layer attempts to leverage several basic tenets:
+- Frequently used data structures tend to be allocated and freed often, so cache them.
+- Frequent allocation and deallocation can result in memory fragmentation. To prevent this, the cached free lists are arranged contiguously. Because freed data structures return to the free list, there is no resulting fragmentation.
+- The free list provides improved performance during frequent allocation and deallocation because a freed object can be immediately returned to the next allocation.
+- If the allocator is aware of concepts such as object size, page size, and total cache size, it can make more intelligent decisions.
+- If part of the cache is made per-processor, allocations and frees can be performed without an SMP lock.
+- If the allocator is NUMA-aware, it can fulfill allocations from the same memory node as the requestor.
+- Stored objects can be colored to prevent multiple objects from mapping to the same cache lines.
+
+### Design of the Slab Layer
+- `cache`: The slab layer divides different objects into groups called `caches`, each of which stores a different type of object. There is one cache per object type.
+- `slab`: The caches are then divided into `slabs`. The slabs are composed of one or more physical contiguous pages. Each cache may consist of multiple slabs.
+- `object`: Each cache contains some number of `objects`, which are the data structures being called. Each slab is in one of three states: full, partial, or empty.
+
+![](./static/ch12_1.png)
+
+Each cache is represented by a `kmem_cache` structure, which contains three lists, `slabs_full`, `slabs_partial` and `slabs_empty` (stored inside a `kmem_list3` structure, which is defined in `mm/slab.c`). These lists contain all the slabs associated with the cache.
+
+A slab descriptor, `struct slab`, represents each slab:
+```
+struct slab {
+        struct list_head list;    /* full, partial, or empty list */
+        unsigned long colouroff;  /* offset for the slab coloring */
+        void *s_mem;              /* first object in the slab */
+        unsigned int inuse;       /* allocated objects in the slab */
+        kmem_bufctl_t free;       /* first free object, if any */
+};
+```
+
+Slab descriptors are allocated either outside the slab in a general cache or inside the slab itself, at the beginning. The descriptor is stored inside the slab if the total size of the slab is sufficiently small, or if internal slack space is sufficient to hold the descriptor.
+
+The slab allocator creates new slabs by interfacing with the low-level kernel page allocator via `__get_free_pages()`:
+```
+static void *kmem_getpages(struct kmem_cache *cachep, gfp_t flags, int nodeid)
+{
+        struct page *page;
+        void *addr;
+        int i;
+
+        flags |= cachep->gfpflags;
+        if (likely(nodeid == -1)) {
+                addr = (void*)__get_free_pages(flags, cachep->gfporder);
+                if (!addr)
+                    return NULL;
+                page = virt_to_page(addr);
+        } else {
+                page = alloc_pages_node(nodeid, flags, cachep->gfporder);
+                if (!page)
+                    return NULL;
+                addr = page_address(page);
+        }
+
+        i = (1 << cachep->gfporder);
+        if (cachep->flags & SLAB_RECLAIM_ACCOUNT)
+                atomic_add(i, &slab_reclaim_pages);
+        add_page_state(nr_slab, i);
+        while (i--) {
+                SetPageSlab(page);
+                page++;
+        }
+        return addr;
+}
+```
+This function uses `__get_free_pages()` to allocate memory sufficient to hold the cache. The first parameter points to the specific cache that needs more pages. The second parameter points to the flags given to `__get_free_pages()`. It adds default flags that the cache requires to the `flags` parameter. The third parameter `nodeid` makes the allocator `NUMA`-aware. When `nodeid` is not negative one, the allocator attempts to fulfill the allocation from the same memory node that requested the allocation.
+
+Memory is then freed by `kmem_freepages()`, which calls `free_pages()` on the given cache's pages. The freeing function is called only when avaliable memory grows low and the system is attempting to free memory, or when a cache is explicitly destroyed.
+
+### Slab Allocator Interface
+A new cache is created via `kmem_cache_create()`:
+```
+struct kmem_cache * kmem_cache_create(const char *name,
+                                      size_t size,
+                                      size_t align,
+                                      unsigned long flags,
+                                      void (*ctor)(void *));
+```
+- The first parameter `name` is a string storing the name of the cache.
+- The second parameter `size` is the size of each element in the cache.
+- The third parameter `align` is the offset of the first object within a slab, which ensures a particular alignment within the page. A value of zero results in the standard alignment.
+- The `flags` parameter specifies optional settings controlling the cache’s behavior. It can be zero, specifying no special behavior, or one or more of the following flags OR’ed together:
+ - `SLAB_HWCACHE_ALIGN` instructs the slab layer to align each object within a slab to a cache line, which prevents "false sharing" (two or more objects mapping to the same cache line despite existing at different addresses in memory). This improves performance but comes at a cost of increased memory footprint. For frequently used caches in performance-critical code, setting this option is a good idea.
+ - `SLAB_POISON` causes the slab layer to fill the slab with a known value (a5a5a5a5). This is called poisoning and is useful for catching access to uninitialized memory.
+ - `SLAB_RED_ZONE` causes the slab layer to insert "red zones" around the allocated memory to help detect buffer overruns.
+ - `SLAB_PANIC` causes the slab layer to panic if the allocation fails. This flag is useful when the allocation must not fail.
+ - `SLAB_CACHE_DMA` instructs the slab layer to allocate each slab in DMA-able memory. This is needed if the allocated object is used for DMA and must reside in ZONE_DMA.
+- The final parameter `ctor` is a constructor for the cache. The constructor is called whenever new pages are added to the cache.
+
+To destroy a cache:
+```
+int kmem_cache_destroy(struct kmem_cache *cachep)
+```
+The caller of this function must ensure two conditions before invoking this function:
+- All slabs in the cache are empty.
+- No one accesses the cache during and after a call to `kmem_cache_destroy()`. The caller must ensure this synchronization.
+
+##### Allocating from the Cache
+After a cache is created, an object is obtained from the cache via:
+```
+void * kmem_cache_alloc(struct kmem_cache *cachep, gfp_t flags)
+```
+This function returns a pointer to an object from the given cache `cachep`. If no free objects are in any slabs in the cache, and the slab layer must obtain new pages via `kmem_getpages()`, the value of flags is passed to `__get_free_pages()`. You probably want `GFP_KERNEL` or `GFP_ATOMIC`.
+
+To later free an object and return it to its originating slab:
+```
+void kmem_cache_free(struct kmem_cache *cachep, void *objp)
+```
+This marks the object `objp` in `cachep` as free.
+
+
+## Statically Allocating on the Stack
