@@ -17,6 +17,35 @@ Server = http://mirrors.xdlinux.info/archlinuxcn/$arch
 Server = https://mirrors.xdlinux.info/archlinux/$repo/os/$arch
 ```
 
+### install MATLAB using an ISO image
+Note that you must be a license administrator to download an ISO archive of the MATLAB installer.
+
+1.Create a folder to use as a mount point.
+```
+# mkdir /run/media/mathworks
+```
+
+2.Mount the ISO to that folder. In this example, the ISO is called “matlab.iso” and is located in the user’s home folder under Downloads:
+```
+# mount -t iso9660 -o loop ~/downloads/matlab.iso /run/media/mathworks
+```
+
+3.Navigate to the mount point.
+```
+# cd /run/media/mathworks
+```
+
+4.Run the installer script.
+```
+# ./install
+```
+
+5.Umount and remove
+```
+# umount /run/media/mathworks
+# rm -R /run/media/mathworks
+```
+
 ## Error Handling
 ### PGP signatures could not be verified
 ```sh
