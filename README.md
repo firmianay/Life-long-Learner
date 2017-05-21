@@ -64,7 +64,7 @@ Paper Review
 ---
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
-](./paper-review/MaMaDroid:_Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
+](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
 2. [Android Malware Classification by Applying Online Machine Learning](./Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
 
 Diary
