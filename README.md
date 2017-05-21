@@ -36,10 +36,10 @@ Reverse Engineering for Beginners
 0. [Auto script for learner](./RE4B/auto.sh)
 1. [Noise in stack](./RE4B/noise-in-stack.md)
 
-Tips
+Misc
 ---
-1. (-) [Infosec Favorites](./tips/infosec-favorites.md)
-2. [LaTex in GitHub](./tips/LaTex-in-github.md)
+1. (-) [Infosec Favorites](./misc/infosec-favorites.md)
+2. [LaTex in GitHub](./misc/LaTex-in-github.md)
 
 Use Linux
 ---
@@ -65,6 +65,7 @@ Paper Review
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
 ](./paper-review/MaMaDroid:_Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
+2. [Android Malware Classification by Applying Online Machine Learning](./Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
 
 Diary
 ---
