@@ -58,7 +58,7 @@ Linux Kernel Development
 9. [Chapter 9: An Introduction to Kernel Synchronization](./linux-kernel-development/chapter-9.md)
 10. [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
 11. [Chapter 11: Timers and Time Management](./linux-kernel-development/chapter-11.md)
-12. (-) [Chapter 12: Memory Management](./linux-kernel-development/chapter-12.md)
+12. [Chapter 12: Memory Management](./linux-kernel-development/chapter-12.md)
 
 Paper Review
 ---
@@ -66,6 +66,7 @@ Paper Review
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
 ](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
 2. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
+3. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
 
 Diary
 ---
