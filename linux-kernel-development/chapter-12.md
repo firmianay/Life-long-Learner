@@ -275,7 +275,7 @@ The slab layer attempts to leverage several basic tenets:
 Each cache is represented by a `kmem_cache` structure, which contains three lists, `slabs_full`, `slabs_partial` and `slabs_empty` (stored inside a `kmem_list3` structure, which is defined in `mm/slab.c`). These lists contain all the slabs associated with the cache.
 
 A slab descriptor, `struct slab`, represents each slab:
-```
+```c
 struct slab {
         struct list_head list;    /* full, partial, or empty list */
         unsigned long colouroff;  /* offset for the slab coloring */
@@ -288,7 +288,7 @@ struct slab {
 Slab descriptors are allocated either outside the slab in a general cache or inside the slab itself, at the beginning. The descriptor is stored inside the slab if the total size of the slab is sufficiently small, or if internal slack space is sufficient to hold the descriptor.
 
 The slab allocator creates new slabs by interfacing with the low-level kernel page allocator via `__get_free_pages()`:
-```
+```c
 static void *kmem_getpages(struct kmem_cache *cachep, gfp_t flags, int nodeid)
 {
         struct page *page;
@@ -325,7 +325,7 @@ Memory is then freed by `kmem_freepages()`, which calls `free_pages()` on the gi
 
 ### Slab Allocator Interface
 A new cache is created via `kmem_cache_create()`:
-```
+```c
 struct kmem_cache * kmem_cache_create(const char *name,
                                       size_t size,
                                       size_t align,
@@ -344,7 +344,7 @@ struct kmem_cache * kmem_cache_create(const char *name,
 - The final parameter `ctor` is a constructor for the cache. The constructor is called whenever new pages are added to the cache.
 
 To destroy a cache:
-```
+```c
 int kmem_cache_destroy(struct kmem_cache *cachep)
 ```
 The caller of this function must ensure two conditions before invoking this function:
@@ -353,16 +353,161 @@ The caller of this function must ensure two conditions before invoking this func
 
 ##### Allocating from the Cache
 After a cache is created, an object is obtained from the cache via:
-```
+```c
 void * kmem_cache_alloc(struct kmem_cache *cachep, gfp_t flags)
 ```
 This function returns a pointer to an object from the given cache `cachep`. If no free objects are in any slabs in the cache, and the slab layer must obtain new pages via `kmem_getpages()`, the value of flags is passed to `__get_free_pages()`. You probably want `GFP_KERNEL` or `GFP_ATOMIC`.
 
 To later free an object and return it to its originating slab:
-```
+```c
 void kmem_cache_free(struct kmem_cache *cachep, void *objp)
 ```
 This marks the object `objp` in `cachep` as free.
 
 
 ## Statically Allocating on the Stack
+This is usually 8KB for 32-bit architectures and 16KB for 64-bit architectures because they usually have 4KB and 8KB pages.
+
+### Single-Page Kernel Stacks
+When enabled the single-page kernel stacks option, each process is given only a single page. This was done for two reasons:
+- It results in a page with less memory consumption per process.
+- As uptime increases, it becomes increasingly hard to find two physically contiguous unallocated pages. Physical memory becomes fragmented, and the resulting VM pressure from allocating a single new process is expensive.
+
+There is one more complication. Each process’s entire call chain has to fit in its kernel stack. Historically, interrupt handlers also used the kernel stack of the process they interrupted, thus they too had to fit. This was efficient and simple, but it placed even tighter constraints on the already meager kernel stack. When the stack moved to only a single page, interrupt handlers no longer fit. The kernel developers implemented `interrupt stacks`, which provide a single per-processor stack used for interrupt handlers.
+
+### Playing Fair on the Stack
+Performing a large static allocation on the stack is dangerous. Therefore, it is wise to use a dynamic allocation scheme.
+
+
+## Hign Memory Mappings
+By definition, pages in high memory might not be permanently mapped into the kernel’s address space. Thus, pages obtained via `alloc_pages()` with the `__GFP_HIGHMEM` flag might not have a logical address.
+
+### Permanent Mappings
+To map a given page structure into the kernel’s address space, use this function, declared in `<linux/highmem.h>`:
+```c
+void *kmap(struct page *page)
+```
+This function works on either high or low memory. If the page structure belongs to a page in low memory, the page’s virtual address is simply returned. If the page resides in high memory, a permanent mapping is created and the address is returned. The function may sleep, so `kmap()` works only in process context.
+
+Because the number of permanent mappings are limited, high memory should be unmapped when no longer needed. This is done via the following function, which unmaps the given `page`:
+```c
+void kunmap(struct page *page)
+```
+
+### Temporary Mappings
+When a mapping must be created but the current context cannot sleep, the kernel provides `temporary mappings`. The kernel can atomically map a high memory page into one of the reserved mappings. Consequently, a temporary mapping can be used in places that cannot sleep, such as interrupt handlers, because obtaining the mapping never blocks.
+
+Setting up a temporary mapping is done via:
+```c
+void *kmap_atomic(struct page *page, enum km_type type)
+```
+The `type` parameter is one of the following enumerations defined in `<asm-generic/kmap_types.h>`, which describe the purpose of the temporary mapping.
+```c
+enum km_type {
+        KM_BOUNCE_READ,
+        KM_SKB_SUNRPC_DATA,
+        KM_SKB_DATA_SOFTIRQ,
+        KM_USER0,
+        KM_USER1,
+        KM_BIO_SRC_IRQ,
+        KM_BIO_DST_IRQ,
+        KM_PTE0,
+        KM_PTE1,
+        KM_PTE2,
+        KM_IRQ0,
+        KM_IRQ1,
+        KM_SOFTIRQ0,
+        KM_SOFTIRQ1,
+        KM_SYNC_ICACHE,
+        KM_SYNC_DCACHE,
+        KM_UML_USERCOPY,
+        KM_IRQ_PTE,
+        KM_NMI,
+        KM_NMI_PTE,
+        KM_TYPE_NR
+};
+```
+
+The mapping is undone via:
+```c
+void kunmap_atomic(void *kvaddr, enum km_type type)
+```
+This function also does not block. In many architectures it does not do anything at all except enable kernel preemption, because a temporary mapping is valid only until the next temporary mapping.
+
+
+## Per-CPU Allocations
+Modern SMP-capable operating systems use per-CPU data (data that is unique to a given processor). Typically, per-CPU data is stored in an array. Each item in the array corresponds to a possible processor on the system. The current processor number indexes this array. You declare the data as:
+```c
+unsigned long my_percpu[NR_CPUS];
+```
+
+Then you can access it as:
+```c
+int cpu;
+
+cpu = get_cpu();  /* get current processor and disable kernel preemption */
+my_percpu[cpu]++; /* ... or whatever */
+printk("my_percpu on cpu=%d is %lu\n", cpu, my_percpu[cpu]);
+put_cpu();        /* enable kernel preemption */
+```
+
+There is no concurrency concerns exist and current processor can safely access the data without lock. And the call `get_cpu()` disables kernel preemption, where the corresponding call to `put_cpu()` enables kernel premption.
+
+
+## The New percpu Interface
+The 2.6 kernel introduced a new interface, `percpu`, for creating and manipulating per-CPU data. The header `<linux/percpu.h>` declares all the routines. You can find the actual definitions there, in `mm/slab.c`, and in `<asm/percpu.h>`.
+
+### Per-CPU Data at Compile-Time
+Define a per-CPU variable at compile time:
+```c
+DEFINE_PER_CPU(type, name);
+```
+This creates an instance of a variable of type `type`, named `name`, for each processor on the system. If you need a declaration of the variable elsewhere, to avoid compile warnings, use the following macro:
+```c
+DECLARE_PER_CPU(type, name);
+```
+
+You can manipulate the variables with the `get_cpu_var()` and `put_cpu_var()` routines. A call to `get_cpu_var()` returns an lvalue for the given variable on the current processor. It also disables preemption, which `put_cpu_var()` correspondingly enables.
+```c
+get_cpu_var(name)++; /* increment name on this processor */
+put_cpu_var(name); /* done; enable kernel preemption */
+```
+
+You can obtain the value of another processor’s per-CPU data, too:
+```c
+per_cpu(name, cpu)++; /* increment name on the given processor */
+```
+You need to be careful with this approach because `per_cpu()` neither disables kernel preemption nor provides any sort of locking mechanism. The lockless nature of per-CPU data exists only if the current processor is the only manipulator of the data. If other processors touch other processors’ data, you need locks.
+
+### Per-CPU Data at Runtime
+The kernel implements a dynamic allocator, similar to `kmalloc()`, for creating per-CPU data. This routine creates an instance of the requested memory for each processor on the systems. The prototypes are in `<linux/percpu.h>`:
+```c
+void *alloc_percpu(type); /* a macro */
+void *__alloc_percpu(size_t size, size_t align);
+void free_percpu(const void *);
+```
+The `alloc_percpu()` macro allocates one instance of an object of the given type for every processor on the system. It is a wrapper around `__alloc_percpu()`, which takes the actual number of bytes to allocate as a parameter and the number of bytes on which to align the allocation. The `alloc_percpu()` macro aligns the allocation on a byte boundary that is the natural alignment of the given type. Such alignment is the usual behavior.
+
+A corresponding call to `free_percpu()` frees the given data on all processors.
+
+A call to `alloc_percpu()` or `__alloc_percpu()` returns a pointer, which is used to indirectly reference the dynamically created per-CPU data. The kernel provides two macros to make this easy:
+```c
+get_cpu_var(ptr);   /* return a void pointer to this processor’s copy of ptr */
+put_cpu_var(ptr);   /* done; enable kernel preemption */
+```
+The `get_cpu_var()` macro returns a pointer to the specific instance of the current processor’s data. It also disables kernel preemption, which a call to `put_cpu_var()` then enables.
+
+
+## Reasons for Using Per-CPU Data
+- The first is the reduction in locking requirements. Depending on the semantics by which processors access the per-CPU data, you might not need any locking at all.
+- The second is per-CPU data greatly reduces cache invalidation. Because processors ideally access only their own data.
+
+The only safety requirement for the use of per-CPU data is disabling kernel preemption.
+
+
+## Picking an Allocation Method
+
+- `kmalloc()`: If you need contiguous physical pages.
+- `alloc_pages()`: If you want to allocate from high memory.
+- `vmalloc()`: If you do not need physically contiguous pages, only virtually contiguous.
+- `slab`: If you are creating and destroying many large data structures.
