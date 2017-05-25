@@ -64,7 +64,7 @@ Linux Kernel Development
 Paper Review
 ---
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
-1. [Manifest Files Classification of Android Malware](./paper-review/Manifest_Files_Classification_of_Android_Malware/review.md)
+1. [DroidNative: Semantic-Based Detection of Android Native Code Malware](./paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
 2. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
 ](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
 3. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)

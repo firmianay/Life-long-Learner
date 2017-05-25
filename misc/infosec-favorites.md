@@ -12,10 +12,6 @@ I think blind collection does not make sense, here only list some I've seen and 
 ## Books
 
 ## Papers
-### 2014
-1. [Manifest Files Classification of Android Malware](http://icmr.crru.ac.th/Journal/Journal%204/9%20Manifest%20Files%20Classification%20of%20Android%20Malware.pdf)
- - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/Manifest_Files_Classification_of_Android_Malware/review.md)
-
 ### 2016
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models](https://arxiv.org/pdf/1612.04433.pdf)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
@@ -24,6 +20,10 @@ I think blind collection does not make sense, here only list some I've seen and 
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
 3. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](http://www.waset.org/publications/10005499)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
+4. [DroidNative: Semantic-Based Detection of Android Native Code Malware](https://arxiv.org/pdf/1602.04693.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
+ - [slides](http://web.uvic.ca/~salam/seminars/Seminar-March-30-2016.pdf)
+ - [source](https://bitbucket.org/shahid_alam/droidnative)
 
 ## Tools
 
