@@ -12,6 +12,11 @@ I think blind collection does not make sense, here only list some I've seen and 
 ## Books
 
 ## Papers
+### 2013
+1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](http://www.uvic.ca/engineering/ece/isot/assets/docs/alam-paper-sin-2013.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
+ - [report](http://web.uvic.ca/~salam/PhD/TR-MAIL.pdf)
+
 ### 2016
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models](https://arxiv.org/pdf/1612.04433.pdf)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)

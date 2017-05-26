@@ -64,11 +64,12 @@ Linux Kernel Development
 Paper Review
 ---
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
-1. [DroidNative: Semantic-Based Detection of Android Native Code Malware](./paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
-2. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
+1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](./paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
+2. [DroidNative: Semantic-Based Detection of Android Native Code Malware](./paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
+3. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
 ](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
-3. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
-4. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
+4. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
+5. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
 
 Diary
 ---
