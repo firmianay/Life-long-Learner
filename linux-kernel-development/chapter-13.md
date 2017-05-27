@@ -157,3 +157,139 @@ The following are some of the superblock operations that are specified by `super
 
 
 ## The Inode Object
+The inode Object represents all the information needed by the kernel to manipulate a file or directory. For Unix-style filesystems, this information is simply read from the on-disk inode.
+
+The inode object is represented by `struct inode` and is defined in `<linux/fs.h>`.
+```
+struct inode {
+        struct hlist_node       i_hash;               /* hash list */
+        struct list_head        i_list;               /* list of inodes */
+        struct list_head        i_sb_list;            /* list of superblocks */
+        struct list_head        i_dentry;             /* list of dentries */
+        unsigned long           i_ino;                /* inode number */
+        atomic_t                i_count;              /* reference counter */
+        unsigned int            i_nlink;              /* number of hard links */
+        uid_t                   i_uid;                /* user id of owner */
+        gid_t                   i_gid;                /* group id of owner */
+        kdev_t                  i_rdev;               /* real device node */
+        u64                     i_version             /* versioning number */
+        loff_t                  i_size                /* file size in bytes */
+        seqcount_t              i_size_seqcount;      /* serializer for i_size */
+        struct timespec         i_atime;              /* last access time */
+        struct timespec         i_mtime;              /* last modify time */
+        struct timespec         i_ctime;              /* last change time */
+        unsigned int            i_blkbits;            /* block size in bits */
+        blkcnt_t                i_blocks;             /* block size in bits */
+        unsigned short          i_bytes;              /* bytes consumed */
+        umode_t                 i_mode;               /* access permissions */
+        spinlock_t              i_lock;               /* spinlock */
+        struct rw_semaphore     i_alloc_sem;          /* nests inside of i_sem */
+        struct semaphore        i_sem;                /* inode semaphore */
+        struct inode_operations *i_op;                /* inode ops table */
+        struct file_operations  *i_fop;               /* default inode ops */
+        struct super_block      *i_sb;                /* associated superblock */
+        struct file_lock        *i_flock;             /* file lock list */
+        struct address_space    *i_mapping;           /* associated mapping */
+        struct address_space    i_data;               /* mapping for device */
+        struct dquot            *i_dquot[MAXQUOTAS];  /* disk quotas for inode */
+        struct list_head        i_devices;            /* list of block devices */
+        union {
+            struct pipe_inode_info  *i_pipe;          /* pipe information */
+            struct block_device     *i_bdev;          /* block device driver */
+            struct cdev             *i_cdev;          /* character device driver */
+        };
+        unsigned long           i_dnotify_mask;       /* directory notify mask */
+        struct dnotify_struct   *i_dnotify;           /* dnotify */
+        struct list_head        inotify_watches;      /* inotify watches */
+        struct mutex            inotify_mutex;        /* protects inotify_watches */
+        unsigned long           i_state;              /* state flags */
+        unsigned long           dirtied_when;         /* first dirtying time */
+        unsigned int            i_flags;              /* filesystem flags */
+        atomic_t                i_writecount;         /* count of writers */
+        void                    *i_security;          /* security module */
+        void                    *i_private;           /* fs private pointer */
+};
+```
+An inode represents each file on a filesystem, but the inode object is constructed in memory only as file are accessed.
+
+
+## Inode Operations
+Inode Operations are invoked via:
+```
+i->i_op->truncate(i)
+```
+`i` is a reference to a particular inode, the `truncate()` operation defined by the filesystem on which `i` exists is called on the given inode.
+
+The `inode_operations` structure is defined in `<linux/fs.h>`:
+```
+struct inode_operations {
+    int (*create) (struct inode *, struct dentry *, int, struct nameidata *);
+    struct dentry * (*lookup) (struct inode *, struct dentry *, struct nameidata *);
+    int (*link) (struct dentry *, struct inode *, struct dentry *);
+    int (*unlink) (struct inode *, struct dentry *);
+    int (*symlink) (struct inode *, struct dentry *, const char *);
+    int (*mkdir) (struct inode *, struct dentry *, int);
+    int (*rmdir) (struct inode *, struct dentry *);
+    int (*mknod) (struct inode *, struct dentry *, int, dev_t);
+    int (*rename) (struct inode *, struct dentry *, struct inode *, struct dentry *);
+    int (*readlink) (struct dentry *, char __user *, int);
+    void * (*follow_link) (struct dentry *, struct nameidata *);
+    void (*put_link) (struct dentry *, struct nameidata *, void *);
+    void (*truncate) (struct inode *);
+    int (*permission) (struct inode *, int);
+    int (*setattr) (struct dentry *, struct iattr *);
+    int (*getattr) (struct vfsmount *mnt, struct dentry *, struct kstat *);
+    int (*setxattr) (struct dentry *, const char *, const void *, size_t, int);
+    ssize_t (*getxattr) (struct dentry *, const char *, void *, size_t);
+    ssize_t (*listxattr) (struct dentry *, const char *);
+    int (*removexattr) (struct dentry *, const char *);
+    void (*truncate_range) (struct inode *, loff_t, loff_t);
+    long (*fallocate) (struct inode *inode, int mode, loff_t offset, loff_t len);
+    int (*fiemap) (struct inode *, struct fiemap_extent_info *, u64 start, u64 len);
+};
+```
+
+The following interfaces constitute the various functions that the VFS may perform, or ask a specific filesystem to perform, on a given inode:
+- `int create(struct inode *dir, struct dentry *dentry, int mode)`
+    - TheVFS calls this function from the `creat()` and `open()` system calls to create a new inode associated with the given dentry object with the specified initial access mode.
+- `struct dentry * lookup(struct inode *dir, struct dentry *dentry)`
+    - This function searches a directory for an inode corresponding to a filename specified in the given dentry.
+- `int link(struct dentry *old_dentry, struct inode *dir, struct dentry *dentry)`
+    - Invoked by the link() system call to create a hard link of the file `old_dentry` in the directory dir with the new filename `dentry`.
+- `int unlink(struct inode *dir, struct dentry *dentry)`
+    - Called from the `unlink()` system call to remove the inode specified by the directory entry dentry from the directory `dir`.
+- `int symlink(struct inode *dir, struct dentry *dentry, const char *symname)`
+    - Called from the `symlink()` system call to create a symbolic link named symname to the file represented by dentry in the directory `dir`.
+- `int mkdir(struct inode *dir, struct dentry *dentry, int mode)`
+    - Called from the `mkdir()` system call to create a new directory with the given initial mode.
+- `int rmdir(struct inode *dir, struct dentry *dentry)`
+    - Called by the `rmdir()` system call to remove the directory referenced by dentry from the directory `dir`.
+- `int mknod(struct inode *dir, struct dentry *dentry, int mode, dev_t rdev)`
+    - Called by the `mknod()` system call to create a special file (device file, named pipe, or socket). The file is referenced by the device rdev and the directory entry dentry in the directory `dir`. The initial permissions are given via `mode`.
+- `int rename(struct inode *old_dir, struct dentry *old_dentry, struct inode *new_dir, struct dentry *new_dentry)`
+    - Called by the VFS to move the file specified by `old_dentry` from the `old_dir` directory to the directory `new_dir`, with the filename specified by `new_dentry`.
+- `int readlink(struct dentry *dentry, char *buffer, int buflen)`
+    - Called by the `readlink()` system call to copy at most `buflen` bytes of the full path associated with the symbolic link specified by `dentry` into the specified buffer.
+- `int follow_link(struct dentry *dentry, struct nameidata *nd)`
+    - Called by the VFS to translate a symbolic link to the inode to which it points. The link pointed at by `dentry` is translated, and the result is stored in the `nameidata` structure pointed at by `nd`.
+- `int put_link(struct dentry *dentry, struct nameidata *nd)`
+    - Called by the VFS to clean up after a call to `follow_link()`.
+- `void truncate(struct inode *inode)`
+    - Called by the VFS to modify the size of the given file. Before invocation, the inode’s `i_size` field must be set to the desired new size.
+- `int permission(struct inode *inode, int mask)`
+    - Checks whether the specified access mode is allowed for the file referenced by `inode`. This function returns zero if the access is allowed and a negative error code otherwise. Most filesystems set this field to `NULL` and use the generic VFS method, which simply compares the mode bits in the inode’s objects to the given mask.
+- `int setattr(struct dentry *dentry, struct iattr *attr)`
+    - Called from `notify_change()` to notify a “change event” after an inode has been modified.
+- `int getattr(struct vfsmount *mnt, struct dentry *dentry, struct kstat *stat)`
+    - Invoked by the VFS upon noticing that an inode needs to be refreshed from disk. Extended attributes allow the association of key/values pairs with files.
+- `int setxattr(struct dentry *dentry, const char *name, const void *value, size_t size, int flags)`
+    - Used by the VFS to set the extended attribute name to the value value on the file referenced by dentry .
+- `ssize_t getxattr(struct dentry *dentry, const char *name, void *value, size_t size)`
+    - Used by the VFS to copy into value the value of the extended attribute `name` for the specified file.
+- `ssize_t listxattr(struct dentry *dentry, char *list, size_t size)`
+    - Copies the list of all attributes for the specified file into the buffer `list`.
+- `int removexattr(struct dentry *dentry, const char *name)`
+    - Removes the given attribute from the given file.
+
+
+## The Dentry Object
