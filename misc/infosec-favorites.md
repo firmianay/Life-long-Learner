@@ -16,6 +16,10 @@ I think blind collection does not make sense, here only list some I've seen and 
 1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](http://www.uvic.ca/engineering/ece/isot/assets/docs/alam-paper-sin-2013.pdf)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
  - [report](http://web.uvic.ca/~salam/PhD/TR-MAIL.pdf)
+2. [DroidAnalytics: A Signature Based Analytic System to Collect, Extract, Analyze and Associate Android Malware](https://arxiv.org/pdf/1302.7212.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DroidAnalytics:A_Signature_Based_Analytic_System_to_Collect,Extract,Analyze_and_Associate_Android_Malware/review.md)
+ [slides](https://mssun.me/assets/trustcom13droidanalytics_slides.pdf)
+ [source](https://github.com/Choosue/DroidAnalytics)
 
 ### 2016
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models](https://arxiv.org/pdf/1612.04433.pdf)
