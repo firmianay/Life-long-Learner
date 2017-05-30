@@ -140,3 +140,21 @@ Each request can be composed of more than one `bio` structure because individual
 
 
 ## I/O Schedulers
+The subsystem of the kernel that performs these operations is called the I/O scheduler. The I/O scheduler divides the resource of disk I/O among the pending block I/O requests in the system.
+
+### The Job of an I/O Scheduler
+An I/O scheduler works by managing a block device's request queue. It decides the order of requests in the queue and at what time each request is dispatched to the block device. It manages the request queue with the goal of reducing seeks, which results in greater `global throughput`.
+
+I/O scheduler perform two primary actions to minimize seeks:
+- `merging`: the coalescing of two or more requests into one.
+- `sorting`: the entire request queue is kept sorted, sectorwise.
+
+### I/O Scheduler Selection
+There are four different I/O schedulers in the 2.6 kernel. Each of these I/O schedulers can be enabled and built into the kernel. By default, block devices use the Complete Fair Queuing I/O scheduler. This can be overridden via the boot-time option `elevator=foo` on the kernel command line, where `foo` is a valid and enabled I/O Scheduler.
+
+Parameter | I/O Scheduler
+--------- | -------------
+as | Anticipatory
+cfq | Complete Fair Queuing
+deadline | Deadline
+noop | Noop
