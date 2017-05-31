@@ -19,7 +19,7 @@ I think blind collection does not make sense, here only list some I've seen and 
 2. [DroidAnalytics: A Signature Based Analytic System to Collect, Extract, Analyze and Associate Android Malware](https://arxiv.org/pdf/1302.7212.pdf)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DroidAnalytics:A_Signature_Based_Analytic_System_to_Collect,Extract,Analyze_and_Associate_Android_Malware/review.md)
  - [slides](https://mssun.me/assets/trustcom13droidanalytics_slides.pdf)
- - [source](https://github.com/Choosue/DroidAnalytics)
+ - [source](https://github.com/zhengmin1989/DroidAnalytics)
 
 ### 2016
 1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models](https://arxiv.org/pdf/1612.04433.pdf)
@@ -33,6 +33,10 @@ I think blind collection does not make sense, here only list some I've seen and 
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
  - [slides](http://web.uvic.ca/~salam/seminars/Seminar-March-30-2016.pdf)
  - [source](https://bitbucket.org/shahid_alam/droidnative)
+
+### 2017
+1. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](https://arxiv.org/pdf/1703.10926.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
 
 ## Tools
 
