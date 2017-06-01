@@ -71,7 +71,8 @@ Paper Review
 ](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
 5. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
 6. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
-7. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](./paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
+7. [DynaLog: An automated dynamic analysis framework for characterizing Android applications](./paper-review/DynaLog:An_automated_dynamic_analysis_framework_for_characterizing_Android_applications/review.md)
+8. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](./paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
 
 Diary
 ---

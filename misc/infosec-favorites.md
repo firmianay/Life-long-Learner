@@ -33,6 +33,9 @@ I think blind collection does not make sense, here only list some I've seen and 
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
  - [slides](http://web.uvic.ca/~salam/seminars/Seminar-March-30-2016.pdf)
  - [source](https://bitbucket.org/shahid_alam/droidnative)
+5. [DynaLog: An automated dynamic analysis framework for characterizing Android applications](https://arxiv.org/pdf/1607.08166.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/DynaLog:An_automated_dynamic_analysis_framework_for_characterizing_Android_applications/review.md)
+ - [slides](http://www.123devops.com/wp-content/uploads/2014/10/Mohammed_Alzaylaee_CyberSecurity2016.pdf)
 
 ### 2017
 1. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](https://arxiv.org/pdf/1703.10926.pdf)
