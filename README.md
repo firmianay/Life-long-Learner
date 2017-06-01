@@ -59,7 +59,9 @@ Linux Kernel Development
 10. [Chapter 10: Kernel Synchronization Methods](./linux-kernel-development/chapter-10.md)
 11. [Chapter 11: Timers and Time Management](./linux-kernel-development/chapter-11.md)
 12. [Chapter 12: Memory Management](./linux-kernel-development/chapter-12.md)
-13. (-) [Chapter 13: The Virtual Filesystem](./linux-kernel-development/chapter-13.md)
+13. [Chapter 13: The Virtual Filesystem](./linux-kernel-development/chapter-13.md)
+14. [Chapter 14: The Block I/O Layer](./linux-kernel-development/chapter-14.md)
+15. (-) [Chapter 15: The Process Address Space](./linux-kernel-development/chapter-15.md)
 
 Paper Review
 ---
