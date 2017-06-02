@@ -24,7 +24,7 @@ All valid addresses in the process address space exist in exactly one area; memo
 The kernel represents a process's address space with a data structure called the `memory descriptor`. This structure contains all the information related to the process address space.
 
 The memory descriptor is represented by `struct mm_struct` and defined in `<linux/mm_types.h>`:
-```
+```c
 struct mm_struct {
     struct vm_area_struct     *mmap;            /* list of memory areas */
     struct rb_root            mm_rb;            /* red-black tree of VMAs */
@@ -82,7 +82,7 @@ Whenever a process is scheduled, the process address space referenced by the pro
 The memory area structure, `vm_area_struct`, represents memory areas. It is defined in `<linux/mm_types.h>`. In the Linux kernel, memory areas are often called `virtual memory areas` (VMAs).
 
 The `vm_area_struct` structure describes a single memory area over a contiguous interval in a given address space. The kernel treats each memory area as a unique memory object. Each memory area prossesses certain properties. In this manner, each VMA structure can represent different types of memory areas.
-```
+```c
 struct vm_area_struct {
     struct mm_struct        *vm_mm;         /* associated mm_struct */
     unsigned                long vm_start;  /* VMA start, inclusive */
@@ -142,7 +142,7 @@ VM_NONLINEAR | This area is a nonlinear mapping.
 The `vm_ops` field in the `vm_area_struct` structure points to the table of operations associated with a given memory area, which the kernel can invoke to manipulate the VMA. The `vm_area_struct` acts as a generic object for representing any type of memory area, and the operations table describes the specific methods that can operate on this particular instance of the object.
 
 The operations table is represented by struct `vm_operations_struct` and is defined in `<linux/mm.h>`:
-```
+```c
 struct vm_operations_struct {
     void (*open) (struct vm_area_struct *);
     void (*close) (struct vm_area_struct *);
@@ -173,3 +173,165 @@ The linked list is used when every node needs to be traversed. The red-black tre
 
 
 ## Manipulating Memory Areas
+The kernel often has to perform operations on a memory area, these operations are frequent and form the basis of the `mmap()` routine. Helper function are defined to assist these jobs. These functions are all declared in `<linux/mm.h>`.
+
+### find_vma()
+The kernel provides a function `find_vma()` for searching for the VMA in which a given memory address resides. It is defined in `mm/mmap.c`:
+```c
+struct vm_area_struct * find_vma(struct mm_struct *mm, unsigned long addr)
+```
+This function searches the given address space for the first memory area whose `vm_end` field is greater than `addr`. The result of the `find_vma` function is cached in the `mmap_cache` field of the memory descriptor.
+
+If the given address is not in the cache, you must search the memory areas associated with this memory descriptor for a match. This is done via the red-black tree:
+```c
+struct vm_area_struct *find_vma(struct mm_struct *mm, unsigned long addr)
+{
+	struct vm_area_struct *vma = NULL;
+
+	if (mm) {
+		/* Check the cache first. */
+		/* (Cache hit rate is typically around 35%.) */
+		vma = mm->mmap_cache;
+		if (!(vma && vma->vm_end > addr && vma->vm_start <= addr)) {
+			struct rb_node * rb_node;
+
+			rb_node = mm->mm_rb.rb_node;
+			vma = NULL;
+
+			while (rb_node) {
+				struct vm_area_struct * vma_tmp;
+
+				vma_tmp = rb_entry(rb_node,
+						struct vm_area_struct, vm_rb);
+
+				if (vma_tmp->vm_end > addr) {
+					vma = vma_tmp;
+					if (vma_tmp->vm_start <= addr)
+						break;
+					rb_node = rb_node->rb_left;
+				} else
+					rb_node = rb_node->rb_right;
+			}
+			if (vma)
+				mm->mmap_cache = vma;
+		}
+	}
+	return vma;
+```
+
+### find_vma_prev()
+The `find_vma_prev()` function works the same as `find_vma()`, but it also returns the last VMA before addr. The function is also defined in `mm/mmap.c` and declared in `<linux/mm.h>`:
+```c
+struct vm_area_struct * find_vma_prev(struct mm_struct *mm, unsigned long addr,
+                                      struct vm_area_struct **pprev)
+```
+The `pprev` argument stores a pointer to the VMA preceding `addr`.
+
+### find_vma_intersection()
+The `find_vma_intersection()` function returns the first VMA that overlaps a given address interval. The function is defined in `<linux/mm.h>` because it is inline:
+```c
+static inline struct vm_area_struct *
+find_vma_intersection(struct mm_struct *mm,
+                      unsigned long start_addr,
+                      unsigned long end_addr)
+{
+    struct vm_area_struct *vma;
+
+    vma = find_vma(mm, start_addr);
+    if (vma && end_addr <= vma->vm_start)
+    vma = NULL;
+    return vma;
+}
+```
+The first parameter is the address space to search, `start_addr` is the start of the interval, and `end_addr` is the end of the interval.
+
+### mmap() and do_mmap(): Creating an Address Interval
+`do_mmap()` is the function used to add an address interval to a process's address space, whether that means expanding an existing memory area or creating a new one.
+
+The `do_mmap()` function is defined in `<linux/mm.h>`:
+```c
+unsigned long do_mmap(struct file *file, unsigned long addr,
+                      unsigned long len, unsigned long prot,
+                      unsigned long flag, unsigned long offset)
+```
+This function maps the file specified by `file` at offset `offset` for length `len`. The `file` parameter can be `NULL` and `offset` can be zero, in which case the mapping will not be backed by a file. In that case, this is called an `anonymous mapping`. If a `file` and `offset` are provided, the mapping is called a `file-backed mapping`.
+
+The `addr` function optionally specifies the initial address from which to start the search for a free interval.
+
+The `prot` parameter specifies the access permissions for pages in the memory area. The possible permission flags are defined in `<asm/mman.h>` and are unique to each supported architecture, although in practice each architecture defines the flags listed in the following table:
+
+Flag | Effect on the Pages in the New Interval
+---- | ---------------------------------------
+PROT_READ | Corresponds to `VM_READ`
+PROT_WRITE | Corresponds to `VM_WRITE`
+PROT_EXEC | Corresponds to `VM_EXEC`
+PROT_NONE | Cannot access page
+
+The `flags` parameter specifies flags that correspond to the remaining VMA flags. These flags specify the type and change the behavior of the mapping. They are also defined in `<asm/mman.h>`:
+
+
+Flag | Effect on the New Interval
+---- | --------------------------
+MAP_SHARED | The mapping can be shared.
+MAP_PRIVATE | The mapping cannot be shared.
+MAP_FIXED | The new interval must start at the given address `addr`.
+MAP_ANONYMOUS | The mapping is not file-backed, but is anonymous.
+MAP_GROWSDOWN | Corresponds to `VM_GROWSDOWN`.
+MAP_DENYWRITE | Corresponds to `VM_DENYWRITE`.
+MAP_EXECUTABLE | Corresponds to `VM_EXECUTABLE`.
+MAP_LOCKED | Corresponds to `VM_LOCKED`.
+MAP_NORESERVE | No need to reserve space for the mapping.
+MAP_POPULATE | Populate (prefault) page tables.
+MAP_NONBLOCK | Do not block on I/O.
+
+If any of the parameters are invalid, `do_mmap()` returns a negative value. Otherwise, a suitable interval in virtual memory is located. If possible, the interval is merged with an adjacent memory area. Otherwise, a new `vm_area_struct` structure is allocated from the `vm_area_cachep` slab cache, and the new memory area is added to the address space's linked list and red-black tree of memory areas via the `vma_link()` function. Next, the `total_vm` field in the memory descriptor is updated. Finally, the function returns the initial address of the newly created address interval.
+
+The `do_mmap()` functionality is exported to user-space via the `mmap()` system call, defined as:
+```c
+void * mmap2(void *start,
+             size_t length,
+             int prot,
+             int flags,
+             int fd,
+             off_t pgoff)
+```
+
+### munmap() and do_munmap(): Removing an Address Interval
+The `do_munmap()` function removes an address interval from a specified process address space. The function is declared in `<linux/mm.h>`:
+```c
+int do_munmap(struct mm_struct *mm, unsigned long start, size_t len)
+```
+The first parameter `mm` specifies the address space from which the interval starting at address `start` of length `len` bytes is removed. On success, zero is returned. Otherwise, a negative error code is returned.
+
+As the complement of the `mmap()`, the `munmap()` system call is exported to user-space as a means to enable processes to remove address intervals from their address space:
+```c
+int munmap(void *start, size_t length)
+```
+The system call is defined in mm/mmap.c and acts as a simple wrapper to `do_munmap()`:
+```c
+asmlinkage long sys_munmap(unsigned long addr, size_t len)
+{
+    int ret;
+    struct mm_struct *mm;
+    mm = current->mm;
+    down_write(&mm->mmap_sem);
+    ret = do_munmap(mm, addr, len);
+    up_write(&mm->mmap_sem);
+    return ret;
+}
+```
+
+
+## Page Tables
+In Linux, the page tables consist of three levels.
+- The top-level page table is the page global directory (PGD), which consists of an array of `pgd_t` types. On most architectures, the `pgd_t` type is an unsigned long. The entries in the PGD point to entries in the second-level directory, the PMD.
+- The second-level page table is the page middle directory (PMD), which is an array of `pmd_t` types. The entries in the PMD point to entries in the PTE.
+- The final level is called simply the page table and consists of page table entries of type `pte_t`. Page table entries point to physical pages.
+
+![](static/ch15_1.png)
+
+Each process has its own page tables (threads share them). The `pgd` field of the memory descriptor points to the process's page global directory. Manipulating and traversing page tables requires the `page_table_lock`, which is located inside the associated memory descriptor.
+
+Page table data structures are quite architecture-dependent and thus are defined in `<asm/page.h>`.
+
+Most processors implement a translation lookaside buffer (TLB), which acts as a hardware cache of virtual-to-physical mappings. When accessing a virtual address, the processor first checks whether the mapping is cached in the TLB. If there is a hit, the physical address is immediately returned. If there is a miss, the page tables are consulted for the corresponding physical address.
