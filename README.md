@@ -66,15 +66,17 @@ Linux Kernel Development
 Paper Review
 ---
 0. (el) [How to Read an Engineering Research Paper](http://cseweb.ucsd.edu/~wgg/CSE210/howtoread.html)
-1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](./paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
-2. [DroidAnalytics: A Signature Based Analytic System to Collect, Extract, Analyze and Associate Android Malware](./paper-review/DroidAnalytics:A_Signature_Based_Analytic_System_to_Collect,Extract,Analyze_and_Associate_Android_Malware/review.md)
-3. [DroidNative: Semantic-Based Detection of Android Native Code Malware](./paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
-4. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
+1. [
+All You Ever Wanted to Know about Dynamic Taint Analysis and Forward Symbolic Execution (but Might Have Been Afraid to Ask)](./paper-review/All_You_Ever_Wanted_to_Know_about_Dynamic_Taint_Analysis_and_Forward_Symbolic_Execution/review.md)
+2. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](./paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
+3. [DroidAnalytics: A Signature Based Analytic System to Collect, Extract, Analyze and Associate Android Malware](./paper-review/DroidAnalytics:A_Signature_Based_Analytic_System_to_Collect,Extract,Analyze_and_Associate_Android_Malware/review.md)
+4. [DroidNative: Semantic-Based Detection of Android Native Code Malware](./paper-review/DroidNative:Semantic-Based_Detection_of_Android_Native_Code_Malware/review.md)
+5. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models
 ](./paper-review/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
-5. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
-6. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
-7. [DynaLog: An automated dynamic analysis framework for characterizing Android applications](./paper-review/DynaLog:An_automated_dynamic_analysis_framework_for_characterizing_Android_applications/review.md)
-8. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](./paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
+6. [Android Malware Classification by Applying Online Machine Learning](./paper-review/Android_Malware_Classification_by_Applying_Online_Machine_Learning/review.md)
+7. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
+8. [DynaLog: An automated dynamic analysis framework for characterizing Android applications](./paper-review/DynaLog:An_automated_dynamic_analysis_framework_for_characterizing_Android_applications/review.md)
+9. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](./paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
 
 Diary
 ---

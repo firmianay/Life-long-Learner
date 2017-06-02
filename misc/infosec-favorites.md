@@ -12,6 +12,11 @@ I think blind collection does not make sense, here only list some I've seen and 
 ## Books
 
 ## Papers
+### 2010
+1. [All You Ever Wanted to Know about Dynamic Taint Analysis and Forward Symbolic Execution (but Might Have Been Afraid to Ask)](http://www.cs.umd.edu/class/spring2014/cmsc631/papers/schwartz-symbolic-execution.pdf)
+ - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/All_You_Ever_Wanted_to_Know_about_Dynamic_Taint_Analysis_and_Forward_Symbolic_Execution/review.md)
+ - [slides](https://edmcman.github.io/pres/oakland10.pdf)
+
 ### 2013
 1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](http://www.uvic.ca/engineering/ece/isot/assets/docs/alam-paper-sin-2013.pdf)
  - [review](https://github.com/firmianay/Life-long-Learner/blob/master/paper-review/MAIL:Malware_Analysis_Intermediate_Language/review.md)
