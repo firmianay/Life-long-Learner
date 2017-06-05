@@ -45,7 +45,7 @@ Use Linux
 ---
 1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
 
-Linux Kernel Development
+Linux Kernel Development 3rd
 ---
 1. [Chapter 1: Introduction to the Linux Kernel](./linux-kernel-development/chapter-1.md)
 2. [Chapter 2: Getting Started with the Kernel](./linux-kernel-development/chapter-2.md)
@@ -79,6 +79,10 @@ All You Ever Wanted to Know about Dynamic Taint Analysis and Forward Symbolic Ex
 7. [A Static Android Malware Detection Based on Actual Used Permissions Combination and API Calls](./paper-review/A_Static_Android_Malware_Detection_Based_on_Actual_Used_Permissions_Combination_and_API_Calls/review.md)
 8. [DynaLog: An automated dynamic analysis framework for characterizing Android applications](./paper-review/DynaLog:An_automated_dynamic_analysis_framework_for_characterizing_Android_applications/review.md)
 9. [EMULATOR vs REAL PHONE: Android Malware Detection Using Machine Learning](./paper-review/EMULATOR_vs_REAL_PHONE:Android_Malware_Detection_Using_Machine_Learning/review.md)
+
+Data Communications and Networking 5th
+---
+1. (-) [Chapter 1: Introduction](./data-communications-and-networking/chapter-1.md)
 
 Diary
 ---
