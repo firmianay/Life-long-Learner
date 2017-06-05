@@ -82,7 +82,8 @@ All You Ever Wanted to Know about Dynamic Taint Analysis and Forward Symbolic Ex
 
 Data Communications and Networking 5th
 ---
-1. (-) [Chapter 1: Introduction](./data-communications-and-networking/chapter-1.md)
+1. [Chapter 1: Introduction](./data-communications-and-networking/chapter-1.md)
+2. (-) [Chapter 2: Network Models](./data-communications-and-networking/chapter-2.md)
 
 Diary
 ---
