@@ -84,7 +84,8 @@ Data Communications and Networking 5th
 ---
 1. [Chapter 1: Introduction](./data-communications-and-networking/chapter-1.md)
 2. [Chapter 2: Network Models](./data-communications-and-networking/chapter-2.md)
-3. (-) [Chapter 3: Introduction to Physical Layer](./data-communications-and-networking/chapter-3.md)
+3. [Chapter 3: Introduction to Physical Layer](./data-communications-and-networking/chapter-3.md)
+4. (-) [Chapter 4: Digital Transmission](./data-communications-and-networking/chapter-4.md)
 
 Diary
 ---
