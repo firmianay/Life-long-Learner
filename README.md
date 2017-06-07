@@ -86,7 +86,8 @@ Data Communications and Networking 5th
 2. [Chapter 2: Network Models](./data-communications-and-networking/chapter-2.md)
 3. [Chapter 3: Introduction to Physical Layer](./data-communications-and-networking/chapter-3.md)
 4. [Chapter 4: Digital Transmission](./data-communications-and-networking/chapter-4.md)
-5. (-) [Chapter 5: Analog Transmission](./data-communications-and-networking/chapter-5.md)
+5. [Chapter 5: Analog Transmission](./data-communications-and-networking/chapter-5.md)
+6. (-) [Chapter 6: Bandwidth Utilization: Multiplexing and Spectrum Spreading](./data-communications-and-networking/chapter-6.md)
 
 Diary
 ---
