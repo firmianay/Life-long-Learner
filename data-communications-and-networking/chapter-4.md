@@ -111,3 +111,146 @@ The `multiline transmission, three-level (MLT-3)` scheme uses three levels (+V, 
 ![](./static/ch4_f4.png)
 
 ### Block Coding
+Block coding is normally referred to as *mB/nB* coding; it replaces each *m*-bit group with *n*-bit group. Block coding normally involves three steps: division, substitution, and combination.
+
+![](./static/ch4_14.png)
+
+##### 4B/5B
+The `four binary/five binary (4B/5B)` coding scheme was changed to be used in combination with NRZ-I.
+- A long sequence of 0s can make the receiver clock lose synchronization in NRZ-I.
+- 4B/5B solves the problem, the 5-bit output that replaces the 4-bit input has no more than one leading zero and no more than two trailing zero.
+
+![](./static/ch4_15.png)
+
+![](./static/ch4_f5.png)
+
+##### 8B/10B
+The `eight binary/ten binary (8B/10B)` provides greater error detection capability than 4B/5B. The 8B/10B block coding is actually a combination of 5B/6B and 3B/4B encoding.
+
+![](./static/ch4_17.png)
+
+### Scrambling
+`Scrambling` is one solution that does not increase the number of bits and does provide synchronization, and one solution that substitutes long zero-level pulses with a combination of other levels to provide synchronization.
+
+![](./static/ch4_18.png)
+
+##### B8ZS
+`Bipolar with 8-zero substitution (B8ZS)` substitutes eight consecutive zeros with `000VB0VB`. HDB3 substitutes four consecutive zeros with OOOVor BOOV depending on the number of nonzero pulses after the last substitution.
+
+1. If the number of nonzero pulses after the last substitution is odd, the substitution pattern will be `OOOV`, which makes the total number of nonzero pulses even.
+2. If the number of nonzero pulses after the last substitution is even, the substitution pattern will be `BOOV`, which makes the total number of nonzero pulses even.
+
+![](./static/ch4_19.png)
+
+
+## Analog-to-Digital Conversion
+### Pulse Code Modulation (PCM)
+The most common technique to change an analog signal to digital data is called `pulse code modulation (PCM)`. A PCM encoder has three processes:
+1. The analog signal is sampled.
+2. The sampled signal is quantized.
+3. The quantized values are encoded as streams of bits.
+
+![](./static/ch4_21.png)
+
+##### Sampling
+The first step in PCM is `sampling`. The analog signal is sampled every *T<sub>s</sub>* s, where *T<sub>s</sub>* is the sample interval or period. The inverse of the sampling interval is called the `sampling rate` or `sampling frequency` and denoted by *f<sub>s</sub>* where *f<sub>s</sub>* = 1/*T<sub>s</sub>*. There are three sampling methods: `ideal`, `natural`, and `flat-top`. The sampling process is sometimes referred to as `pulse amplitude modulation (PAM)`.
+
+![](./static/ch4_22.png)
+
+**Sampling Rate**: According to the Nyquist theorem, the sampling rate must be at least 2 times the highest frequency contained in the signal.
+
+![](./static/ch4_23.png)
+
+![](./static/ch4_24.png)
+
+##### Quantization
+1. We assume that the original analog signal has instantaneous amplitudes between V<sub>min</sub> and V<sub>max</sub>.
+2. We divide the range into *L* zones, each of height delta. ![](./static/ch4_f6.png)
+3. We assign quantized values of 0 to *L* - 1 to the midpoint of each zone.
+4. We approximate the value of the sample amplitude to the quantized values.
+
+![](./static/ch4_26.png)
+
+**Quantization Levels**: The choice of *L*, the number of levels, depends on the range of the amplitudes of the analog signal and how accurately we need to recover the signal.
+
+**Quantization Error**: The contributon of the `quantization error` to the SNR<sub>dB</sub> of the signal depends on the number of quantization levels *L*, or the bits per sample *n<sub>b</sub>*: ![](./static/ch4_f7.png)
+
+##### Encoding
+If the number of quantization levels is *L*, the number of bits is *n<sub>b</sub>* = log<sub>2</sub> *L*. The bit rate can be found from the formula: ![](./static/ch4_f8.png)
+
+##### Original Signal Recovery
+
+![](./static/ch4_27.png)
+
+##### PCM Bandwidth
+Suppose we are given the bandwidth of a low-pass analog signal. If we then digitize the signal, what is the new minimum bandwidth of the channel that can pass this digitized signal?
+
+![](./static/ch4_f9.png)
+
+When 1/r = 1 (for a NRZ or bipolar signal) and c = (1/2) (the average situation), the
+minimum bandwidth is: **B<sub>min</sub> = n<sub>b</sub> &times; B<sub>analog</sub>**
+
+### Delta Modulation (DM)
+PCM finds the value of the signal amplitude for each sample; DM finds the change from the previous sample.
+
+![](./static/ch4_28.png)
+
+##### Modulator
+The modulator is used at the sender site to create a stream of bits from an analog signal.
+
+![](./static/ch4_29.png)
+
+##### Demodulator
+The demodulator takes the digital data and, using the staircase maker and the delay unit, creates the analog signal.
+
+![](./static/ch4_30.png)
+
+
+## Transmission Modes
+
+![](./static/ch4_31.png)
+
+### Parallel Transmission
+
+![](./static/ch4_32.png)
+
+### Serial Transmission
+
+![](./static/ch4_33.png)
+
+Serial transmission occurs in one of three ways: `asynchronous`, `synchronous`, and `isochronous`.
+
+##### Asynchronous Transmission
+Asynchronous transmission is so named because the timing of a signal is unimportant. Instead, information is received and translated by agreed upon patterns. patterns are based on grouping the bit stream into bytes.
+
+- In asynchronous transmission, we send 1 start bit (0) at the beginning and 1 or more stop bits (1s) at the end of each byte. There may be a gap between bytes.
+- Asynchronous here means "asynchronous at the byte level; but the bits are still synchronized; their durations are the same.
+
+![](./static/ch4_34.png)
+
+##### Synchronous Transmission
+In synchronous transmission, the bit stream is combined into longer "frames," which may contain multiple bytes. Each byte, however, is introduced onto the transmission link without a gap between it and the next one.
+
+- In synchronous transmission, we send bits one after another without start or stop bits or gaps. It is the responsibility of the receiver to group the bits.
+
+![](./static/ch4_35.png)
+
+##### Isochronous
+The isochronous transmission guarantees that the data arrive at a fixed rate.
+
+
+## Summary
+- Digital-to-digital conversion involves three techniques: line coding, block coding, and scrambling.
+- Line coding is the process of converting digital data to a digital signal.
+- We can roughly divide line coding schemes into five broad categories: unipolar, polar, bipolar, multilevel, and multitransition.
+- Block coding provides redundancy to ensure synchronization and inherent error detection. Block coding is normally referred to as roB/nB coding; it replaces each m-bit group with an n-bit group.
+- Scrambling provides synchronization without increasing the number of bits. Two common scrambling techniques are B8ZS and HDB3.
+- The most common technique to change an analog signal to digital data (digitization) is called pulse code modulation (PCM).
+- The first step in PCM is sampling. The analog signal is sampled every T<sub>s</sub> second, where T<sub>s</sub> is the sample interval or period. The inverse of the sampling interval is called the sampling rate or sampling frequency and denoted by f<sub>s</sub>, where f<sub>s</sub> = 1/T<sub>s</sub>. There are three sampling methods-ideal, natural, and
+flat-top.
+- According to the Nyquist theorem, to reproduce the original analog signal, one necessary condition is that the sampling rate be at least twice the highest frequency in the original signal.
+- Other sampling techniques have been developed to reduce the complexity of PCM. The simplest is delta modulation. PCM finds the value of the signal amplitude for each sample; DM finds the change from the previous sample.
+- While there is only one way to send parallel data, there are three subclasses of serial transmission: asynchronous, synchronous, and isochronous.
+- In asynchronous transmission, we send 1 start bit (0) at the beginning and 1 or more stop bits (1s) at the end of each byte.
+- In synchronous transmission, we send bits one after another without start or stop bits or gaps. It is the responsibility of the receiver to group the bits.
+- The isochronous mode provides synchronization for the entire stream of bits. In other words, it guarantees that the data arrive at a fixed rate.
