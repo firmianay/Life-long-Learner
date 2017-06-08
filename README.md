@@ -89,6 +89,7 @@ Data Communications and Networking 5th
 5. [Chapter 5: Analog Transmission](./data-communications-and-networking/chapter-5.md)
 6. [Chapter 6: Bandwidth Utilization: Multiplexing and Spectrum Spreading](./data-communications-and-networking/chapter-6.md)
 7. [Chapter 7: Transmission Media](./data-communications-and-networking/chapter-7.md)
+8. (-) [Chapter 8: Switching](./data-communications-and-networking/chapter-8.md)
 
 Diary
 ---
