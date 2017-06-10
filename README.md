@@ -90,7 +90,8 @@ Data Communications and Networking 5th
 6. [Chapter 6: Bandwidth Utilization: Multiplexing and Spectrum Spreading](./data-communications-and-networking/chapter-6.md)
 7. [Chapter 7: Transmission Media](./data-communications-and-networking/chapter-7.md)
 8. [Chapter 8: Switching](./data-communications-and-networking/chapter-8.md)
-9. (-) [Chapter 9: Introduction to Data-Link Layer](./data-communications-and-networking/chapter-9.md)
+9. [Chapter 9: Introduction to Data-Link Layer](./data-communications-and-networking/chapter-9.md)
+10. (-) [Chapter 10: Error Detection and Correction](./data-communications-and-networking/chapter-10.md)
 
 Diary
 ---
