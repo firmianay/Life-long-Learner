@@ -93,6 +93,7 @@ Data Communications and Networking 5th
 9. [Chapter 9: Introduction to Data-Link Layer](./data-communications-and-networking/chapter-9.md)
 10. [Chapter 10: Error Detection and Correction](./data-communications-and-networking/chapter-10.md)
 11. [Chapter 11: Data Link Control (DLC)](./data-communications-and-networking/chapter-11.md)
+12. [Chapter 12: Media Access Control (MAC)](./data-communications-and-networking/chapter-12.md)
 
 Diary
 ---
