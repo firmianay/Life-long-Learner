@@ -188,3 +188,50 @@ To make SONET backward-compatible with the current hierarchy, its frame design i
 
 
 ## ATM
+`Asynchronous Transfer Mode (ATM)` is a switched wide area network based on the `cell relay` protocol designed by the ATM forum and adopted by the ITU-T.
+
+### Design Goals
+Among the challenges faced by the designers of ATM, six stand out.
+1. Foremost is the need for a transmission system to optimize the use of high- data-rate transmission media, in particular optical fiber.
+2. The system must interface with existing systems and provide wide-area interconnectivity between them without lowering their effectiveness or requiring their replacement.
+3. The design must be implemented inexpensively so that cost would not be a barrier to adoption.
+4. The new system must be able to work with and support the existing telecommunications hierarchies.
+5. The new system must be connection-oriented to ensure accurate and predictable delivery.
+6. One objective is to move as many of the functions to hardware as possible and eliminate as many software functions as possible.
+
+### Architecture
+ATM is a cell-switched network. The user access devices, called the endpoints, are connected through a `user-to-network interface (UNI)` to the switches inside the network. The switches are connected through `network-to-network interfaces (NNIs)`.
+
+![](./static/ch14_43.png)
+
+##### Virtual Connection
+Connection between two endpoints is accomplished through transmission paths (TP), virtual paths (VP), and virtual circuits (VC).
+
+![](./static/ch14_44.png)
+
+##### Identifiers
+ATM uses a hierarchical identifier with two levels: a virtual-path identifier (VPI) and a virtual-circuit identifier (VCI).
+
+![](./static/ch14_45.png)
+
+##### Cells
+The basic data unit in an ATM network is called a cell.
+
+![](./static/ch14_46.png)
+
+##### Connection Establishment and Release
+ATM uses two types of connections: PVC and SVC:
+- `PVC`: A permanent virtual-circuit connection (PVC) is established between two endpoints by the network provider.
+- `SVC`: In a switched virtual-circuit connection (SVC), each time an endpoint wants to make a connection with another endpoint, a new virtual circuit must be established.
+
+##### Switching
+ATM uses switches to route the cell from a source endpoint to the destination endpoint. A switch routes the cell using both the VPIs and the VCIs.
+
+![](./static/ch14_47.png)
+
+##### ATM Layers
+![](./static/ch14_48.png)
+
+The ATM standard defines three layers. They are, from top to bottom, the application adaptation layer, the ATM layer, and the physical layer. The endpoints use all three layers while the switches use only the two bottom layers.
+
+![](./static/ch14_49.png)
