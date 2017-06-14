@@ -117,6 +117,12 @@ The exchange of data and control frames in time:
 ##### Network Allocation Vector
 When a station sends an RTS frame, it includes the duration of time that it needs to occupy the channel. The stations that are affected by this transmission create a timer called a `network allocation vector (NAV)` that shows how much time must pass before these stations are allowed to check the channel for idleness. Each time a station accesses the system and sends an RTS frame, other stations start their NAV.
 
+##### Collision During Handshaking
+Two or more stations may try to send RTS frames at the same time. These control frames may collide. However, because these is no mechanism for collision detection, the sender assumes there has been a collision if it has not received a CTS frame from the receiver.
+
+##### Hidden-Station Problem
+The solution to the hidden station problem is the use of the handshake frames (RTS and CTS).
+
 
 ## Controlled Access
 In `controlled access`, the stations consult one another to find which station has the right to send. There are three controlled-access methods: `reservation`, `polling`, and `token-passing`.
