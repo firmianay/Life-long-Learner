@@ -97,7 +97,8 @@ Data Communications and Networking 5th
 13. [Chapter 13: Wired LANs: Ethernet](./data-communications-and-networking/chapter-13.md)
 14. [Chapter 14: Other Wired Network](./data-communications-and-networking/chapter-14.md)
 15. [Chapter 15: Wireless LANs](./data-communications-and-networking/chapter-15.md)
-16. (-) [Chapter 16: Other Wireless Network](./data-communications-and-networking/chapter-16.md)
+16. [Chapter 16: Other Wireless Network](./data-communications-and-networking/chapter-16.md)
+17. (-) [Chapter 17: Connecting Devices and Virtual LANs](./data-communications-and-networking/chapter-17.md)
 
 Diary
 ---
