@@ -108,3 +108,35 @@ Solution:
 
 # So, first uninstall with pacman the pakages pacman -R and install with yaourt -S
 ```
+
+### Installing pacman () breaks dependency 'pacman-init'
+```
+[firmy@MiWiFi-R3L-srv ~]$ sudo pacman -Syu
+[sudo] password for firmy:
+:: Synchronizing package databases...
+ core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
+ extra is up to date        0.0   B  0.00B/s 00:00 [----------------------]   0%
+ community is up to date    0.0   B  0.00B/s 00:00 [----------------------]   0%
+ multilib is up to date     0.0   B  0.00B/s 00:00 [----------------------]   0%
+ archlinuxcn is up to date  0.0   B  0.00B/s 00:00 [----------------------]   0%
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: manjaro-system: installing pacman (5.0.2-1) breaks dependency 'pacman-init'
+```
+A manjaro install does not have a default mirrorlist. The mirrorlist is created by pacman-mirrors so pacman-mirrors is a serious and very vital of a manjaro installation.
+
+Solution:
+```
+# -g, --generate        Generate mirrorlist
+# -c, --country COUNTRY
+#                     Comma separated list of countries, from which mirrors will be used
+sudo pacman-mirrors -g -c China
+
+# -y, --refresh        download fresh package databases from the server
+#                      (-yy to force a refresh even if up to date)
+# -u, --sysupgrade     upgrade installed packages (-uu enables downgrades)
+sudo pacman -Syy
+sudo pacman -Syu
+```
