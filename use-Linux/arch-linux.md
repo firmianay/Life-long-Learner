@@ -80,7 +80,7 @@ vim ~/.gnupg/gpg.conf
 
 ### file owned by xxxx
 ```sh
-[firmy@MiWiFi-R1CL-srv ~]$ yaourt -Syu
+$ yaourt -Syu
 :: Synchronizing package databases...
  core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
  extra is up to date        0.0   B  0.00B/s 00:00 [----------------------]   0%
@@ -95,7 +95,7 @@ Solution:
 ```sh
 # The issue is related tp packages first installed by pacman and later trying to install same packages with yaourt
 # If update with pacman, there is no error
-[firmy@MiWiFi-R1CL-srv ~]$ sudo pacman -Syu
+$ sudo pacman -Syu
 [sudo] password for firmy:
 :: Synchronizing package databases...
  core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
@@ -110,8 +110,8 @@ Solution:
 ```
 
 ### Installing pacman () breaks dependency 'pacman-init'
-```
-[firmy@MiWiFi-R3L-srv ~]$ sudo pacman -Syu
+```sh
+$ sudo pacman -Syu
 [sudo] password for firmy:
 :: Synchronizing package databases...
  core is up to date         0.0   B  0.00B/s 00:00 [----------------------]   0%
@@ -127,8 +127,10 @@ error: failed to prepare transaction (could not satisfy dependencies)
 ```
 A manjaro install does not have a default mirrorlist. The mirrorlist is created by pacman-mirrors so pacman-mirrors is a serious and very vital of a manjaro installation.
 
+The error will occur if you are on a Manjaro installation but change to Arch mirrors.
+
 Solution:
-```
+```sh
 # -g, --generate        Generate mirrorlist
 # -c, --country COUNTRY
 #                     Comma separated list of countries, from which mirrors will be used
@@ -139,4 +141,33 @@ sudo pacman-mirrors -g -c China
 # -u, --sysupgrade     upgrade installed packages (-uu enables downgrades)
 sudo pacman -Syy
 sudo pacman -Syu
+```
+
+### filesystem: /etc/os-release exists in filesystem
+```sh
+$ sudo pacman -Syu
+
+error: failed to commit transaction (conflicting files)
+filesystem: /etc/os-release exists in filesystem
+Errors occurred, no packages were upgraded.
+```
+
+After updating mirrorlist, the error occurred. It seems as something is understood as new but has the same filename with what it is expected to replace.
+```sh
+$ pacman -Qo /etc/os-release
+error: No package owns /etc/os-release
+$ ls -al /etc/os-release
+lrwxrwxrwx 1 root root 21 Apr 11 18:34 /etc/os-release -> /usr/lib/os-release
+$ ls -al /usr/lib/os-release
+-rw-r--r-- 1 root root 212 Mar 27 05:57 /usr/lib/os-release
+$ pacman -Qo /usr/lib/os-release
+/usr/lib/os-release is owned by filesystem 2017.03-2
+```
+So `/etc/os-release` is a symlink to `/usr/lib/or-release`. You can remove it and do the update/upgrade.
+
+Solution:
+```sh
+$ sudo mv /etc/os-release /etc/os-release.old
+# or sudo rm /etc/os-release
+$ sudo pacman -Syu
 ```
