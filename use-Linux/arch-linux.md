@@ -46,6 +46,57 @@ Note that you must be a license administrator to download an ISO archive of the 
 # rm -R /run/media/mathworks
 ```
 
+### Black Manjaro (install Blackarch tools)
+BlackArch Linux is an Arch Linux-based penetration testing distribution for penetration testers and security researchers. The repository contains 1805 tools. We now install those tools on top of Manjaro.
+```sh
+# Run https://blackarch.org/strap.sh as root and follow the instructions.
+$ curl -O https://blackarch.org/strap.sh
+
+# The SHA1 sum should match: 34b1a3698a4c971807fb1fe41463b9d25e1a4a09
+$ sha1sum strap.sh
+
+# Set execute bit
+$ chmod +x strap.sh
+
+# Run strap.sh
+$ sudo ./strap.sh
+You may now install tools from the blackarch repository.
+
+# To list all of the available tools, run
+$ sudo pacman -Sgg | grep blackarch | cut -d' ' -f2 | sort -u
+
+# To install all of the tools, run
+$ sudo pacman -S blackarch
+
+# To install a category of tools, run
+$ sudo pacman -S blackarch-<category>
+
+# To see the blackarch categories, run
+$ sudo pacman -Sg | grep blackarch
+```
+As part of an alternative method of installation, you can build the blackarch packages from source. You can find the PKGBUILDs on github. To build the entire repo, you can use the blackman tool.
+```sh
+# First, you must install blackman. If the BlackArch package repository is setup on your machine,
+# you can install blackman like:
+$ sudo pacman -S blackman
+
+# Download, compile and install package:
+$ sudo blackman -i <package>
+
+# Download, compile and install whole category
+$ sudo blackman -g <group>
+
+# Download, compile and install all BlackArch tools
+$ sudo blackman -a
+
+# To list blackarch categories
+$ blackman -l
+
+# To list category tools
+$ blackman -p <category>
+```
+
+
 ## Error Handling
 ### PGP signatures could not be verified
 ```sh
