@@ -162,3 +162,107 @@ Five special addresses that are used for special purposes:
 - `multicast addresses`: 224.0.0.0/4 is reserved for multicast addresses.
 
 ### Dynamic Host Configuration Protocol (DHCP)
+Address assignment in an organization can be done automatically using the `Dynamic Host Configuration Protocol (DHCP)`. DHCP is an application-layer program, using the client-server paradigm, that actually helps TCP/IP at the network layer.
+
+##### DHCP Message Foramt
+DHCP is client-server protocol in which the client sends a request message and the server returns a response message.
+
+![](./static/ch18_25.png)
+
+The server uses a number, called a `magic cookie`, in the format of an IP address with the value of 99.130.83.99. When the client finishes reading the message, it looks for this magic cookie. If present, the next 60 bytes are options.
+
+![](./static/ch18_26.png)
+
+##### DHCP Operation
+![](./static/ch18_27.png)
+
+1. The joining host creates a `DHCPDISCOVER` message in which only the transaction ID field is set to a random number. No other field can be set because the host has no knowledge with which to do so. This message is encapsulated in a UDP user datagram with the source port set to 68 and the destination port set to 67. The user datagram is encapsulated in an IP datagram with the source address set to **0.0.0.0** (this host) and the destination address set to **255.255.255.255** (broadcast address). The reason is that the joining host knows neither its own address nor the server address.
+2. The DHCP servers respond with a `DHCPOFFER` message in which the your address field defines the offered IP address for the joining host and the server address field includes the IP address of the server. The message also includes the lease time for which the host can keep the IP address. This message is encapsulated in a user datagram with the same port numbers, but in the reverse order. The user datagram in turn is encapsulated in a datagram with the server address as the source IP address, but the destination address is a broadcast address, in which the server allows other DHCP servers to receive the offer and give a better offer if they can.
+3. The joining host receives one or more offers and selects the best of them. The joining host then sends a `DHCPREQUEST` message to the server that has given the best offer. The fields with known value are set. The message is encapsulated in a user datagram with port numbers as the first message. The user datagram is encapsulated in an IP datagram with the source address set to the new client address, but the destination address still is set to the broadcast address to let the other servers know that their offer was not accepted.
+4. Finally, the selected server responds with a `DHCPACK` message to the client if the offered IP address is valid. If the server cannot keep its offer, the server sends a DHCPNACK message and the client needs to repeat the process. This message is also broadcast to let other servers know that the request is accepted or rejected.
+
+##### Transition States
+![](./static/ch18_28.png)
+
+### Network Address Resolution (NAT)
+A technology that can provide the mapping between the private and universal addresses, and at the same time support virtual private networks is `Network Address Translation (NAT)`. The technology allows a site to use a set of private addresses for internal communication and a set of global Internet addresses for communication with the rest of the world. The site must have only one connection to the global Internet through a NAT-capable router that runs NAT software.
+
+![](./static/ch18_29.png)
+
+##### Address Translation
+![](./static/ch18_30.png)
+
+##### Translation Table
+The problem how does the NAT router know the destination address for a packet coming from the Internet is solved if the NAT router has a translation table.
+
+**Using One IP Address**: In this strategy, communication must always be initiated by the private network. The NAT mechanism described requires that the private network start the communication.
+
+![](./static/ch18_31.png)
+
+**Using a Pool of IP Addresses**: The use of only one global address by the NAT router allows only one private-network host to access a given external host. To remove this restriction, the NAT router can use a pool of global addresses.
+
+**Using Both IP Addresses and Port Addresses**: To allow a many-to-many relationship between private-network hosts and external server programs, we need more information in the translation table.
+
+![](./static/ch18_f1.png)
+
+
+## Forwarding of IP Packets
+When IP is used as a connectionless protocol, forwarding is based on the destination address of the IP datagram; when the IP is used as a connection-oriented protocol, forwarding is based on the label attached to an IP datagram.
+
+### Forwarding Based on Destination Address
+A classless forwarding table needs to include four pieces of information: the mask, the network address, the interface number, and the IP address of the next router. The job of the forwarding module is to search the table, row by row. In each row, the *n* leftmost bits of the destination address (prefix) are kept and the rest of the bits (suffix) are set to 0s. If the resulting address (which we call the network address), matches with the address in the first column, the information in the next two columns is extracted; otherwise the search continues. Normally, the last row has a default value in the first column, which indicates all destination addresses that did not match the previous rows.
+
+![](./static/ch18_32.png)
+
+##### Address Aggregation
+This is called address aggregation because the blocks of addresses for four organizations are aggregated into one larger block.
+
+![](./static/ch18_34.png)
+
+**Longest Mask Matching**: If one of the organizations in the previous figure is not geographically close to the other three, routing in classless addressing uses `longest mask matching` principle. This principle states that the forwarding table is sorted from the longest mask to the shortest mask.
+
+![](./static/ch18_35.png)
+
+**Hierarchical Routing**: To solve the problem of gigantic forwarding tables, we can create a sense of hierarchy in the forwarding tables.
+
+![](./static/ch18_36.png)
+
+### Forwarding Based on Label
+- In a connectionless network (datagram approach), a router forwards a packet based on the destination address in the header of the packet.
+ - Routing is normally based on searching the contents of a table.
+- In a connection-oriented network (virtual-circuit approach), a switch forwards a packet based on the label attached to the packet.
+ - Switching can be done by accessing a table using an index.
+
+![](./static/ch18_37.png)
+
+![](./static/ch18_38.png)
+
+##### Multi-Protocol Label Switching (MPLS)
+A MPLS can behave like a router and a switch. When behaving like a router, MPLS can forward the packet based on the destination address; when behaving like a switch, it can forward a packet based on the label.
+
+**A New Header**: To simulate connection-oriented switching using a protocol like IP, the first thing that is needed is to add a field to the packet that carries the label. The IPv4 packet format does not allow this extension. The solution is to encapsulate the IPv4 packet in an MPLS packet. The whole IP packet is encapsulated as the payload in an MPLS packet and an MPLS header is added.
+
+![](./static/ch18_39.png)
+
+The MPLS header is actually a stack of subheaders that is used for multilevel hierarchical switching.
+
+![](./static/ch18_40.png)
+
+The following is a brief description of each field:
+- `Label`: This 20-bit field defines the label that is used to index the forwarding table in the router.
+- `Exp`: This 3-bit field is reserved for experimental purposes.
+- `S`: The one-bit stack field defines the situation of the subheader in the stack. When the bit is 1, it means that the header is the last one in the stack.
+- `TTL`: This 8-bit field is similar to the TTL field in the IP datagram. Each visited router decrements the value of this field. When it reaches zero, the packet is discarded to prevent looping.
+
+
+## Summary
+- The network layer in the Internet provides services to the transport layer and receives services from the network layer.
+- The main services provided by the network layer are packetizing and routing the packet from the source to the destination.
+- The network layer in the Internet does not seriously address other services such as flow, error, or congestion qontrol.
+- One of the main duties of the network layer is to provide packet switching.
+- There are two approaches to packet switching: datagram approach and virtual-circuit approach. The first is used in a connectionless network; the second, in a connection-oriented network. Currently, the network layer is using the first approach, but the tendency is to move to the second.
+- Performance of the network layer is measured in terms of delay, throughput, and packet loss.
+- Congestion control is a mechanism that can be used to improve the performance. Although congestion control is not directly implemented at the network layer, the discussior can help us to understand its indirect implementation and also to understand the congestion control implemented at the transport layer.
+- One of the main issues at the network layer is addressing. In this chapter, we discussed addressing in IPv4 (the current version). We explained the address space of the IPv4 and two address distribution mechanisms: classful and classless addressing. Although the first is deprecated, it helps us to understand the second. In classful addressing the whole address space is divided into five fixed-size classes. In classless addressing, the address space is divided into variable-size blocks based on the demand.
+- Some problems of address shortage in the current version can be temporarily alleviated using DHCP and NAT protocols.
+- The section on forwarding helps to understand how routers forward packets. Two approaches are used for this purpose. The first approach, which is used in a connectionless network such as the current Internet, is based on the destination address of the packet. The second approach, which can be used if the Internet is changed to a connection-oriented network, uses the labels in the packets.
