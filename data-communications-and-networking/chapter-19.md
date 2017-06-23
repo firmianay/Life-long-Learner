@@ -77,3 +77,66 @@ There are three security issues that are particularly applicable to the IP proto
 - `Origin Authentication`
 
 ## ICMPv4
+1. The IPv4 has no error-reporting or error-correcting mechanism.
+2. The IP protocol also lacks a mechanism for host and management queries.
+
+The `Internet Control Management Protocol version 4 (ICMPv4)` has been designed to compensate for the above two deficiencies. It is a companion to the IP protocol, its messages are first encapsulated inside IP datagrams before going to the lower layer. When an IP datagram encapsulates an ICMP message, the value of the protocol field in the IP datagram is set to 1 to indicate that the IP payroll is an ICMP message.
+
+### Messages
+ICMP messages are divided into two broad categories: *error-reporting messages* and *query messages*.
+- `error-reporting messages`: report problems that a router or a host may encounter when it processes an IP packet.
+- `query messages`: occur in pairs, help a host or a network manager get specific information from a router or another host.
+
+An ICMP message has an 8-byte header and a variable-size data section. Although the general format of the header is different for each message type, the first 4 bytes are common to all.
+
+![](./static/ch19_8.png)
+
+- The first field, ICMP type, defines the type of the message.
+- The code field specifies the reason for the particular message type.
+- The last common field is the checksum field.
+- The rest of the header is specific for each message type.
+- The data section in error messages carries information for finding the original packet that had the error. In query messages, the data section carries extra information based on the type of query.
+
+##### Error Reporting Messages
+The following are important points about ICMP error messages:
+- No ICMP error message will be generated in response to a datagram carrying an ICMP error message.
+- No ICMP error message will be generated for a fragmented datagram that is not the first fragment.
+- No ICMP error message will be generated for a datagram having a multicast address.
+- No ICMP error message will be generated for a datagram having a special addres1s such as 127.0.0.0 or 0.0.0.0.
+
+![](./static/ch19_9.png)
+
+Note that all error messages contain a data section that includes the IP header of the original datagram plus the first 8 bytes of data in that datagram.
+- The original datagram header is added to give the original source, which receives the error message, information about the datagram itself.
+- The 8 bytes of data are included because the they provide information about the port numbers (UDP and TCP) and sequence number (TCP).
+
+### ICMP Checksum
+In ICMP the checksum is calculated over the entire message (header and data).
+
+
+## Mobile IP
+### Addressing
+##### Stationary Hosts
+The IP addresses are designed to work with stationary hosts because part of the address defines the network to which the host is attached.
+
+##### Mobile Hosts
+When a host moves from one network to another, the IP addressing structure needs to
+be modified.
+
+Mobile IP has two addresses for a mobile host: one home address and one care-of address. The home address is permanent; the care-of address changes as the mobile host moves from one network to another.
+
+![](./static/ch19_12.png)
+
+### Agents
+To make the change of address transparent to the rest of the Internet requires a `home agent` and a `foreign agent`.
+
+![](./static/ch19_13.png)
+
+- `Home Agent`: The home agent is usually a router attached to the home network of the mobile host. The home agent acts on behalf of the mobile host when a remote host sends a packet to the mobile host. The home agent receives the packet and sends it to the foreign agent.
+- `Foreign Agent`: The foreign agent is usually a router attached to the foreign network. The foreign agent receives and delivers packets sent by the home agent to the mobile host.
+- When the mobile host and the foreign agent are the same, the care-of address is called a `collocated care-of address`.
+
+### Three Phases
+To communicate with a remote host, a mobile host goes through three phases: `agent discovery`, `registration`, and `data transfer`.
+
+![](./static/ch19_14.png)
