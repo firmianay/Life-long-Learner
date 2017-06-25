@@ -101,7 +101,8 @@ Data Communications and Networking 5th
 17. [Chapter 17: Connecting Devices and Virtual LANs](./data-communications-and-networking/chapter-17.md)
 18. [Chapter 18: Introduction to Network Layer](./data-communications-and-networking/chapter-18.md)
 19. [Chapter 19: Network-Layer Protocols](./data-communications-and-networking/chapter-19.md)
-20. (-) [Chapter 20: Unicast Routing](./data-communications-and-networking/chapter-20.md)
+20. [Chapter 20: Unicast Routing](./data-communications-and-networking/chapter-20.md)
+21. (-) [Chapter 21: Multicast Routing](./data-communications-and-networking/chapter-21.md)
 
 Diary
 ---
