@@ -31,7 +31,7 @@ Reverse Engineering for Beginners
 
 Binary Security
 ---
-1. (-) [IOLI crackme Writeup](./binary-security/IOLI-crackme-Writeup.md)
+1. [IOLI crackme Writeup](./binary-security/IOLI-crackme-Writeup.md)
 
 Misc
 ---
