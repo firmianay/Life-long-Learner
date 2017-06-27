@@ -8,13 +8,6 @@ Items marked with `(-)` are still works in progress.
 
 Items marked with `(el)` means external links.
 
-Machine Learning Foundations (NTU)
----
-1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
-2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
-3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
-4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
-5. [Homework 1](./ML-foundations/hw1_Sol.md)
 
 Web Application Security
 ---
@@ -35,6 +28,10 @@ Reverse Engineering for Beginners
 ---
 0. [Auto script for learner](./RE4B/auto.sh)
 1. [Noise in stack](./RE4B/noise-in-stack.md)
+
+Binary Security
+---
+1. (-) [IOLI crackme Writeup](./binary-security/IOLI-crackme-Writeup.md)
 
 Misc
 ---
@@ -105,6 +102,14 @@ Data Communications and Networking 5th
 21. [Chapter 21: Multicast Routing](./data-communications-and-networking/chapter-21.md)
 22. (-) [Chapter 22: Next Generation IP](./data-communications-and-networking/chapter-22.md)
 23. (-) [Chapter 23: Introduction to Transport Layer](./data-communications-and-networking/chapter-23.md)
+
+Machine Learning Foundations (NTU)
+---
+1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
+2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
+3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
+4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
+5. [Homework 1](./ML-foundations/hw1_Sol.md)
 
 Diary
 ---
