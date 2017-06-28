@@ -222,3 +222,19 @@ $ sudo mv /etc/os-release /etc/os-release.old
 # or sudo rm /etc/os-release
 $ sudo pacman -Syu
 ```
+
+### XXXX exists in filesystem
+When I install pwntools, the error occurred as:
+```
+error: failed to commit transaction (conflicting files)
+python2-markupsafe: /usr/lib/python2.7/site-packages/MarkupSafe-1.0-py2.7.egg-info/PKG-INFO exists in filesystem
+python2-markupsafe: /usr/lib/python2.7/site-packages/MarkupSafe-1.0-py2.7.egg-info/SOURCES.txt exists in filesystem
+python2-markupsafe: /usr/lib/python2.7/site-packages/MarkupSafe-1.0-py2.7.egg-info/dependency_links.txt exists in filesystem
+```
+We can install the package as follows:
+```
+pacman -S pwntools --force
+```
+>--force          force install, overwrite conflicting files
+
+But it is strongly advised to avoid the `--force` or `-f` switch as it is not safe.
