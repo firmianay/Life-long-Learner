@@ -9,6 +9,10 @@ Items marked with `(-)` are still works in progress.
 Items marked with `(el)` means external links.
 
 
+My Tutorials
+---
+1. [Write Hat Python](./my-tutorials/writehat-python/)
+
 Web Application Security
 ---
 1. [XSS for beginners](./web-application-security/XSS-for-beginners.md)

@@ -127,7 +127,7 @@ We normally like to know three pieces of information about the block to which th
 The address mask is a 32-bit number in which the *n* leftmost bits are set to 1s and the rest of the bits (*32 - n*) are set to 0s.
 
 It can be used by a computer program to extract the information in a block, using the three bit-wise operations NOT, AND, and OR.
-1. The nUfber of addresses in the block N = NOT (mask) + 1.
+1. The number of addresses in the block N = NOT (mask) + 1.
 2. The first address in the block = (Any address in the block) AND (mask).
 3. The last address in the block = (Any address in the block) OR [(NOT (mask)].
 
