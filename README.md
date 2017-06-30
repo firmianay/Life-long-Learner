@@ -11,7 +11,7 @@ Items marked with `(el)` means external links.
 
 My Tutorials
 ---
-1. [Write Hat Python](./my-tutorials/writehat-python/)
+1. [Write Hat Python](https://github.com/firmianay/Wite-Hat-Python)
 
 Web Application Security
 ---
