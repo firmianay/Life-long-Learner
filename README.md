@@ -37,6 +37,7 @@ Binary Security
 ---
 1. [IOLI crackme Writeup](./binary-security/IOLI-crackme-Writeup.md)
 2. (-) [Pwnable.kr Toddler's Bottle Writeup](./binary-security/Pwnable.kr-Toddler's-Bottle-writeup.md)
+3. (-) [HITCON-Training Writeup](./binary-security/HITCON-training-writeup.md)
 
 Misc
 ---

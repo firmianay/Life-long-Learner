@@ -45,7 +45,7 @@ Modify the program logic so that any password can be OK.
 
 I opened the binary with `radare2` using `-w` to be in *write* mode, allowing radare2 to write data to the file.
 ```
-bin-linux$ radare2 -d crackme0x00
+bin-linux$ radare2 -w crackme0x00
 
 [0xf7777b30]> s main
 [0x08048414]> pd 32
