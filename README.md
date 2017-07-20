@@ -42,7 +42,7 @@ Binary Security
 Misc
 ---
 1. (-) [Infosec Favorites](./misc/infosec-favorites.md)
-2. [LaTex in GitHub](./misc/LaTex-in-github.md)
+2. [GitHub Tips](misc/github-tips.md)
 
 Use Linux
 ---
