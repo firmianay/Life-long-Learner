@@ -1,5 +1,18 @@
 # Arch Linux
 
+- [Install](#install)
+  - [clean up useless software](#clean-up-useless-software-manjaro)
+  - [software source settings](#software-source-settings)
+  - [install MATLAB using an ISO image](#install-matlab-using-an-iso-image)
+  - [Black Manjaro (install Blackarch tools)](#black-manjaro-install-blackarch-tools)
+- [Error Handling](#error-handling)
+  - [PGP signatures could not be verified](#pgp-signatures-could-not-be-verified)
+  - [file owned by xxxx](#file-owned-by-xxxx)
+  - [Installing pacman () breaks dependency 'pacman-init'](#installing-pacman-breaks-dependency-pacman-init)
+  - [filesystem: /etc/os-release exists in filesystem](#filesystem-etc-os-release-exists-in-filesystem)
+  - [XXXX exists in filesystem](#xxxx-exists-in-filesystem)
+
+
 ## Install
 ### clean up useless software (manjaro)
 ```sh
