@@ -41,6 +41,7 @@ Binary Security
 4. (-) [Jarvis OJ Writeup](./binary-security/Jarvisoj-writeup.md)
 5. (-) [Reversing.Kr Writeup](./binary-security/Reversingkr-writeup.md)
 6. [Reverse Engineering Learning: X86 and X64](./binary-security/RE_Learning_X86_X64.md)
+7. [Reverse Engineering Learning: ARM](./binary-security/RE_Learning_ARM.md)
 
 Misc
 ---
