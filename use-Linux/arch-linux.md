@@ -109,6 +109,14 @@ $ blackman -l
 $ blackman -p <category>
 ```
 
+If you got an error:
+```
+$ sudo ./strap.sh
+[+] installing blackarch keyring...
+[-] ERROR: invalid keyring signature. please stop by irc.freenode.net/blackarch
+```
+Try to change `-gpg --keyserver http://pgp.mit.edu --recv-keys` to `-gpg --keyserver http://pgp.mit.edu --recv-keys`. Or do the reverse thing.
+
 
 ## Error Handling
 ### PGP signatures could not be verified
