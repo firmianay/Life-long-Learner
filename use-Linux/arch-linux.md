@@ -11,6 +11,7 @@
   - [Installing pacman () breaks dependency 'pacman-init'](#installing-pacman-breaks-dependency-pacman-init)
   - [filesystem: /etc/os-release exists in filesystem](#filesystem-etc-os-release-exists-in-filesystem)
   - [XXXX exists in filesystem](#xxxx-exists-in-filesystem)
+  - [shadowsocks undefined symbol: EVP_CIPHER_CTX_cleanup](#shadowsocks-undefined-symbol-evpcipherctxcleanup)
 
 
 ## Install
@@ -259,3 +260,60 @@ pacman -S pwntools --force
 >--force          force install, overwrite conflicting files
 
 But it is strongly advised to avoid the `--force` or `-f` switch as it is not safe.
+
+### shadowsocks undefined symbol: EVP_CIPHER_CTX_cleanup
+When I updated `openssl`, the Python version of shadowsocks can't work, so now I try to fix it:
+```
+$ sslocal -c shadowsocks.json    
+INFO: loading config from shadowsocks.json
+2017-09-08 12:03:57 INFO     loading libcrypto from libcrypto.so.1.1
+Traceback (most recent call last):
+  File "/usr/bin/sslocal", line 11, in <module>
+    load_entry_point('shadowsocks==2.8.2', 'console_scripts', 'sslocal')()
+  File "/usr/lib/python3.6/site-packages/shadowsocks/local.py", line 39, in main
+    config = shell.get_config(True)
+  File "/usr/lib/python3.6/site-packages/shadowsocks/shell.py", line 262, in get_config
+    check_config(config, is_local)
+  File "/usr/lib/python3.6/site-packages/shadowsocks/shell.py", line 124, in check_config
+    encrypt.try_cipher(config['password'], config['method'])
+  File "/usr/lib/python3.6/site-packages/shadowsocks/encrypt.py", line 44, in try_cipher
+    Encryptor(key, method)
+  File "/usr/lib/python3.6/site-packages/shadowsocks/encrypt.py", line 83, in __init__
+    random_string(self._method_info[1]))
+  File "/usr/lib/python3.6/site-packages/shadowsocks/encrypt.py", line 109, in get_cipher
+    return m[2](method, key, iv, op)
+  File "/usr/lib/python3.6/site-packages/shadowsocks/crypto/openssl.py", line 76, in __init__
+    load_openssl()
+  File "/usr/lib/python3.6/site-packages/shadowsocks/crypto/openssl.py", line 52, in load_openssl
+    libcrypto.EVP_CIPHER_CTX_cleanup.argtypes = (c_void_p,)
+  File "/usr/lib/python3.6/ctypes/__init__.py", line 361, in __getattr__
+    func = self.__getitem__(name)
+  File "/usr/lib/python3.6/ctypes/__init__.py", line 366, in __getitem__
+    func = self._FuncPtr((name_or_ordinal, self))
+AttributeError: /usr/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup
+```
+
+Let's see the OpenSSL update history:
+> EVP_CIPHER_CTX was made opaque in OpenSSL 1.1.0. As a result, EVP_CIPHER_CTX_reset() appeared and EVP_CIPHER_CTX_cleanup() disappeared. EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
+
+Before update:
+```
+$ openssl version
+OpenSSL 1.0.2g  1 May 2016
+```
+After update:
+```
+$ openssl version             
+OpenSSL 1.1.0f  25 May 2017
+```
+
+So, we just replace `EVP_CIPHER_CTX_cleanup()` with `EVP_CIPHER_CTX_reset()` and then shadowsocks will work again.
+```
+$ sudo vim /usr/lib/python3.6/site-packages/shadowsocks/crypto/openssl.py
+```
+Then change the following two `EVP_CIPHER_CTX_cleanup` to `EVP_CIPHER_CTX_reset`, which on line 52 and line 111.
+```
+libcrypto.EVP_CIPHER_CTX_cleanup.argtypes = (c_void_p,)
+
+libcrypto.EVP_CIPHER_CTX_cleanup(self._ctx)
+```
