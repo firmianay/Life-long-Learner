@@ -9,10 +9,6 @@ Items marked with `(-)` are still works in progress.
 Items marked with `(el)` means external links.
 
 
-My Tutorials
----
-1. [White Hat Python](https://github.com/firmianay/White-Hat-Python)
-
 Web Application Security
 ---
 1. [XSS for beginners](./web-application-security/XSS-for-beginners.md)
@@ -110,6 +106,11 @@ Machine Learning Foundations (NTU)
 3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
 4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 5. [Homework 1](./ML-foundations/hw1_Sol.md)
+
+Translation
+---
+1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
+2. [LibOFX Tag Parsing Code Execution Vulnerability](LibOFX Tag Parsing Code Execution Vulnerability.rar)
 
 Diary
 ---
