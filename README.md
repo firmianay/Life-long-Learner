@@ -112,6 +112,7 @@ Translation
 1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
 2. [LibOFX Tag Parsing Code Execution Vulnerability](./translated/LibOFX Tag Parsing Code Execution Vulnerability.rar)
 3. [Mistreating Triton](./translated/Mistreating Triton.rar)
+4. [NFS](./translated/NFS.rar)
 
 Diary
 ---
