@@ -109,10 +109,34 @@ Machine Learning Foundations (NTU)
 
 Translation
 ---
+#### published
+1. [使用 WinAFL 对 MSXML6 库进行模糊测试](http://bobao.360.cn/learning/detail/4443.html)
+2. [看我如何进行Python对象注入利用](http://bobao.360.cn/learning/detail/4462.html)
+3. [Windows内核池喷射的乐趣](http://bobao.360.cn/learning/detail/4439.html)
+4. [堆利用——UAF之殇](http://bobao.360.cn/learning/detail/4476.html)
+
+#### not published
 1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
 2. [LibOFX Tag Parsing Code Execution Vulnerability](./translated/LibOFX Tag Parsing Code Execution Vulnerability.rar)
 3. [Mistreating Triton](./translated/Mistreating Triton.rar)
 4. [NFS](./translated/NFS.rar)
+5. [Exploiting insecure file extraction in Python for code execution](./translated/Exploiting insecure file extraction in Python for code execution.rar)
+6. [hooking luajit](./translated/hooking luajit.rar)
+7. [Reversing DirtyC0W](./translated/Reversing DirtyC0W.rar)
+
+#### LCTT
+1. [使用 Headless Chrome 进行自动化测试](https://linux.cn/article-8861-1.html)
+2. [Headless Chrome 入门](https://linux.cn/article-8850-1.html)
+3. [六个优雅的 Linux 命令行技巧](https://linux.cn/article-8820-1.html)
+4. [如何恢复丢弃的 git stash 数据](https://linux.cn/article-8819-1.html)
+5. [在 Linux 中分割和重组文件](https://linux.cn/article-8818-1.html)
+6. [GitHub 简易入门指南](https://linux.cn/article-8814-1.html)
+7. [文件系统层次标准（FHS）简介](https://linux.cn/article-8757-1.html)
+8. [LKU：一套在 Ubuntu/LinuxMint 上编译、安装和更新最新内核的 Shell 脚本](https://linux.cn/article-8739-1.html)
+9. [使用 Kdump 检查 Linux 内核崩溃](https://linux.cn/article-8737-1.html)
+10. [网络分析利器：在 Ubuntu 16.04 上安装 Bro](https://linux.cn/article-8736-1.html)
+11. [超过七万台 memcached 服务器面临危险](https://linux.cn/article-8731-1.html)
+12. [一周工作所用的日常 Git 命令](https://linux.cn/article-8841-1.html)
 
 Diary
 ---

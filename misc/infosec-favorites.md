@@ -12,10 +12,19 @@ I think blind collection does not make sense, here only list some I've seen and 
 ## Books
 
 ## Papers
+### 2007
+1. [New frontiers of reverse engineering](http://cipressosjsu.info/CS266/pdf/new_frontiers_of_reverse_engineering.pdf)
+ - [review](https://github.com/firmianay/Paper-Reviews/blob/master/Binary_Code_Analysis/New_Frontiers_of_Reverse_Engineering/review.md)
+
 ### 2010
 1. [All You Ever Wanted to Know about Dynamic Taint Analysis and Forward Symbolic Execution (but Might Have Been Afraid to Ask)](http://www.cs.umd.edu/class/spring2014/cmsc631/papers/schwartz-symbolic-execution.pdf)
  - [review](https://github.com/firmianay/Paper-Reviews/blob/master/Binary_Code_Analysis/All_You_Ever_Wanted_to_Know_about_Dynamic_Taint_Analysis_and_Forward_Symbolic_Execution/review.md)
  - [slides](https://edmcman.github.io/pres/oakland10.pdf)
+
+### 2011
+1. [Achievements and Challenges in Software Reverse Engineering](https://dl.acm.org/citation.cfm?id=1924451)
+ - [review](https://github.com/firmianay/Paper-Reviews/blob/master/Binary_Code_Analysis/Achievements_and_Challenges_in_Software_Reverse_Engineering/review.md)
+ - [slides](http://homepages.dcc.ufmg.br/~mtov/mes/08%20-%20Achievements%20and%20challenges%20in%20reverse%20eng.pdf)
 
 ### 2013
 1. [MAIL: Malware Analysis Intermediate Language: a step towards automating and optimizing malware detection](http://www.uvic.ca/engineering/ece/isot/assets/docs/alam-paper-sin-2013.pdf)
@@ -27,7 +36,7 @@ I think blind collection does not make sense, here only list some I've seen and 
  - [source](https://github.com/zhengmin1989/DroidAnalytics)
 
 ### 2016
-1. [MaMaDroid: Detecting Android malware by building Markov chains of behavorial models](https://arxiv.org/pdf/1612.04433.pdf)
+1. [MaMaDroid: Detecting Android malware by building Markov chains of behavioral models](https://arxiv.org/pdf/1612.04433.pdf)
  - [review](https://github.com/firmianay/Paper-Reviews/blob/master/Android_Security/MaMaDroid:Detecting_Android_Malware_by_Building_Markov_Chains_of_Behavioral_Models/review.md)
  - [slides](https://www.slideshare.net/EmilianoDC/mamadroid-detecting-android-malware-by-building-markov-chains-of-behavioral-models?qid=3dd36cff-565e-43b6-b4f2-776f91dadff0&v=&b=&from_search=1)
 2. [Android_Malware_Classification_by_Applying_Online_Machine_Learning](https://link.springer.com/chapter/10.1007/978-3-319-47217-1_8/fulltext.html)
