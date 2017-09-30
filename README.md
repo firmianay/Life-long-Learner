@@ -117,12 +117,12 @@ Translation
 
 #### not published
 1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
-2. [LibOFX Tag Parsing Code Execution Vulnerability](./translated/LibOFX Tag Parsing Code Execution Vulnerability.rar)
-3. [Mistreating Triton](./translated/Mistreating Triton.rar)
+2. [LibOFX Tag Parsing Code Execution Vulnerability](./translated/LibOFX_Tag_Parsing_Code_Exection_Vulnerability.rar)
+3. [Mistreating Triton](./translated/Mistreating_Triton.rar)
 4. [NFS](./translated/NFS.rar)
-5. [Exploiting insecure file extraction in Python for code execution](./translated/Exploiting insecure file extraction in Python for code execution.rar)
-6. [hooking luajit](./translated/hooking luajit.rar)
-7. [Reversing DirtyC0W](./translated/Reversing DirtyC0W.rar)
+5. [Exploiting insecure file extraction in Python for code execution](./translated/Exploiting_insecure_file_extraction_in_Python_for_code_execution.rar)
+6. [hooking luajit](./translated/hooking_luajit.rar)
+7. [Reversing DirtyC0W](./translated/Reversing_DirtyC0W.rar)
 
 #### LCTT
 1. [使用 Headless Chrome 进行自动化测试](https://linux.cn/article-8861-1.html)
