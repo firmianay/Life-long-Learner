@@ -49,6 +49,26 @@ Use Linux
 ---
 1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
 
+Languages
+---
+1. [C](./Languages/C)
+  - [The C Programming Language 2nd](./Languages/C/The-C-Programming-Language-2nd)
+  - [C Primer Plus](./Languages/C/C-Primer-Plus-5th)
+2. [C++](./Languages/C++)
+  - [C++ Primer](./Languages/C++/C++-Primer-5th)
+3. [Python](./Languages/Python)
+  - Python2
+    - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
+  - Python3
+    - [Core Python Programming 3rd](./Languages/Python/py2/Core-Python-Programming-3rd)
+4. [Assembly](./Languages/Assembly)
+  - x86
+  - ARM
+
+Paper Review
+---
+- [Paper Reviews](https://github.com/firmianay/Paper-Reviews)
+
 Linux Kernel Development 3rd
 ---
 1. [Chapter 1: Introduction to the Linux Kernel](./linux-kernel-development/chapter-1.md)
@@ -68,10 +88,6 @@ Linux Kernel Development 3rd
 15. [Chapter 15: The Process Address Space](./linux-kernel-development/chapter-15.md)
 16. [Chapter 16: The Page Cache and Page Writeback](./linux-kernel-development/chapter-16.md)
 17. (-) [Chapter 17: Devices and Modules](./linux-kernel-development/chapter-17.md)
-
-Paper Review
----
-- [Paper Reviews](https://github.com/firmianay/Paper-Reviews)
 
 Data Communications and Networking 5th
 ---
