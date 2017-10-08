@@ -12,6 +12,7 @@
   - [filesystem: /etc/os-release exists in filesystem](#filesystem-etc-os-release-exists-in-filesystem)
   - [XXXX exists in filesystem](#xxxx-exists-in-filesystem)
   - [shadowsocks undefined symbol: EVP_CIPHER_CTX_cleanup](#shadowsocks-undefined-symbol-evpcipherctxcleanup)
+- [AUR](#aur)
 
 
 ## Install
@@ -316,4 +317,25 @@ Then change the following two `EVP_CIPHER_CTX_cleanup` to `EVP_CIPHER_CTX_reset`
 libcrypto.EVP_CIPHER_CTX_cleanup.argtypes = (c_void_p,)
 
 libcrypto.EVP_CIPHER_CTX_cleanup(self._ctx)
+```
+
+
+## AUR
+First download snapshot from https://aur.archlinux.org/packages/:
+```
+$ tar xzf xxx.tar.gz
+```
+Then install using PKGBUILD:
+```
+$ makepkg -rs
+$ sudo pacman -U <package-name>
+```
+Or:
+```
+$ makepkg -rsi
+```
+
+Or using a AUR helper - yaourt:
+```
+$ yaourt -S <package-name>
 ```
