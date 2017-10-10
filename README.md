@@ -2,16 +2,11 @@
 
 > Study Makes Me Happy!
 
-This is my personal study notes, may be computer science, mathematics, and even diary, everything. I hope to motivate myself through this project and its about passionate living and lifelong learning.
+This is my personal study notes include computer science and mathematics. I hope to motivate myself through this project and its about passionate living and lifelong learning.
 
-Items marked with `(-)` are still works in progress.
+- Items marked with `(-)` are still works in progress.
+- Items marked with `(el)` means external links.
 
-Items marked with `(el)` means external links.
-
-
-Web Application Security
----
-1. [XSS for beginners](./web-application-security/XSS-for-beginners.md)
 
 Programming
 ---
@@ -130,6 +125,12 @@ Machine Learning Foundations (NTU)
 4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 5. [Homework 1](./ML-foundations/hw1_Sol.md)
 
+My Blog
+---
+0. [水贴镇楼](https://github.com/firmianay/blog/issues/1)
+1. [AUR 入门](https://github.com/firmianay/blog/issues/2)
+2. [XSS 入门](https://github.com/firmianay/blog/issues/3)
+
 Translation
 ---
 #### published
@@ -137,6 +138,8 @@ Translation
 2. [看我如何进行Python对象注入利用](http://bobao.360.cn/learning/detail/4462.html)
 3. [Windows内核池喷射的乐趣](http://bobao.360.cn/learning/detail/4439.html)
 4. [堆利用——UAF之殇](http://bobao.360.cn/learning/detail/4476.html)
+5. [OS X内核大揭秘之基础篇](http://bobao.360.cn/learning/detail/4501.html)
+6. [OS X内核大揭秘之利用篇](http://bobao.360.cn/learning/detail/4500.html)
 
 #### not published
 1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
