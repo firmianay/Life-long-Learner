@@ -10,7 +10,7 @@ x86 supports the concept of privilege seperation through a abstraction called `r
 ## 0x01 Register Set and Data Types
 When operating in protected mode, the x86 architecture has eight 32-bit general-purpose registers (GPRs): `EAX`, `EBX`, `ECX`, `EDX`, `EDI`, `ESI`, `EBP`, and `ESP`. Some of them can be further divided into 8- and 16-bit registers.
 
-![Practical_Reverse1](static/Practical_Reverse1.png)
+![Practical_Reverse1](./pic/Practical_Reverse1.png)
 
 Some GPRs and Their Usage:
 
@@ -129,7 +129,7 @@ Line 1 reads a value from memory and stores it in EAX. The `DeferredRoutine` fie
 
 Line 5 writes the double-word value 0x113 to the base of the structure. The first field is only 1 byte in size. So, the `Typt` field is set to 0x13, `Importance` is set to 0x1, and `Number` is set to 0x0.
 
-![Practical_Reverse2](static/Practical_Reverse2.png)
+![Practical_Reverse2](./pic/Practical_Reverse2.png)
 
 By writing one value, the code managed to initialize three fields with a single instruction! The following two codes are same. Another interesting thing is that memory access can be done at three granularity levels: byte, word, and double-word. The default granularity is 4 bytes,
 which can be changed to 1 or 2 bytes with an override prefix. In the example,
@@ -331,7 +331,7 @@ Suppose that `ESP` initially points to 0xb20000 and you have the following code:
 ; EDI will contain the value 0xAAAAAAAA and ESP will be 0xb20000 (=0xb1fffc+4)
 ```
 
-![Practical_Reverse3](static/Practical_Reverse3.png)
+![Practical_Reverse3](./pic/Practical_Reverse3.png)
 
 At the lowest level, the processor operates only on concrete objects, such as registers or data coming from memory. So functions are implemented through the stack data structure. Consider the following function:
 ```c
@@ -386,7 +386,7 @@ A calling convention is a set of rules dictating how function calls work at the 
 
 We now return to the code snippet to discuss how the function `addme` is invoked. In line 1 and 3, the two parameters are pushed on the stack; `ECX` and `EAX` are the first and second parameter, respectively. Line 4 invokes the `addme` function with the `CALL` instruction. This immediately pushes the return address, 0x4129FE, on the stack and begins execution at 0x4113A0.
 
-![Practical_Reverse4](static/Practical_Reverse4.png)
+![Practical_Reverse4](./pic/Practical_Reverse4.png)
 
 After line 4 executes, we are now in the `addme` function body. Line 1 pushes `EBP` on the stack. Line 2 sets `EBP` to the current stack pointer. This two-instruction sequence is typically known as the function prologue because it establishes a new function frame. Line 4 reads the value at address `EBP+8`, which is the first parameter on the stack; line 5 reads the second parameter. Note that the parameters are accessed using `EBP` as the base register. When used in this context, `EBP` is known as the base frame pointer because it points to the stack frame for the current function, and parameters/locals can be accessed relative to it. Line 6 adds the numbers and saves the result in `EAX`. Line 8 sets the stack pointer to the base frame pointer. Line 9 pops the saved `EBP` from line 1 into `EBP`. This two-instruction sequence is commonly referred to as the `function epilogue` because it is at the end of the function and restores the previous function frame. At this point, the top of the stack contains the return address saved by the `CALL` instruction at 0x4129F9. Line 10 performs a `RET`, which pops the stack and resumes execution at 0x4129FE. Line 5 in the snippet shrinks the stack by 8 because the caller must clean up the stack per `CDECL`'s calling convention.
 If the function `addme` had local variables, the code would need to grow the stack by subtracting `ESP` after line 2. All local variables would then be accessible through a negative offset from `EBP`.
@@ -839,7 +839,7 @@ x64 is an extension of x86, so most of the architecture properties are the same,
 ### Register Set and Data Types
 The register set has 18 64-bit GPRs, note that 64-bit registers have the "R" prefix.
 
-![Practical_Reverse5](static/Practical_Reverse5.png)
+![Practical_Reverse5](./pic/Practical_Reverse5.png)
 
 While RBP can still be used as the base frame pointer, it is rarely used for that purpose in real-life compiler-generated code. Most x64 compilers simply treat RBP as another GPR, and reference local variables relative to RSP.
 
@@ -907,7 +907,7 @@ This function uses a combination `SCAS` and `STOS` to do its work. First, explai
 
 First, we look at a standard representation of the stack layout after a function call. We will know that `[EBP+8]` and `[EBP+C]` are used to point to the function arguments.
 
-![Practical_Reverse6](static/Practical_Reverse6.png)
+![Practical_Reverse6](./pic/Practical_Reverse6.png)
 
 Now, let's put the function prologue and epilogue around it and added a caller to get a fully functional assembly code.
 ```text

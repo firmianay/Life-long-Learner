@@ -8,68 +8,15 @@ This is my personal study notes include computer science and mathematics. I hope
 - Items marked with `(el)` means external links.
 
 
-Programming
----
-1. (-) [Python Challenge Writeup](./programming/python-challenge-writeup.md)
-
-SEED Labs
----
-1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
-2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
-3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
-4. [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
-
 Reverse Engineering for Beginners
 ---
 0. [Auto script for learner](./RE4B/auto.sh)
 1. [Noise in stack](./RE4B/noise-in-stack.md)
 
-Binary Security
+Practical Reverse Engineering
 ---
-0. [initial pwn envirenment](./binary-security/pwn-across-arch.sh)
-1. [IOLI crackme Writeup](./binary-security/IOLI-crackme-Writeup.md)
-2. (-) [Pwnable.kr Toddler's Bottle Writeup](./binary-security/Pwnable.kr-Toddler's-Bottle-writeup.md)
-3. (-) [HITCON-Training Writeup](./binary-security/HITCON-training-writeup.md)
-4. (-) [Jarvis OJ Writeup](./binary-security/Jarvisoj-writeup.md)
-5. (-) [Reversing.Kr Writeup](./binary-security/Reversingkr-writeup.md)
-6. [Reverse Engineering Learning: X86 and X64](./binary-security/RE_Learning_X86_X64.md)
-7. [Reverse Engineering Learning: ARM](./binary-security/RE_Learning_ARM.md)
-
-Misc
----
-1. (-) [Infosec Favorites](./misc/infosec-favorites.md)
-2. [GitHub Tips](misc/github-tips.md)
-
-Use Linux
----
-1. [Arch Linux/manjaro](./use-Linux/arch-linux.md)
-
-Languages
----
-1. [C](./Languages/C)
-  - [The C Programming Language 2nd](./Languages/C/The-C-Programming-Language-2nd)
-  - [C Primer Plus 5th](./Languages/C/C-Primer-Plus-5th)
-  - [Pointers on C](./Languages/C/Pointers-on-C)
-  - [Expert C Programming](./Languages/C/Expert-C-Programming)
-2. [C++](./Languages/C++)
-  - [C++ Primer 5th](./Languages/C++/C++-Primer-5th)
-3. [Python](./Languages/Python)
-  - Python2
-    - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
-  - Python3
-    - [Core Python Programming 3rd](./Languages/Python/py2/Core-Python-Programming-3rd)
-4. [Assembly](./Languages/Assembly)
-  - x86
-  - ARM
-5. [Java](./Languages/Java)
-  - [Thinking in Java 4th](./Languages/Java/Thinking-in-Java-4th)
-6. [HTML](./Languages/HTML)
-7. [JavaScript](./Languages/JavaScript)
-8. [Markdown](./Languages/Markdown)
-
-Paper Review
----
-- [Paper Reviews](https://github.com/firmianay/Paper-Reviews)
+1. [Reverse Engineering Learning: X86 and X64](./practical-reverse-engineering/RE_Learning_x86_x64.md)
+2. [Reverse Engineering Learning: ARM](./practical-reverse-engineering/RE_Learning_ARM.md)
 
 Linux Kernel Development 3rd
 ---
@@ -125,11 +72,45 @@ Machine Learning Foundations (NTU)
 4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 5. [Homework 1](./ML-foundations/hw1_Sol.md)
 
+Languages
+---
+1. [C](./Languages/C)
+  - [The C Programming Language 2nd](./Languages/C/The-C-Programming-Language-2nd)
+  - [C Primer Plus 5th](./Languages/C/C-Primer-Plus-5th)
+  - [Pointers on C](./Languages/C/Pointers-on-C)
+  - [Expert C Programming](./Languages/C/Expert-C-Programming)
+2. [C++](./Languages/C++)
+  - [C++ Primer 5th](./Languages/C++/C++-Primer-5th)
+3. [Python](./Languages/Python)
+  - Python2
+    - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
+  - Python3
+    - [Core Python Programming 3rd](./Languages/Python/py2/Core-Python-Programming-3rd)
+4. [Assembly](./Languages/Assembly)
+  - x86
+  - ARM
+5. [Java](./Languages/Java)
+  - [Thinking in Java 4th](./Languages/Java/Thinking-in-Java-4th)
+6. [HTML](./Languages/HTML)
+7. [JavaScript](./Languages/JavaScript)
+8. [Markdown](./Languages/Markdown)
+
+Paper Review
+---
+- [Paper Reviews](https://github.com/firmianay/Paper-Reviews)
+
 My Blog
 ---
 0. [水贴镇楼](https://github.com/firmianay/blog/issues/1)
-1. [AUR 入门](https://github.com/firmianay/blog/issues/2)
+1. [2016.1.18](https://github.com/firmianay/blog/issues/4)
 2. [XSS 入门](https://github.com/firmianay/blog/issues/3)
+3. [与 Arch/Manjaro Linux 的日常斗争](https://github.com/firmianay/blog/issues/5)
+4. [Python Challenge Writeup](https://github.com/firmianay/blog/issues/6)
+5. [一些 GitHub 的小技巧](https://github.com/firmianay/blog/issues/7)
+6. [IOLI crackme Writeup](https://github.com/firmianay/blog/issues/8)
+7. [Pwnable.kr Toddler's Bottle Writeup](https://github.com/firmianay/blog/issues/9)
+8. [HITCON-Training Writeup](https://github.com/firmianay/blog/issues/10)
+9. [AUR 入门](https://github.com/firmianay/blog/issues/2)
 
 Translation
 ---
@@ -161,12 +142,25 @@ Translation
 8. [LKU：一套在 Ubuntu/LinuxMint 上编译、安装和更新最新内核的 Shell 脚本](https://linux.cn/article-8739-1.html)
 9. [使用 Kdump 检查 Linux 内核崩溃](https://linux.cn/article-8737-1.html)
 10. [网络分析利器：在 Ubuntu 16.04 上安装 Bro](https://linux.cn/article-8736-1.html)
-11. [超过七万台 memcached 服务器面临危险](https://linux.cn/article-8731-1.html)
-12. [一周工作所用的日常 Git 命令](https://linux.cn/article-8841-1.html)
+11. [一周工作所用的日常 Git 命令](https://linux.cn/article-8841-1.html)
 
-Diary
+Binary Security
 ---
-1. [2016.1.18](./diary/2016-1-18.md)
+0. [initial pwn envirenment](./binary-security/pwn-across-arch.sh)
+1. (-) [Jarvis OJ Writeup](./binary-security/Jarvisoj-writeup.md)
+2. (-) [Reversing.Kr Writeup](./binary-security/Reversingkr-writeup.md)
+
+Misc
+---
+1. (-) [Infosec Favorites](./misc/infosec-favorites.md)
+
+SEED Labs
+---
+1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
+2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
+3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
+4. [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
+
 
 ## LICENSE
 ```
