@@ -66,7 +66,11 @@ Data Communications and Networking 5th
 
 The Basics of Hacking and Penetration Testing 2nd
 ---
-1. [](./the-Basics-of-hacking-and-penetration-testing/note.md)
+1. [note](./the-basics-of-hacking-and-penetration-testing/note.md)
+
+Computer Networking：A Top-Down Approach 6th
+---
+1. [note 1](./computer-networking-a-top-down-approach/note_1.md)
 
 Machine Learning Foundations (NTU)
 ---
