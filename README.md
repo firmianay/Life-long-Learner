@@ -64,6 +64,10 @@ Data Communications and Networking 5th
 22. (-) [Chapter 22: Next Generation IP](./data-communications-and-networking/chapter-22.md)
 23. (-) [Chapter 23: Introduction to Transport Layer](./data-communications-and-networking/chapter-23.md)
 
+The Basics of Hacking and Penetration Testing 2nd
+---
+1. [](./the-Basics-of-hacking-and-penetration-testing/note.md)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
@@ -95,7 +99,7 @@ Languages
 7. [JavaScript](./Languages/JavaScript)
 8. [Markdown](./Languages/Markdown)
 9. [LaTeX](./Languages/LaTex)
-  - [LaTeX 入门](./Languages/LaTex入门.md)
+  - [LaTeX 入门](./Languages/LaTeX/LaTex入门.md)
 
 Paper Review
 ---
