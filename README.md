@@ -94,6 +94,8 @@ Languages
 6. [HTML](./Languages/HTML)
 7. [JavaScript](./Languages/JavaScript)
 8. [Markdown](./Languages/Markdown)
+9. [LaTeX](./Languages/LaTex)
+  - [LaTeX 入门](./Languages/LaTex入门.md)
 
 Paper Review
 ---
