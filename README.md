@@ -72,6 +72,10 @@ Computer Networking：A Top-Down Approach 6th
 ---
 1. [note 1](./computer-networking-a-top-down-approach/note_1.md)
 
+Effective Debugging
+---
+1. [note](./effective-debugging/note.md)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
@@ -111,16 +115,7 @@ Paper Review
 
 My Blog
 ---
-0. [水贴镇楼](https://github.com/firmianay/blog/issues/1)
-1. [2016.1.18](https://github.com/firmianay/blog/issues/4)
-2. [XSS 入门](https://github.com/firmianay/blog/issues/3)
-3. [与 Arch/Manjaro Linux 的日常斗争](https://github.com/firmianay/blog/issues/5)
-4. [Python Challenge Writeup](https://github.com/firmianay/blog/issues/6)
-5. [一些 GitHub 的小技巧](https://github.com/firmianay/blog/issues/7)
-6. [IOLI crackme Writeup](https://github.com/firmianay/blog/issues/8)
-7. [Pwnable.kr Toddler's Bottle Writeup](https://github.com/firmianay/blog/issues/9)
-8. [HITCON-Training Writeup](https://github.com/firmianay/blog/issues/10)
-9. [AUR 入门](https://github.com/firmianay/blog/issues/2)
+https://firmianay.github.io/
 
 Translation
 ---
@@ -157,8 +152,6 @@ Translation
 Binary Security
 ---
 0. [initial pwn envirenment](./binary-security/pwn-across-arch.sh)
-1. (-) [Jarvis OJ Writeup](./binary-security/Jarvisoj-writeup.md)
-2. (-) [Reversing.Kr Writeup](./binary-security/Reversingkr-writeup.md)
 
 Misc
 ---

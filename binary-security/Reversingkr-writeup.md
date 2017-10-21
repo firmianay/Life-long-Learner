@@ -1,2 +1,0 @@
-# Reversing.Kr Writeup
-

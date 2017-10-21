@@ -1,2 +1,0 @@
-# Jarvis OJ Writeup
-
