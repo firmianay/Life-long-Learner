@@ -66,15 +66,15 @@ Data Communications and Networking 5th
 
 The Basics of Hacking and Penetration Testing 2nd
 ---
-1. [note](./the-basics-of-hacking-and-penetration-testing/note.md)
+1. [Note](./the-basics-of-hacking-and-penetration-testing/note.md)
 
 Computer Networking：A Top-Down Approach 6th
 ---
-1. [note](./computer-networking-a-top-down-approach/note.md)
+1. [Note](./computer-networking-a-top-down-approach/note.md)
 
 Effective Debugging
 ---
-1. [note](./effective-debugging/note.md)
+1. [Note](./effective-debugging/note.md)
 
 Machine Learning Foundations (NTU)
 ---
@@ -153,10 +153,6 @@ Translation
 Binary Security
 ---
 0. [initial pwn envirenment](./binary-security/pwn-across-arch.sh)
-
-Misc
----
-1. (-) [Infosec Favorites](./misc/infosec-favorites.md)
 
 SEED Labs
 ---
