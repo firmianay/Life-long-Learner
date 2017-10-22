@@ -70,7 +70,7 @@ The Basics of Hacking and Penetration Testing 2nd
 
 Computer Networking：A Top-Down Approach 6th
 ---
-1. [note 1](./computer-networking-a-top-down-approach/note_1.md)
+1. [note](./computer-networking-a-top-down-approach/note.md)
 
 Effective Debugging
 ---
@@ -96,6 +96,7 @@ Languages
 3. [Python](./Languages/Python)
   - Python2
     - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
+    - [High Performance Python](./Languages/Python/py2/High-Performance-Python)
   - Python3
     - [Core Python Programming 3rd](./Languages/Python/py2/Core-Python-Programming-3rd)
 4. [Assembly](./Languages/Assembly)
