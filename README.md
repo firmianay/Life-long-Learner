@@ -76,6 +76,10 @@ Effective Debugging
 ---
 1. [Note](./effective-debugging/note.md)
 
+Binary Hacks
+---
+1. [Note](./Binary-Hacks/note.md)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)

@@ -166,6 +166,7 @@ dis.dis(julia1_nopil.calculate_z_serial_purepython)
 - 静态数组：元组
 元组不支持改变大小，但可以将两个元组合并为一个新元组。但新元组不会超额分配空间，对元组添加每一个新元素都会有分配和复制操作。
 
+
 ## 第四章　字典和集合
 字典和集合使用散列表来获得 O(1) 的查询和插入。能得到这一效率是因为散列函数将一个任意的键转变成了一个列表的索引。
 
@@ -173,9 +174,85 @@ dis.dis(julia1_nopil.calculate_z_serial_purepython)
 
 
 ## 第五章　迭代器和生成器
+简单实现 range 和 xrange 函数：
+```python
+def range(start, stop, step=1):
+    numbers = []
+    while start < stop:
+        numbers.append(start)
+        start += step
+    return numbers
+```
+```python
+def xrange(start, stop, step=1):
+    while start < stop:
+        yield start
+        start += step
+```
+使用 yield 使函数变成一个生成器。虽然两个函数最终运行了同样的计算次数，但 range 版本的循环多消耗了 10000 倍内存用于维护列表。
+
+Python 的 for 循环要求被循环的对象支持迭代，所以需要使用内建的 iter 函数将一个对象转换成迭代器。由于 xrange 已经返回一个迭代器，所以不需要 iter，而 range 返回的是一个列表，所以需要转换。
+
+Python 的 for 循环解析：
+```python
+# python 循环
+for i in object:
+    do_work(i)
+
+# 等同于
+object_iterator = iter(object)
+while True:
+    try:
+        i = object_iterator.next()
+        do_work(i)
+    except StopIteration:
+        break
+```
+所以使用 xrange 代替 range 往往能获得更好的效果，但实际的问题可能隐藏很深，比如：
+```python
+# [<value> for <item> in <sequence> if <condition>]
+divisible_by_three = len([n for n in list_of_numbers if n%3 == 0])
+```
+这种写法和 range 一样要创建一个列表，下面我们使用生成器来代替：
+```python
+# (<value> for <item> in <sequence> if <condition>)
+divisible_by_three = sum((n for n in list_of_numbers if n%3 == 0))
+```
+
+itertools 库中提供了许多内建函数的生成器版本以及其他有用的函数。
 
 
 ## 第六章　矩阵和矢量计算
+numpy 能将数据连续存储在内存中并支持数据的矢量操作。
+```python
+from array import array
+import numpy
+
+def norm_square_list(vector):
+    norm = 0
+    for v in vector:
+        norm += v*v
+    return norm
+
+def norm_square_list_comprehension(vector):
+    return sum([v*v for v in vector])
+
+def norm_squared_generator_comprehension(vector):
+    return sum(v*v for v in vector)
+
+def norm_square_array(vector):
+    norm = 0
+    for v in vector:
+        norm += v*v
+        return norm
+
+def norm_square_numpy(vector):
+    return numpy.sum(vector * vector)
+
+def norm_square_numpy_dot(vector):
+    return numpy.dot(vector, vector)
+```
+
 
 ## 第七章　编译成 C
 
