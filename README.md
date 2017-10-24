@@ -102,7 +102,8 @@ Languages
     - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
     - [High Performance Python](./Languages/Python/py2/High-Performance-Python)
   - Python3
-    - [Core Python Programming 3rd](./Languages/Python/py2/Core-Python-Programming-3rd)
+    - [Core Python Programming 3rd](./Languages/Python/py3/Core-Python-Programming-3rd)
+    - [Fluent Python](./Languages/Python/py3/Fluent-Python)
 4. [Assembly](./Languages/Assembly)
   - x86
   - ARM

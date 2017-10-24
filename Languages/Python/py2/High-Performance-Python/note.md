@@ -7,10 +7,6 @@
 - [第五章　迭代器和生成器](#第五章-迭代器和生成器)
 - [第六章　矩阵和矢量计算](#第六章-矩阵和矢量计算)
 - [第七章　编译成 C](#第七章-编译成-c)
-- [第八章　并发](#第八章-并发)
-- [第九章　multiprocessing 模块](#第九章-multiprocessing-模块)
-- [第十章　集群和工作队列](#第十章-集群和工作队列)
-- [第十一章　使用更少的 RAM](#第十一章-使用更少的-ram)
 
 
 ## 第一章　理解高性能 Python
@@ -255,11 +251,8 @@ def norm_square_numpy_dot(vector):
 
 
 ## 第七章　编译成 C
-
-## 第八章　并发
-
-## 第九章　multiprocessing 模块
-
-## 第十章　集群和工作队列
-
-## 第十一章　使用更少的 RAM
+- Cython：这是编译成 C 最通用的工具，覆盖了 numpy 和普通的 Python 代码。
+- Shed Skin：一个用于非 numpy 代码的，自动把 Python 转换成 C 的转换器。
+- Numba：一个专用于 numpy 代码的新编译器。
+- Pythran：一个用于 numpy 和非 numpy 代码的新编译器。
+- PyPy：一个用于非 numpy 代码的，取代常规 Python 可执行程序的稳定的即时编译器。
