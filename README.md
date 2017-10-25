@@ -94,29 +94,34 @@ Machine Learning Foundations (NTU)
 
 Languages
 ---
-1. [C](./Languages/C)
+- [C](./Languages/C)
   - [The C Programming Language 2nd](./Languages/C/The-C-Programming-Language-2nd)
   - [C Primer Plus 5th](./Languages/C/C-Primer-Plus-5th)
   - [Pointers on C](./Languages/C/Pointers-on-C)
   - [Expert C Programming](./Languages/C/Expert-C-Programming)
-2. [C++](./Languages/C++)
+- [C++](./Languages/C++)
   - [C++ Primer 5th](./Languages/C++/C++-Primer-5th)
-3. [Python](./Languages/Python)
+- [Python](./Languages/Python)
   - Python2
     - [Core Python Programming 2nd](./Languages/Python/py2/Core-Python-Programming-2nd)
     - [High Performance Python](./Languages/Python/py2/High-Performance-Python)
   - Python3
     - [Core Python Programming 3rd](./Languages/Python/py3/Core-Python-Programming-3rd)
     - [Fluent Python](./Languages/Python/py3/Fluent-Python)
-4. [Assembly](./Languages/Assembly)
+- [Assembly](./Languages/Assembly)
   - x86
   - ARM
-5. [Java](./Languages/Java)
+  - Smali
+- [Java](./Languages/Java)
   - [Thinking in Java 4th](./Languages/Java/Thinking-in-Java-4th)
-6. [HTML](./Languages/HTML)
-7. [JavaScript](./Languages/JavaScript)
-8. [Markdown](./Languages/Markdown)
-9. [LaTeX](./Languages/LaTex)
+- [Android](./Languages/Android)
+  - [第一行代码](./Languages/Android/The-First-Line-Code-of-Android)
+  - [Android 开发进阶——从小工到专家](./Languages/Android/Android-Development-Advance)
+- [HTML](./Languages/HTML)
+- [CSS](./Languages/CSS)
+- [JavaScript](./Languages/JavaScript)
+- [Markdown](./Languages/Markdown)
+- [LaTeX](./Languages/LaTex)
   - [LaTeX 入门](./Languages/LaTeX/LaTex入门.md)
 
 Paper Review
@@ -138,13 +143,7 @@ Translation
 6. [OS X内核大揭秘之利用篇](http://bobao.360.cn/learning/detail/4500.html)
 
 #### not published
-1. [SheepSec: 7 Reflected Cross-site Scripting (XSS) Examples](./translated/7_Reflected_Cross-site_Scripting_XSS_Examples.rar)
-2. [LibOFX Tag Parsing Code Execution Vulnerability](./translated/LibOFX_Tag_Parsing_Code_Exection_Vulnerability.rar)
-3. [Mistreating Triton](./translated/Mistreating_Triton.rar)
-4. [NFS](./translated/NFS.rar)
-5. [Exploiting insecure file extraction in Python for code execution](./translated/Exploiting_insecure_file_extraction_in_Python_for_code_execution.rar)
-6. [hooking luajit](./translated/hooking_luajit.rar)
-7. [Reversing DirtyC0W](./translated/Reversing_DirtyC0W.rar)
+1. [Translated](./translated)
 
 #### LCTT
 1. [使用 Headless Chrome 进行自动化测试](https://linux.cn/article-8861-1.html)
