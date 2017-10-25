@@ -66,19 +66,23 @@ Data Communications and Networking 5th
 
 The Basics of Hacking and Penetration Testing 2nd
 ---
-1. [Note](./the-basics-of-hacking-and-penetration-testing/note.md)
+1. [Note](./the-basics-of-hacking-and-penetration-testing)
 
 Computer Networking：A Top-Down Approach 6th
 ---
-1. [Note](./computer-networking-a-top-down-approach/note.md)
+1. [Note](./computer-networking-a-top-down-approach)
 
 Effective Debugging
 ---
-1. [Note](./effective-debugging/note.md)
+1. [Note](./effective-debugging)
 
 Binary Hacks
 ---
-1. [Note](./Binary-Hacks/note.md)
+1. [Note](./Binary-Hacks)
+
+The Shellcoder's Handbook 2nd
+---
+1. [Note](./The-Shellcoders-Handbook-2nd)
 
 Machine Learning Foundations (NTU)
 ---
