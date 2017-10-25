@@ -84,6 +84,10 @@ The Shellcoder's Handbook 2nd
 ---
 1. [Note](./The-Shellcoders-Handbook-2nd)
 
+The Docker Book
+---
+1. [Note](./The-Docker-Book)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
