@@ -88,6 +88,10 @@ The Docker Book
 ---
 1. [Note](./The-Docker-Book)
 
+Core Principle of Reverse Engineering
+---
+1. [Note](./Core-Principle-of-Reverse-Engineering)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
