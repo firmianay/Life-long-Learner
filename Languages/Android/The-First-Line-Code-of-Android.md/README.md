@@ -155,6 +155,8 @@ onCreate()，onStart()，onResume()，onPause()，onStop()，onDestroy()，onRes
 - 可见生存期：onStart() 和 onStop() 之间。
 - 前台生存期：onResume() 和 onPause() 之间。
 
+![](static/1.png)
+
 #### 五： Activity防回收
 
 一个进入停止状态的活动，由于系统内存不足，被回收掉了，这时按下 `Back` 键返回这个活动时，不会执行 `onRestart()` 方法，而是执行 `onCreate()` 方法，所以我们要事先保持好活动的临时数据。`onSacedInstanceState()` 回调方法会保证在活动被回收之前调用，该方法携带一个 `Bundle` 类型的参数，`Bundle` 提供了一系列方法用于保存数据，比如 `putString()` 方法保存字符串，第一个参数是键，用于后面从 `Bundle` 中取值，第二个参数是真正要保存的内容。
@@ -179,17 +181,25 @@ if (savedInstanceState != null) {
 
 每当启动一个新的活动，它就会在返回栈中入栈，并处于栈顶的位置，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建该活动的一个新的实例。
 
+![](static/2.png)
+
 2. single Top
 
 该模式在启动活动时，如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。很好地解决了重复创建栈顶活动的问题。
+
+![](static/3.png)
 
 3. single Task
 
 该模式在启动时，系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。
 
+![](static/4.png)
+
 4. singleInstance
 
 该模式的活动会启用一个新的返回栈来管理这个活动。可以解决共享活动实例问题。
+
+![](static/5.png)
 
 #### 七： 活动集合
 
@@ -266,6 +276,8 @@ public static void actionStart(Context context, String data1, String data2) {
 
 所有控件都直接或简介继承自 `View`，所有布局都直接或简介继承自 `ViewGroup`。
 
+![](static/6.png)
+
 #### ListView
 
 数据列表控件。
@@ -324,7 +336,11 @@ MainActivity activity = (MainActivity) getActivity();
 - onDestroyView()：当与碎片关联的视图被移除的时候调用。
 - onDetach()：当碎片和活动解除关联的时候调用。
 
+![](static/7.png)
+
 与 `Activity` 的生命周期对比：
+
+![](static/8.png)
 
 
 ## 四： 广播接收器（Broadcast Receiver）
@@ -332,7 +348,12 @@ MainActivity activity = (MainActivity) getActivity();
 #### 广播机制简介
 
 1. 有序广播（Normal broadcasts）：完全异步执行的广播，在广播发出之后，所有的广播接收器都会在同一时刻接收到这条广播消息，没有任何先后顺序，也无法被截断。
+
+![](static/9.png)
+
 2. 有序广播（Ordered broadcasts）：同步执行的广播，在广播发出后，同一时刻只有一个广播接收器能够收到这条广播消息，当这个广播接收器中的逻辑执行完毕后，广播才会继续传递。此时是有先后顺序的，优先级高的广播接收器先收到，并且前面的广播接收器可以截断正在传播的广播，这样后面的就无法收到。
+
+![](static/10.png)
 
 #### 接受系统广播
 
@@ -573,6 +594,8 @@ name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.P
 - MessageQueue：消息列队，用于存放所有通过 `Handler` 发送的消息。
 - Looper：线程中的 `MessageQueue` 的管家，调用 `Looper` 的 `loop()` 方法后，会进入一个无限循环中。
 
+![](static/11.png)
+
 2. 使用AsyncTask
 
 创建一个子类去继承 `AsyncTask`，可以指定三个泛型参数：
@@ -695,3 +718,7 @@ public static Context getContext() {
     ......
 </application>
 ```
+
+![](static/12.png)
+
+![](static/13.png)

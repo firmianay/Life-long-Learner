@@ -7,6 +7,8 @@ Docker 是一个能够把开发的应用程序自动部署到容器的开源引�
 #### Docker 核心组件：
 Docker客户端和服务器：Docker 是一个客户端/服务器（C/S）架构的程序。客户端只需向 Docker 服务器或守护进程发出请求，服务器或守护进程将完成所有工作并返回结果。Docker 守护进程也称作 Docker 引擎。
 
+![](static/1.png)
+
 Docker 镜像：基于联合文件系统的一种层式结构
 
 Registry：用来保存用户构建的镜像
@@ -330,6 +332,8 @@ sudo docker rm 'sudo docker ps -a -q'
 Docker镜像是由文件系统叠加而成的。一个镜像可以放到另一个镜像的顶部。
 
 当创建一个新容器时，Docker会构建一个镜像栈，并在栈的最顶层添加一个读写层。
+
+![](static/2.png)
 
 #### 列出镜像
 本地镜像都保存在本地的 `/var/lib/docker` 目录下。

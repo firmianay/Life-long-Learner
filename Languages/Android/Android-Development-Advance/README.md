@@ -5,6 +5,8 @@
 
 实际上视图会被设置给一个 `Window` 类，这个 `Window` 中含有一个 `DecorView`，这个 `DecorView` 才是整个窗口的顶级视图。开发人员设置的布局会被设置到这个 `DecorView` 的 `mContentParent` 布局中。也就是说 Android 实际上内置了一些系统布局文件 xml， 我们在 xml 中定义的视图最终会被设置到这些系统布局的特定节点之下，形成了整个 `DecorView`。
 
+![](static/1.png)
+
 #### Service与AIDL
 
 `Service` 默认执行在 UI 线程中，因此不要在 `Service` 中执行耗时的操作，除非在 `Service` 中创建了子线程来完成耗时操作。
@@ -90,6 +92,8 @@ public class myIntentService extends Service {
 ## 第二章 View与动画
 #### 重要的View控件
 
+![](static/2.png)
+
 1. ListView和GridView
 
 列表数据显示的4个元素：
@@ -105,6 +109,9 @@ public class myIntentService extends Service {
 - `getView(int, View, ViewGroup)` 函数——获取 position 位置上的 Item View 视图。
 
 Android 采用视图复用的形式避免创建过多的 `Item View`：
+
+![](static/3.png)
+
 ```java
 public View getView(int position, View convertView, ViewGroup parent) {
     View view = null;
@@ -254,6 +261,8 @@ public class RecyclerAdapter extends Adapter<RecyclerViewHolder> {
 1. 处理消息的手段——Handle、Looper和MessageQueue
 
 应用启动时，后默认有一个主线程（UI线程），在这个线程中会关联一个消息队列，所有的操作都会被封装成消息然后交给主线程处理。为了保证主线程不会主动退出，会将获取消息的操作放在一个死循环中。
+
+![](static/4.png)
 
 UI线程的消息循环是在 `ActivityThread.main` 方法中创建的，该函数为 Android 应用程序的入口：
 ```java
@@ -527,6 +536,8 @@ public interface RunnableFuture<V> extends Runnable, Future<V> {
 ```
 
 4. 线程池
+
+![](static/5.png)
 
 线程池原理就是会创建多个线程并且进行管理，提交给线程的任务会被线程池指派给其中的线程进行执行，通过线程池的统一调度、管理使多线程更简单高效。
 
