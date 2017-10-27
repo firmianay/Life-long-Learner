@@ -96,6 +96,10 @@ The IDA Pro Book 2nd
 ---
 1. [Note](./The-IDA-Pro-Book-2nd)
 
+Build Your Own Build System
+---
+1. [Note](./Build-Your-Own-Build-System)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
