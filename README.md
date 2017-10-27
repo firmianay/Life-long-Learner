@@ -92,6 +92,10 @@ Core Principle of Reverse Engineering
 ---
 1. [Note](./Core-Principle-of-Reverse-Engineering)
 
+The IDA Pro Book 2nd
+---
+1. [Note](./The-IDA-Pro-Book-2nd)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
