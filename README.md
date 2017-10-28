@@ -100,6 +100,10 @@ Build Your Own Build System
 ---
 1. [Note](./Build-Your-Own-Build-System)
 
+Attack and Defense of Android Security
+---
+1. [Note](./Attack-and-Defense-of-Android-Security)
+
 Machine Learning Foundations (NTU)
 ---
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
