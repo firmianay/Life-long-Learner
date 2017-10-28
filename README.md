@@ -92,6 +92,10 @@ This is my personal study notes include computer science and mathematics. I hope
 1. [Note](./Attack-and-Defense-of-Android-Security)
 
 
+#### Android Security Internals
+1. [Note](./Android-Security-Internals)
+
+
 ## Coursera's Notes
 #### Machine Learning Foundations (NTU)
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
