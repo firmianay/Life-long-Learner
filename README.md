@@ -8,18 +8,16 @@ This is my personal study notes include computer science and mathematics. I hope
 - Items marked with `(el)` means external links.
 
 
-Reverse Engineering for Beginners
----
+## Books' Notes
+#### Reverse Engineering for Beginners
 0. [Auto script for learner](./RE4B/auto.sh)
 1. [Noise in stack](./RE4B/noise-in-stack.md)
 
-Practical Reverse Engineering
----
+#### Practical Reverse Engineering
 1. [Reverse Engineering Learning: X86 and X64](./practical-reverse-engineering/RE_Learning_x86_x64.md)
 2. [Reverse Engineering Learning: ARM](./practical-reverse-engineering/RE_Learning_ARM.md)
 
-Linux Kernel Development 3rd
----
+#### Linux Kernel Development 3rd
 1. [Chapter 1: Introduction to the Linux Kernel](./linux-kernel-development/chapter-1.md)
 2. [Chapter 2: Getting Started with the Kernel](./linux-kernel-development/chapter-2.md)
 3. [Chapter 3: Process Management](./linux-kernel-development/chapter-3.md)
@@ -38,8 +36,7 @@ Linux Kernel Development 3rd
 16. [Chapter 16: The Page Cache and Page Writeback](./linux-kernel-development/chapter-16.md)
 17. (-) [Chapter 17: Devices and Modules](./linux-kernel-development/chapter-17.md)
 
-Data Communications and Networking 5th
----
+#### Data Communications and Networking 5th
 1. [Chapter 1: Introduction](./data-communications-and-networking/chapter-1.md)
 2. [Chapter 2: Network Models](./data-communications-and-networking/chapter-2.md)
 3. [Chapter 3: Introduction to Physical Layer](./data-communications-and-networking/chapter-3.md)
@@ -64,56 +61,47 @@ Data Communications and Networking 5th
 22. (-) [Chapter 22: Next Generation IP](./data-communications-and-networking/chapter-22.md)
 23. (-) [Chapter 23: Introduction to Transport Layer](./data-communications-and-networking/chapter-23.md)
 
-The Basics of Hacking and Penetration Testing 2nd
----
+#### The Basics of Hacking and Penetration Testing 2nd
 1. [Note](./the-basics-of-hacking-and-penetration-testing)
 
-Computer Networking：A Top-Down Approach 6th
----
+#### Computer Networking：A Top-Down Approach 6th
 1. [Note](./computer-networking-a-top-down-approach)
 
-Effective Debugging
----
+#### Effective Debugging
 1. [Note](./effective-debugging)
 
-Binary Hacks
----
+#### Binary Hacks
 1. [Note](./Binary-Hacks)
 
-The Shellcoder's Handbook 2nd
----
+#### The Shellcoder's Handbook 2nd
 1. [Note](./The-Shellcoders-Handbook-2nd)
 
-The Docker Book
----
+#### The Docker Book
 1. [Note](./The-Docker-Book)
 
-Core Principle of Reverse Engineering
----
+#### Core Principle of Reverse Engineering
 1. [Note](./Core-Principle-of-Reverse-Engineering)
 
-The IDA Pro Book 2nd
----
+#### The IDA Pro Book 2nd
 1. [Note](./The-IDA-Pro-Book-2nd)
 
-Build Your Own Build System
----
+#### Build Your Own Build System
 1. [Note](./Build-Your-Own-Build-System)
 
-Attack and Defense of Android Security
----
+#### Attack and Defense of Android Security
 1. [Note](./Attack-and-Defense-of-Android-Security)
 
-Machine Learning Foundations (NTU)
----
+
+## Coursera's Notes
+#### Machine Learning Foundations (NTU)
 1. [Lecture 1: The Learning Problem](./ML-foundations/lecture-1.md)
 2. [Lecture 2: Learning to Answer Yes/No](./ML-foundations/lecture-2.md)
 3. [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
 4. [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 5. [Homework 1](./ML-foundations/hw1_Sol.md)
 
-Languages
----
+
+## Languages
 - [C](./Languages/C)
   - [The C Programming Language 2nd](./Languages/C/The-C-Programming-Language-2nd)
   - [C Primer Plus 5th](./Languages/C/C-Primer-Plus-5th)
@@ -144,16 +132,16 @@ Languages
 - [LaTeX](./Languages/LaTex)
   - [LaTeX 入门](./Languages/LaTeX/LaTex入门.md)
 
-Paper Review
----
+
+## Paper Review
 - [Paper Reviews](https://github.com/firmianay/Paper-Reviews)
 
-My Blog
----
+
+## My Blog
 https://firmianay.github.io/
 
-Translation
----
+
+## Translation
 #### published
 1. [使用 WinAFL 对 MSXML6 库进行模糊测试](http://bobao.360.cn/learning/detail/4443.html)
 2. [看我如何进行Python对象注入利用](http://bobao.360.cn/learning/detail/4462.html)
@@ -178,12 +166,12 @@ Translation
 10. [网络分析利器：在 Ubuntu 16.04 上安装 Bro](https://linux.cn/article-8736-1.html)
 11. [一周工作所用的日常 Git 命令](https://linux.cn/article-8841-1.html)
 
-Binary Security
----
+
+## Binary Security
 0. [initial pwn envirenment](./binary-security/pwn-across-arch.sh)
 
-SEED Labs
----
+
+## SEED Labs
 1. [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
 2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
 3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
