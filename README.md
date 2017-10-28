@@ -95,6 +95,12 @@ This is my personal study notes include computer science and mathematics. I hope
 #### Android Security Internals
 1. [Note](./Android-Security-Internals)
 
+#### Android Hacker's Handbook
+1. [Note](./Android-Hackers-Handbook)
+
+#### Android Security and Reverse
+1. [Note](./Android-Security-and-Reverse)
+
 
 ## Coursera's Notes
 #### Machine Learning Foundations (NTU)
