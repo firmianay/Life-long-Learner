@@ -76,30 +76,32 @@ This is my personal study notes include computer science and mathematics. I hope
 #### The Shellcoder's Handbook 2nd
 1. [Note](./The-Shellcoders-Handbook-2nd)
 
-#### The Docker Book
+#### 第一本 Docker 书
 1. [Note](./The-Docker-Book)
 
-#### Core Principle of Reverse Engineering
+#### 逆向工程核心原理
 1. [Note](./Core-Principle-of-Reverse-Engineering)
 
 #### The IDA Pro Book 2nd
 1. [Note](./The-IDA-Pro-Book-2nd)
 
-#### Build Your Own Build System
+#### 自己动手构造编译系统
 1. [Note](./Build-Your-Own-Build-System)
 
-#### Attack and Defense of Android Security
+#### Android 安全攻防实战
 1. [Note](./Attack-and-Defense-of-Android-Security)
 
-
-#### Android Security Internals
+#### Android 安全架构深究
 1. [Note](./Android-Security-Internals)
 
-#### Android Hacker's Handbook
+#### Android 安全攻防权威指南
 1. [Note](./Android-Hackers-Handbook)
 
-#### Android Security and Reverse
+#### Android 软件安全与逆向分析
 1. [Note](./Android-Security-and-Reverse)
+
+#### 程序员的自我修养
+1. [Note](./The-self-cultivation-of-the-programmer)
 
 
 ## Coursera's Notes
