@@ -188,6 +188,9 @@ https://firmianay.github.io/
 2. [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
 3. [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
 4. [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
+5. [Return-to-libc Attack Lab](./SEED-labs/return-to-libc-attack-lab.md)
+6. [Race Condition Vulnerability Lab](./SEED-labs/race-condition-vulnerability-lab.md)
+7. [Environment Variable and Set-UID Lab](./SEED-labs/environment-variable-and-set-uid-lab.md)
 
 
 ## LICENSE
