@@ -6,10 +6,10 @@ The `Worldwide Interoperability for Microwave Access (WiMAX)` has been designed 
 WiMAX provides two types of services to subscribers: `fixed` and `mobile`.
 
 ##### Fixed WiMAX
-![](./static/ch16_1.png)
+![img](./pic/ch16_1.png)
 
 ##### Mobile WiMAX
-![](./static/ch16_2.png)
+![img](./pic/ch16_2.png)
 
 ### IEEE Project 802.16
 WiMAX is the result of the IEEE 802.16 project.
@@ -23,7 +23,7 @@ WiMAX is the result of the IEEE 802.16 project.
 ### Layers in Project 802.16
 IEEE has divided the data-link layer into three sublayers and the physical layer into tow sublayers.
 
-![](./static/ch16_3.png)
+![img](./pic/ch16_3.png)
 
 ##### Service Specific Convergence Sublayer
 This is actually the DLC sublayer revised for broadband wireless communication. It has been devised for a connection-oriented service in which each connection may benefit from a specific quality of service (QoS),
@@ -35,7 +35,7 @@ The MAC sublayer defines the access method and the format of the frame. It is a 
 
 **Frame Format**: We distinguish two types of frames: `generic` and `control`. The first is used to send and receive payload; the second is used only during the connection establishment.
 
-![](./static/ch16_4.png)
+![img](./pic/ch16_4.png)
 
 **Addressing**: This protocol is a connection-oriented protocol that uses a connection identifier or virtual connection identifier (VCI). Each frame then uses the same connection identifier for the duration of data transfer.
 
@@ -45,7 +45,7 @@ Security sublayer provides security for communication using WiMAX.
 ##### Transmission Convergence Sublayer
 The transmission convergence sublayer uses TDD (time-division duplex). The physical layer packs the frames received from the data-link layer into two subframes at the physical layer.
 
-![](./static/ch16_5.png)
+![img](./pic/ch16_5.png)
 
 ##### Physical Medium Dependent Sublayer
 This sublayer is in continuous revision.
@@ -54,13 +54,13 @@ This sublayer is in continuous revision.
 ## Cellular Telephony
 Each cellular service area is divided into small regions called cells. Each cell contains an antenna and is controlled by a `base station (BS)`. Each base station, in turn, is controlled by a switching office, called a `mobile switching center (MSC)`.
 
-![](./static/ch16_6.png)
+![img](./pic/ch16_6.png)
 
 ### Operation
 ##### Frequency-Reuse Principle
 A frequency reuse pattern is a configuration of *N* cells, *N* being the reuse factor, in which each cell uses a unique set of frequencies.
 
-![](./static/ch16_7.png)
+![img](./pic/ch16_7.png)
 
 
 ## Summary

@@ -3,13 +3,13 @@
 
 ## 第一章 纵观Android生态圈
 
-![](pic/1.png)
+![img](pic/1.png)
 
 
 ## 第二章 Android的安全设计与架构
 Android 的总体架构由五个主要层次上的组件构成：Android 应用层，Android 框架层，Dalvik 虚拟机层，用户空间原生代码层和 Linux 内核层。
 
-![](pic/2.png)
+![img](pic/2.png)
 
 ### 理解安全边界和安全策略执行
 安全边界是系统中分隔不同信任级别的特殊区域。
@@ -64,7 +64,7 @@ Android 设备启动时，`Zygote` 进程是最先运行的进程之一，它负
 
 `Property服务`：`Property` 服务位于 Android 的初始化服务中，它提供一个持续性的、内存映射的、基于键值对的配置服务。
 
-![](pic/3.png)
+![img](pic/3.png)
 
 `无线接口层`：提供通讯功能。
 
@@ -79,7 +79,7 @@ Android 设备启动时，`Zygote` 进程是最先运行的进程之一，它负
 
 `Binder` 内核驱动是整个 `Binder` 架构的粘合剂。`Binder` 以客户端/服务器模型运行，允许一个进程同时调用多个“远程”进程中的多个方法。`Binder` 架构将底层细节进行了抽象，使得这些方法调用起来就像是本地函数调用。Binder 的信息流图：
 
-![](pic/4.png)
+![img](pic/4.png)
 
 `Binder` 也使用进程 `ID（PID）` 和 `UID` 信息作为一种标识调用进程的手段，允许被调用方作出访问控制决策。通常会调用 `Binder.getCallingUid` 和 `Binder.getCallingPid` 等函数，或者调用 `checkCallingPermission` 等高层次上的检查函数。
 
@@ -94,7 +94,7 @@ Android 设备启动时，`Zygote` 进程是最先运行的进程之一，它负
 
 作为 `logcat` 命令的支持，这个驱动用于查看日志缓冲区，它根据信息的类型，提供了4个独立的日志缓冲区：`main`（主缓冲区）、radio（无线电缓冲区）、event（事件缓冲区）和 system（系统缓冲区）。
 
-![](pic/5.png)
+![img](pic/5.png)
 
 5. Paranoid Networking
 

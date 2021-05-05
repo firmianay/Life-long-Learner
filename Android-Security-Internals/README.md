@@ -4,7 +4,7 @@
 ## 第一章 Android安全模型
 ### Android体系结构
 
-![](pic/1.png)
+![img](pic/1.png)
 
 ##### Binder
 1. Binder实现
@@ -13,7 +13,7 @@ Binder 实现了一个基于抽象接口的分布式组件架构。Binder 驱动
 
 Binder 驱动管理每个进程的一部分地址空间，这些内存块对于进程是只读的，其写操作由内核模块来实施。当一个进程向另一个进程发送消息时，内核在目录进程的内存空间里申请一部分空间，接着直接将消息从发送进程复制进去。然后它将接收消息的具体地址，通过一个短消息发送给接收进程。因为消息在接受者的内存空间，接受者就可以直接访问。当进程不再需要这个消息时，它通知 Binder 驱动程序来释放这一块内存。
 
-![](pic/2.png)
+![img](pic/2.png)
 
 Android 中更高层次的 IPC 抽象，比如 Intent、Messenger、ContentProvider等，都是基于 Binder 实现的。
 
@@ -303,7 +303,7 @@ Android 上的每个应用均运行在一个受限的沙箱内，并且需要应
 ## 第三章 包管理机制
 ### Android应用程序包文件的格式
 
-![](pic/3.png)
+![img](pic/3.png)
 
 ### 代码签名
 签名验证过程，既验证代码是否被篡改，同时验证签名确实由所预期的密钥生成。但存在两个问题，一个是代码签名不能直接解决代码签名者能否被信任的问题，另一个是不能解决被签名的代码是否确定安全的问题。
@@ -370,7 +370,7 @@ AOSP的 `build/` 目录中包含一个叫 signapk 的Android专用工具。
 - 使用 Android shell，直接复制APK文件到一个应用的目录，由包管理器探测并安装。
 实线箭头表示组件之间的依赖关系，和函数调用一样。虚线箭头指向的文件或目录，受某个组件监控，但不由那个组件直接修改。
 
-![](pic/4.png)
+![img](pic/4.png)
 
 ##### 应用程序包和数据的位置
 大部分系统中，system 分区是只读分区，可在 `/system/app/` 目录下找到系统应用，在 `/system/priv-app/` 下是有特权的应用，它们可被授权 signatureOrSystem 保护级别的权限。`/system/vendor/app` 目录下是厂商专有的应用。用户安装的应用存放在具有读写权限的 userdata 分区的 `/data/app/` 目录下，数据目录 `/data/data/`，应用优化过的DEX文件 `/data/dalvik-cache/`，系统包数据库 `/data/system/packages.xml` 等。
@@ -447,14 +447,14 @@ AppDirObserver 是一个用于检测应用目录下 APK 文件改动的组件，
 
 7. 文件和目录结构
 
-![](pic/5.png)
+![img](pic/5.png)
 
 8. 将新安装的包添加到package.xml
 9. 包属性
 
 可以通过 `android.content.pm.PackageManager` SDK类的 `getPackageInfo(String packageName, int flags)` 方法获取，该方法返回一个 PackageInfo 的实例，其封装了 `packages.xml` 中每个条目的信息。
 
-![](pic/6.png)
+![img](pic/6.png)
 
 10. 更新组件和权限
 
@@ -570,7 +570,7 @@ Android可选择在安装之前，通过一个或多个验证代理对应用程�
 
 1. 用户限制
 
-![](pic/7.png)
+![img](pic/7.png)
 
 2. 应用限制
 应用程序在运行时，可以使用 `UserManager.getUserRestrictions()` 方法获取一个 Bundle（一个通用的容器类，使用字符串映射不同的类型值），其包括强加到用户上的限制条件。限制条件以键值对定义，键是限制条件名称，值用布尔变量表示是否生效。除 OS 定义的内置限制条件，应用程序可以通过创建一个 BroadcastReceiver，接收 `ACTION_GET_RESTRICTION_ENTRIES` intent，从而自定义限制条件。
@@ -651,7 +651,7 @@ JCA 将密码功能分成若干抽象的加密服务，也叫做引擎，并且�
 
 在 JCA 环境中，一个加密服务提供程序（CSP，或Provider）提供了某些加密服务具体实现的一个包。每个 Provider 通告其实现的服务及算法，允许 JCA 框架维护一个所支持算法及相关实现的 Provider 注册表。该注册表维护着 Provider 优先序列，所以如果某个算法被多个 Provider 所支持，则优先级较高的会被返回给所请求的应用程序。
 
-![](pic/8.png)
+![img](pic/8.png)
 
 1. Provider实现
 
@@ -833,7 +833,7 @@ device-mapper 的功能本质上是将一个虚拟块设备映射到一个或多
 ##### dm-verity简介
 因为 dm-verity 是一个块完整性检测靶，当每个块设备被读入时，都会透明地验证每个块设备的完整性。从细节上看，dm-verity 使用了一个预计算哈希树，里面包含所有设备块的哈希。
 
-![](pic/9.png)
+![img](pic/9.png)
 
 ##### Android实现
 Android 也使用了 dm-verity 靶，RSA 公钥保存在 boot 分区的 verity_key 文件中，用于验证 dm-verity 映射表。而该映射表中包含目标设备路径及其对应哈希表偏移、根哈希和盐。
@@ -847,15 +847,15 @@ Android 也使用了 dm-verity 靶，RSA 公钥保存在 boot 分区的 verity_k
 
 哈希树。Android 的 dm-verity 要求哈希树和目标文件系统在同样的设备上，因此在调用 veritysetup 命令时，必须显式指定元数据块之后的偏移量。
 
-![](pic/10.png)
+![img](pic/10.png)
 
 生成哈希树就会产生根哈希值，根哈希之后被用于为目标设备构建 dm-verity 映射表。
 
-![](pic/11.png)
+![img](pic/11.png)
 
 映射表会被 2048 比特的 RSA 密钥签名，然后与生成的 PKCS#1 v1.5 签名一起组成 32KB 的 verity 元数据块。
 
-![](pic/12.png)
+![img](pic/12.png)
 
 最后修改设备的 fstab 文件，打开系统分区的块完整性检查，添加 verify 标签即可。
 
@@ -875,7 +875,7 @@ SELinux 是 Linux 内核的一个强制访问控制机制，作为一个 Linux �
 ##### SELinux架构
 四个基本组件：对象管理器，访问向量缓存，一个安全服务器和一个安全策略。
 
-![](pic/13.png)
+![img](pic/13.png)
 
 ##### 强制访问控制
 SELinux 的 MAC 模型基于三个主要概念：主体、对象和操作。

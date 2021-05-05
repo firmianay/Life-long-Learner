@@ -98,7 +98,7 @@ def perceptron(X, Y, w, speed=1):
         num += 1
     return num
 
-X, Y = loadData('./static/homework/hw1_15_train.dat')
+X, Y = loadData('./pic/homework/hw1_15_train.dat')
 col, row = X.shape
 
 w0 = np.zeros((row, 1))
@@ -142,7 +142,7 @@ def perceptron(X, Y, w, speed=1):
         num += 1
     return num
 
-X, Y = loadData('./static/homework/hw1_15_train.dat')
+X, Y = loadData('./pic/homework/hw1_15_train.dat')
 col, row = X.shape
 
 total = 0
@@ -192,7 +192,7 @@ def perceptron(X, Y, w, speed=1):
         num += 1
     return num
 
-X, Y = loadData('./static/homework/hw1_15_train.dat')
+X, Y = loadData('./pic/homework/hw1_15_train.dat')
 col, row = X.shape
 
 total = 0
@@ -249,8 +249,8 @@ def pocket(X, Y, w, iternum, speed=1):
             errOld = errNow
     return wBest, w
 
-X, Y = loadData('./static/homework/hw1_18_train.dat')
-Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+X, Y = loadData('./pic/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./pic/homework/hw1_18_test.dat')
 col, row = X.shape
 
 total = 0
@@ -310,8 +310,8 @@ def pocket(X, Y, w, iternum, speed=1):
             errOld = errNow
     return wBest, w
 
-X, Y = loadData('./static/homework/hw1_18_train.dat')
-Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+X, Y = loadData('./pic/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./pic/homework/hw1_18_test.dat')
 col, row = X.shape
 
 total = 0
@@ -371,8 +371,8 @@ def pocket(X, Y, w, iternum, speed=1):
             errOld = errNow
     return wBest, w
 
-X, Y = loadData('./static/homework/hw1_18_train.dat')
-Xtest, Ytest = loadData('./static/homework/hw1_18_test.dat')
+X, Y = loadData('./pic/homework/hw1_18_train.dat')
+Xtest, Ytest = loadData('./pic/homework/hw1_18_test.dat')
 col, row = X.shape
 
 total = 0

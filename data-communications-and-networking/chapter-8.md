@@ -2,12 +2,12 @@
 ## Introduction
 A switched network consists of a series of interlinked nodes, called `switches`. Switches are devices capable of creating temporary connections between two or more devices linked to the switch.
 
-![](./static/ch8_1.png)
+![img](./pic/ch8_1.png)
 
 ### Three Methods of Switching
 There are three methods of switching have been discussed: `circuit switching`, `packet switching`, and `message switching`.
 
-![](./static/ch8_2.png)
+![img](./pic/ch8_2.png)
 
 ### Switching and TCP/IP Layers
 
@@ -20,7 +20,7 @@ There are three methods of switching have been discussed: `circuit switching`, `
 ## Circuit-Switching Networks
 A circuit-switched network is made of a set of switches connected by physical links, in which each link is divided into *n* channels.
 
-![](./static/ch8_3.png)
+![img](./pic/ch8_3.png)
 
 In circuit switching, the resources need to be reserved during the setup phase; the resources remain dedicated for the entire duration of data transfer until the teardown phase.
 
@@ -44,7 +44,7 @@ It can be argued that circuit-switched networks are not as efficient as the othe
 ### Delay
 The delay in this type os network is minimal. During data transfer the data are not delayed at each switch; the resources are allocated for the duration of the connection.
 
-![](./static/ch8_6.png)
+![img](./pic/ch8_6.png)
 
 
 ## Packet Switching
@@ -57,14 +57,14 @@ There are two types of packet-switched networks: `datagram networks` and `virtua
 ### Datagram Networks
 In a `datagram network`, each packet is treated independently of all others. Packets in this approach are referred to as `datagrams`. Datagram switching is normally done at the network layer.
 
-![](./static/ch8_7.png)
+![img](./pic/ch8_7.png)
 
 This approach can cause the datagrams of a transmission to arrive at their destination out of order with different delays between the packets. Packets may also be lost or dropped because of a lack of resources.
 
 ##### Routing Table
 A switch in a datagram network uses a routing table that is based on the destination address. The routing tables are dynamic and are updated periodically.
 
-![](./static/ch8_8.png)
+![img](./pic/ch8_8.png)
 
 **Destination Address**: The destination address in the header of a packet in a datagram network remains the same during the entire journey of the packet.
 
@@ -72,7 +72,7 @@ A switch in a datagram network uses a routing table that is based on the destina
 
 **Delay**: There may be greater delay in a datagram network than in a virtual-circuit network.
 
-![](./static/ch8_9.png)
+![img](./pic/ch8_9.png)
 
 ### Virtual-Circuit Networks
 A virtual-circuit network is a cross between a circuit-switched network and a datagram network.
@@ -82,7 +82,7 @@ A virtual-circuit network is a cross between a circuit-switched network and a da
 4. As in a circuit-switched network, all packets follow the same path established during the connection.
 5. A virtual-circuit network is normally implemented in the data-link layer, while a circuit-switched network is implemented in the physical layer and a datagram network in the network layer.
 
-![](./static/ch8_10.png)
+![img](./pic/ch8_10.png)
 
 ##### Addressing
 In a virtual-circuit network, two types of addressing are involved: `global` and `local`.
@@ -91,7 +91,7 @@ In a virtual-circuit network, two types of addressing are involved: `global` and
 
 **Virtual-Circuit Identifier**: The identifier that is actually used for data transfer is called the `virtual-circuit identifier (VCI)`. It is used by a frame between two switches.
 
-![](./static/ch8_11.png)
+![img](./pic/ch8_11.png)
 
 ##### Three Phases
 As in a circuit-switched network, a source and destination need to go through three phases in a virtual-circuit network: `setup`, `data transfer`, and `teardown`. In the setup phase, the source and destination use their global addresses to help switches make table entries for the connection. In the teardown phase, the source and destination inform the switches to delete the corresponding entry.
@@ -99,16 +99,16 @@ As in a circuit-switched network, a source and destination need to go through th
 **Data-Transfer Phase**:
 To transfer a frame from a source to its destination, all switches need to have a table entry for this virtual circuit. The data-transfer phase is active until the source sends all its frames to the destination.
 
-![](./static/ch8_13.png)
+![img](./pic/ch8_13.png)
 
 **Setup Phase**: In the setup phase, a switch creates an entry for a virtual circuit. Two steps are required: the setup request and the acknowledgment.
 - `Setup Phase`: A setup request frame is sent from the source to the destination.
 
- ![](./static/ch8_14.png)
+ ![img](./pic/ch8_14.png)
 
 - `Acknowledgment`: A special frame, called the `acknowledgment frame`, completes the entries in the switching tables.
 
- ![](./static/ch8_15.png)
+ ![img](./pic/ch8_15.png)
 
 **Teardowm Phase**: In this phase, source A, after sending all frames to B, sends a special frame called a teardown request. Destination B responds with a teardown confirmation frame. All switches delete the corresponding entry from their tables.
 
@@ -116,7 +116,7 @@ To transfer a frame from a source to its destination, all switches need to have 
 
 **Delay in Virtual-Circuit Networks**:
 
-![](./static/ch8_16.png)
+![img](./pic/ch8_16.png)
 
 **Circuit-Switched Technology in WANs**: Switching at the data-link layer in a switched WAN is normally implemented by using virtual-circuit techniques.
 
@@ -130,25 +130,25 @@ In space-division switching, the paths in the circuit are separated from one ano
 
 **Crossbar Switch**: A crossbar switch connects *n* inputs to *m* outputs in a grid, using electronic microswitches at each crosspoint. It requires *n x m* crosspoints.
 
-![](./static/ch8_17.png)
+![img](./pic/ch8_17.png)
 
 **Multistage Switch**: multistage switch combines crossbar switches in several stages.
 
-![](./static/ch8_18.png)
+![img](./pic/ch8_18.png)
 
 To design a three-stage switch, we follow these steps:
 1. We divide the *N* input lines into groups, each of *n* lines. For each group, we use one crossbar of size *n x k*, where *k* is the number of crossbars in the middle stage.
 2. We use *k* crossbars, each of size *(N/n) x (N/n)* in the middle stage.
 3. We use *N/n* crossbars, each of size *k x n* at the third stage.
 
-![](./static/ch8_f1.png)
+![img](./pic/ch8_f1.png)
 
 ##### Time-Division Switch
 `Time-division switching` uses time-division multiplexing (TDM) inside a switch. The most popular technology is called the `time-slot interchange (TSI)`.
 
 **Time-Slot Interchange**: The figure combines a TDM multiplexer, a TDM demultiplexer, and a TSI consisting of random access memory (RAM) with several memory locations.
 
-![](./static/ch8_19.png)
+![img](./pic/ch8_19.png)
 
 ##### Time- and Space-Division Switch Combinations
 - The advantage of `space-division switching` is that it is instantaneous. Its disadvantage is the number of cross points required to make space-division switching acceptable in terms of blocking.
@@ -156,12 +156,12 @@ To design a three-stage switch, we follow these steps:
 
 The `time-space-time (TST) switches` combine space-division and time-division technologies to take advantage of the best of both.
 
-![](./static/ch8_20.png)
+![img](./pic/ch8_20.png)
 
 ### Structure of Packet Switches
 A packet switch has four components: `input ports`, `output ports`, the `routing processor`, and the `switching fabric`.
 
-![](./static/ch8_21.png)
+![img](./pic/ch8_21.png)
 
 ##### Input Ports
 An `input port` performs the physical and data-link functions of the packet switch.
@@ -171,7 +171,7 @@ An `input port` performs the physical and data-link functions of the packet swit
 - The packet is now ready to be routed by the network layer.
 - In addition to a physical-layer processor and a data-link processor, the input port has buffers (queues) to hold the packet before it is directed to the switching fabric.
 
-![](./static/ch8_22.png)
+![img](./pic/ch8_22.png)
 
 ###### Output Ports
 The `output port` performs the same functions as the input port, but in the reverse order.
@@ -179,7 +179,7 @@ The `output port` performs the same functions as the input port, but in the reve
 - then the packet is encapsulated in a frame
 - and finally the physical-layer functions are applied to the frame to create the signal to be sent on the line.
 
-![](./static/ch8_23.png)
+![img](./pic/ch8_23.png)
 
 ##### Routing Processor
 The `routing processor` performs the functions of the network layer. The destination address is used to find the address of the next hop and, at the same time, the output port number from which the packet is sent out. This activity is sometimes referred to as `table lookup` because the routing processor searches the routing table.
@@ -191,7 +191,7 @@ The most difficult task in a packet switch is to move the packet from the input 
 
 **Banyan Switch**: A banyan switch is a multistage switch with microswitches at each stage that route the packets based on the output port represented as a binary string. For *n* inputs and *n* outputs, we have log<sub>2</sub>*n* stages with n/2 micros witches at each stage. The first stage routes the packet based on the high-order bit of the binary string. The second stage routes the packet based on the second high-order bit, and so on.
 
-![](./static/ch8_24.png)
+![img](./pic/ch8_24.png)
 
 
 ## Summary

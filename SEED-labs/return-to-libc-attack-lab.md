@@ -323,7 +323,7 @@ seed@ubuntu:~$ cat -n foobar.s
     36      ret
 ```
 
-![return-to-libc1](./static/return-to-libc1.png)
+![return-to-libc1](./pic/return-to-libc1.png)
 
 ### Calling and Entering foo()
 Let us concentrate on the stack while calling `foo()`. We can ignore the stack before that. Please note that line number instead of instruction addresses are used in this explanation.

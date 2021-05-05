@@ -1,18 +1,18 @@
 # Android 软件安全与逆向分析
 
 
-![](pic/1.jpg)
+![img](pic/1.jpg)
 
-![](pic/2.jpg)
+![img](pic/2.jpg)
 
-![](pic/3.png)
+![img](pic/3.png)
 
 
 ## 第三章 进入 Android Dalvik 虚拟机
 #### Dalvik虚拟机的特点
 `dx` 工具将所有的 Java 类文件中的常量池进行分解，消除其中的冗余信息，重新组合形成一个常量池，所有的类文件共享同一个常量池。
 
-![](pic/4.png)
+![img](pic/4.png)
 
 实例：
 ```java
@@ -71,7 +71,7 @@ public class Hello {
 }
 ```
 
-![](pic/5.png)
+![img](pic/5.png)
 
 Java 字节码指令列表：https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings
 
@@ -158,13 +158,13 @@ Class #0            -
   source_file_idx   : 1 (Hello.java)
 ```
 
-![](pic/6.png)
+![img](pic/6.png)
 
 Dalvik 虚拟机属于 Android 运行时环境，它与一些核心库共同承担 Android 应用程序的运行工作。
 
 Android 系统启动加载完内核后，第一个执行的是 `init` 进程， `init` 进程首先要做的是设备的初始化工作，然后读取 `init.rc` 文件并启动系统中的重要外部程序 `Zygote`。`Zygote` 进程是 Android 所有进程的孵化器进程，它启动后首先初始化 `Dalvik` 虚拟机，然后启动 `system_server` 并进入 `Zygote` 模式，通过 `socket` 等候命令。当执行一个 Android 应用程序时，`system_server` 进程通过 `Binder IPC` 方式发送命令给 `Zygote`，`Zygote` 收到命令后通过 `fork` 自身创建一个 Dalvik 虚拟机的实例来执行应用程序的入口函数，一个程序就启动完成了。
 
-![](pic/7.png)
+![img](pic/7.png)
 
 Zygote 提供了三种创建进程的方法：
 - `fork()`：创建一个 Zygote 进程（这种方式实际不会被调用）；
@@ -175,7 +175,7 @@ Zygote 提供了三种创建进程的方法：
 
 当进程 fork 成功后，执行的工作就交给 Dalvik 虚拟机。Dalvik 虚拟机首先通过 `loadClassFromDex()` 函数完成类的装载工作，每个类被成功解析后都会拥有一个 `ClassObject` 类型的数据结构存储在运行时环境中，虚拟机使用 `gDvm.loadedClass` 全局哈希表来存储与查询所有装载进来的类，随后，字节码验证器使用 `dvmVerifyCodeFlow()` 函数对装入的代码进行校验，接着虚拟机调用 `FindClass()` 函数查找并装载 `main` 方法类，随后调用 `dvmInterpret()` 函数初始化解释器并执行字节码流。
 
-![](pic/8.png)
+![img](pic/8.png)
 
 #### Dalvik汇编语言基础为分析Android程序做准备
 Dalvik指令语法由指令的位描述与指令格式标识来决定。
@@ -191,7 +191,7 @@ Dalvik指令语法由指令的位描述与指令格式标识来决定。
 - 第三个字母为类型码，表示指令用到的额外数据的类型。
 还有一种特殊情况是末尾可能会多出另一个字母，如果是字母 `s` 表示指令采用静态链接，如果是字母 `i` 表示指令应该被内联处理。
 
-![](pic/9.png)
+![img](pic/9.png)
 
 Dalvik指令语法约定：
 - 每条指令从操作码开始，后面紧跟参数，参数个数不定，每个参数之间采用逗号分开。
@@ -202,7 +202,7 @@ Dalvik指令语法约定：
 - 如果参数采用 "kind@X" 的方式表示，表明它是一个常量池索引值。kind 可以是 string、type、field、meth。
 Dalvik将部分寄存器映射到了 ARM 寄存器上，还有一部分则通过调用栈进行模拟。Dalvik中用到的寄存器都是32位的，支持任何类型，64位类型用2个相邻寄存器表示。取值范围是 v0~v65535。我们知道Dalvik虚拟机为每个进程维护一个调用栈，这个调用栈其中一个作用就是用来虚拟寄存器。Android SDK 中有一个名为 `dalvik.bytecode.Opcodes` 的接口，它定义了一份完整的Dalvik字节码列表，处理这些字节码的函数为一个宏 `HANDLE_OPCODE()`，每个字节码的处理过程可以在 `dalvik/vm/mterp/c` 中找到。
 
-![](pic/10.png)
+![img](pic/10.png)
 
 Dalvik字节码有一套自己的类型、方法和字段表示方法，与Dalvik虚拟机指令集一起组成Dalvik汇编代码：
 
@@ -210,7 +210,7 @@ Dalvik字节码有一套自己的类型、方法和字段表示方法，与Dalvi
 
 Dalvik字节码只有两种类型，基本类型与引用类型。除了对象与数组属于引用类型外，其他的Java类型都是基本类型。
 
-![](pic/11.png)
+![img](pic/11.png)
 
 - `L` 类型可以表示Java类型中的任何类，以 `Lpackage/name/ObjectName;` 形式表示。
 - `[` 类型可以表示所有基本的数组。`[` 后面紧跟基本类型描述符  ，多个 `[` 在一起时表示多维数组。
@@ -433,19 +433,19 @@ ushr-type        // （无符号数）vBB >> vCC
 6. 对 APK 文件进行签名。
 7. 对签名后的 APK 文件进行对齐处理。
 
-![](pic/12.png)
+![img](pic/12.png)
 
 ##### dex文件格式
 
-![](pic/13.png)
+![img](pic/13.png)
 
 每个 `LEB128` 由1~5个字节组成，所有的字节组合在一起表示一个32位的数据，每个字节只有7位为有效位，如果第1个字节的最高位为1，表示 LEB128 需要使用第2个字节，依次类推，直到最后的字节最高位为0，如果读取5个字节后下一个字节最高位仍为1，表示该 dex 文件无效。
 
-![](pic/14.png)
+![img](pic/14.png)
 
 一个 dex 文件由7个部分组成。dex header 为 dex 头，它指定了 dex 文件的一些属性，并记录了其它６部分数据结构在 dex 文件中的物理偏移。 string_ids 到 class_def 结构可以理解为索引结构区，真实的数据存放在 data 数据区，最后的 link_data 为静态链接数据区。
 
-![](pic/15.png)
+![img](pic/15.png)
 
 未经优化的 dex 文件结构表示如下：
 ```
@@ -489,7 +489,7 @@ struct DexHeader {
 };
 ```
 
-![](pic/16.png)
+![img](pic/16.png)
 
 Dalvik 虚拟机解析 dex 文件的内容，最终将其映射成 `DexMapList` 数据结构。DexHeader 结构的 `mapOff` 字段指明了 DexMapList 结构在 dex 文件中的偏移，声明如下：
 ```
@@ -608,7 +608,7 @@ struct DexCode {
 #### odex文件格式
 odex 文件的结构可以理解为 dex 文件的一个超集，它在 dex 文件头部添加了一些数据，然后在 dex 文件尾部添加了 dex 文件的依赖库以及一些辅助数据。
 
-![](pic/17.png)
+![img](pic/17.png)
 
 ```
 struct ODEXFile {
@@ -728,7 +728,7 @@ struct ChunkEnd {
 };
 ```
 
-![](pic/18.png)
+![img](pic/18.png)
 
 
 ## 第五章 静态分析 Android 程序
@@ -1048,7 +1048,7 @@ NEXT:
 - `opcode` 为指令助记符。
 - `cond` 为执行条件，取值如下：
 
-![](pic/19.png)
+![img](pic/19.png)
 
 - `S` 指定指令是否影响 CPSR 寄存器的值。
 - `.W` 与 `.N` 为指令宽度说明符。
@@ -1092,7 +1092,7 @@ LDRD {cond} Rd, Rd2, label
 ```
 `type` 指明了操作数数据的大小：
 
-![](pic/20.png)
+![img](pic/20.png)
 
 - `cond` 为执行条件。
 - `Rd` 为要加载的寄存器。
@@ -1110,7 +1110,7 @@ LDM {addr_mode} {cond} Rn{!} reglist
 ```
 `addr_mode` 取值如下：
 
-![](pic/21.png)
+![img](pic/21.png)
 
 - `cond`为执行条件。
 - `Rn` 为基址寄存器，用于存储初始地址。
@@ -1317,7 +1317,7 @@ MSR Rd, psr_fields, operand2
 
 #### 原生文件格式
 
-![](pic/22.png)
+![img](pic/22.png)
 
 #### 原生C程序逆向分析
 1. for循环语句反汇编代码的特点
@@ -1351,9 +1351,9 @@ int main(int argc, char* argv[]){
 }
 ```
 
-![](pic/23.png)
+![img](pic/23.png)
 
-![](pic/24.png)
+![img](pic/24.png)
 
 
 2. if...else分支语句反汇编代码的特点
@@ -1387,9 +1387,9 @@ int main(int argc, char* argv[]){
 }
 ```
 
-![](pic/25.png)
+![img](pic/25.png)
 
-![](pic/26.png)
+![img](pic/26.png)
 
 3. while循环语句反汇编代码的特点
 ```
@@ -1420,9 +1420,9 @@ int main(int argc, char* argv[]){
 }
 ```
 
-![](pic/27.png)
+![img](pic/27.png)
 
-![](pic/28.png)
+![img](pic/28.png)
 
 4. switch分支语句反汇编代码的特点
 ```
@@ -1454,7 +1454,7 @@ int main(int argc, char* argv[]){
 }
 ```
 
-![](pic/29.png)
+![img](pic/29.png)
 
 #### 原生C++程序逆向分析
 1. C++类的逆向
@@ -1463,7 +1463,7 @@ int main(int argc, char* argv[]){
 
 2. Android NDK对C++特性的支持
 
-![](pic/30.png)
+![img](pic/30.png)
 
 
 ## 第八章 动态调试Android程序

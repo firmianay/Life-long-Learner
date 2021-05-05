@@ -2,11 +2,11 @@
 ## Introduction
 Transmission media are actually located below the physical layer and are directly controlled by the physical layer.
 
-![](./static/ch7_1.png)
+![img](./pic/ch7_1.png)
 
 In telecommunications, transmission media can be divided into two broad categories: guided and unguided. Guided media include twisted-pair cable, coaxial cable, and fiber-optic cable. Unguided medium is free space.
 
-![](./static/ch7_2.png)
+![img](./pic/ch7_2.png)
 
 
 ## Guided Media
@@ -16,33 +16,33 @@ Guided media, which are those that provide a conduit from one device to another,
 
 ### Twisted-Pair Cable
 
-![](./static/ch7_3.png)
+![img](./pic/ch7_3.png)
 
-![](./static/ch7_5.png)
+![img](./pic/ch7_5.png)
 
-![](./static/ch7_6.png)
+![img](./pic/ch7_6.png)
 
 ### Coaxial Cable
 
-![](./static/ch7_7.png)
+![img](./pic/ch7_7.png)
 
-![](./static/ch7_8.png)
+![img](./pic/ch7_8.png)
 
-![](./static/ch7_9.png)
+![img](./pic/ch7_9.png)
 
 ### Fiber-Optic Cable
 
-![](./static/ch7_11.png)
+![img](./pic/ch7_11.png)
 
-![](./static/ch7_15.png)
+![img](./pic/ch7_15.png)
 
-![](./static/ch7_16.png)
+![img](./pic/ch7_16.png)
 
 
 ## Unguided Media: Wireless
 Unguided medium transport electromagnetic waves without using a physical conductor.
 
-![](./static/ch7_17.png)
+![img](./pic/ch7_17.png)
 
 
 ## Summary

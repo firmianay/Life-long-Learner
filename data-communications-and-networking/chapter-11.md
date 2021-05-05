@@ -13,19 +13,19 @@ Framing in the data-link layer separates a message from one source to a destinat
 
 **Character-Oriented Framing**: data to be carried are 8-bit characters from a coding system such as ASCII. The header, which normally carries the source and destination addresses and other control information, and the trailer, which carries error detection redundant bits, are also multiples of 8 bits. To separate one frame from the next, an 8-bit `flag` is added at the beginning and the end of a frame.
 
-![](./static/ch11_1.png)
+![img](./pic/ch11_1.png)
 
 `Byte stuffing` is the process of adding one extra byte whenever there is a flag or escape character in the text.
 
-![](./static/ch11_2.png)
+![img](./pic/ch11_2.png)
 
 **Bit-Oriented Framing**: the data section of a frame is a sequence of bits to be interpreted by the upper layer. Most protocols use a special 8-bit pattern flag, `01111110`, as the delimiter to define the beginning and the end of the frame.
 
-![](./static/ch11_3.png)
+![img](./pic/ch11_3.png)
 
 `Bit stuffing` is the process of adding one extra 0 whenever five consecutive is follow a 0 in the data, so that the receiver does not mistake the pattern 0111110 for a flag.
 
-![](./static/ch11_4.png)
+![img](./pic/ch11_4.png)
 
 ### Flow and Error Control
 ##### Flow Control
@@ -33,7 +33,7 @@ Framing in the data-link layer separates a message from one source to a destinat
 
 There are two `buffers`: one at the sending data-link layer and the other at the receiving data-link layer.
 
-![](./static/ch11_5.png)
+![img](./pic/ch11_5.png)
 
 ##### Error Control
 Error control at the data-link layer is implemented using one of the following two methods. In both methods, a CRC is added to the frame header by the sender and checked by the receiver.
@@ -54,25 +54,25 @@ Traditionally four protocols have been defined for the data-link layer to deal w
 
 The behavior of a data-link-layer protocol can be better shown as a `finite state machine (FSM)`. An FSM is thought of as a machine with a finite number of states. The machine is always in one of the states until an event occurs. Each event is associated with two reactions: defining the list of actions to be performed and determining the next state. One of the states must be defined as the initial state, the state in which the machine starts when it turns on.
 
-![](./static/ch11_6.png)
+![img](./pic/ch11_6.png)
 
 ### Simple Protocol
 Simple protocol has neither flow nor error control.
 
-![](./static/ch11_7.png)
+![img](./pic/ch11_7.png)
 
 ##### FSMs
 
-![](./static/ch11_8.png)
+![img](./pic/ch11_8.png)
 
 ### Stop-and-Wait Protocol
 Stop-and-Wait protocol uses both flow and error control. The sender sends one frame at a time and waits for an acknowledgment before sending the next one. Note that only one frame and one acknowledgment can be in the channels at any time.
 
-![](./static/ch11_10.png)
+![img](./pic/ch11_10.png)
 
 ##### FSMs
 
-![](./static/ch11_11.png)
+![img](./pic/ch11_11.png)
 
 **Sender States**: The sender is initially in the ready state, but it can move between the ready and blocking state.
 - `Ready State`: When the sender is in this state, it is only waiting for a packet from the network layer. If a packet comes from the network layer, the sender creates a frame, saves a copy of the frame, starts the only timer and sends the frame. The sender then moves to the blocking state.
@@ -87,7 +87,7 @@ Stop-and-Wait protocol uses both flow and error control. The sender sends one fr
 
 **Sequence and Acknowledgment Numbers**: We need to add `sequence numbers` to the data frames and `acknowledgment numbers` to the ACK frames.
 
-![](./static/ch11_13.png)
+![img](./pic/ch11_13.png)
 
 ### Piggybacking
 To make the communication more efficient, the data in one direction is piggybacked with the acknowledgment in the other direction.
@@ -99,11 +99,11 @@ To make the communication more efficient, the data in one direction is piggyback
 HDLC provides two common transfer modes that can be used in different configurations: `normal response mode (NRM)` and `asynchronous balanced mode (ABM)`.
 - In normal response mode (NRM), the station configuration is unbalanced. We have one primary station and multiple secondary stations. A primary station can send commands; a secondary station can only respond. The NRM is used for both point-to-point and multipoint links.
 
- ![](./static/ch11_14.png)
+ ![img](./pic/ch11_14.png)
 
 - In ABM, the configuration is balanced. The link is point-to-point, and each station can function as a primary and a secondary (acting as peers),
 
- ![](./static/ch11_15.png)
+ ![img](./pic/ch11_15.png)
 
 ### Framing
 HDLC defines three types of frames:
@@ -119,7 +119,7 @@ Each frame in HDLC may contain up to six fields:
 - a frame check sequence (FCS) field
 - an ending flag field
 
-![](./static/ch11_16.png)
+![img](./pic/ch11_16.png)
 
 - `Flag field`: This field contains synchronization pattern 01111110, which identifies both the beginning and the end of a frame.
 - `Address field`: This field contains the address of the secondary station. If a primary station created the frame, it contains a *to* address. If a secondary station creates the frame, it contains a *from* address.
@@ -127,7 +127,7 @@ Each frame in HDLC may contain up to six fields:
 - `Information field`: The information field contains the user's data from the network layer or management information.
 - `FCS field`: The frame check sequence (FCS) is the HDLC error detection field. It can contain either a 2- or 4-byte CRC.
 
-![](./static/ch11_17.png)
+![img](./pic/ch11_17.png)
 
 The control field determines the type of frame and defines its functionality.
 - `Control Field for I-Frames`: I-frames are designed to carry user data from the network layer. In addition, they can include flow- and error-control information (piggybacking). The subfields in the control field are used to define these functions. The first bit defines the type. If the first bit of the control field is 0, this means the frame is an I-frame. The next 3 bits, called *N(S)*, define the sequence number of the frame. The last 3 bits, called *N(R)*, correspond to the acknowledgment number when piggybacking is used. The single bit between *N(S)* and *N(R)* is called the P/F bit. The P/F field is a single bit with a dual purpose. It has meaning only when it is set (bit = 1) and can mean poll or final. It means poll when the frame is sent by a primary station to a secondary (when the address field contains the address of the receiver). It means final when the frame is sent by a secondary to a primary (when the address field contains the address of the sender).
@@ -138,9 +138,9 @@ The control field determines the type of frame and defines its functionality.
  - `Selective reject (SREJ)`. If the value of the code subfield is 11, it is an SREJ S-frame. This is a NAK frame used in Selective Repeat ARQ. Note that the HDLC Protocol uses the term selective reject instead of selective repeat. The value of *N(R)* is the negative acknowledgment number.
 - `Control Fieldfor U-Frames`: Unnumbered frames are used to exchange session management and control information between connected devices. Unlike S-frames, U-frames contain an information field, but one used for system management information, not user data. As with S-frames, however, much of the information carried by U-frames is contained in codes included in the control field. U-frame codes are divided into two sections: a 2-bit prefix before the P/F bit and a 3-bit suffix after the P/P bit. Together, these two segments (5 bits) can be used to create up to 32 different types of U-frames.
 
-![](./static/ch11_18.png)
+![img](./pic/ch11_18.png)
 
-![](./static/ch11_19.png)
+![img](./pic/ch11_19.png)
 
 
 ## Point-to-Point Protocol (PPP)
@@ -174,23 +174,23 @@ Since PPP is a character-oriented protocol, the flag in PPP is a byte that need 
 
 ### Transition Phases
 
-![](./static/ch11_21.png)
+![img](./pic/ch11_21.png)
 
 ### Multiplexing
 Three sets of protocols are defined to make PPP powerful: the `Link Control Protocol (LCP)`, two `Authentication Protocols (APs)`, and several `Network Control Protocols (NCPs)`.
 
-![](./static/ch11_22.png)
+![img](./pic/ch11_22.png)
 
 ##### Link Control Protocol
 The `Link Control Protocol (LCP)` is responsible for establishing, maintaining, configuring, and terminating links. It also provides negotiation mechanisms to set options between the two endpoints. Both endpoints of the link must reach an agreement about the options before the link can be established.
 
 All LCP packets are carried in the payload field of the PPP frame with the protocol field set to C021 in hexadecimal.
 
-![](./static/ch11_23.png)
+![img](./pic/ch11_23.png)
 
 The `code field` defines the type of LCP packet. There are 11 types of packets:
 
-![](./static/ch11_f1.png)
+![img](./pic/ch11_f1.png)
 
 There are three categories of packets.
 - The first category, comprising the first four packet types, is used for link configuration during the establish phase.
@@ -203,7 +203,7 @@ The `length field` defines the length of the entire LCP packet.
 
 The `information field` contains information, such as options, needed for some LCP packets. There are many options that can be negotiated between the two endpoints. Options are inserted in the information field of the configuration packets. In this case, the information field is divided into three fields: `option type`, `option length`, and `option data`.
 
-![](./static/ch11_f2.png)
+![img](./pic/ch11_f2.png)
 
 ##### Authentication Protocols
 PPP has created two protocols for authentication: `Password Authentication Protocol` and `Challenge Handshake Authentication Protocol`. Note that these protocols are used during the authentication phase.
@@ -212,7 +212,7 @@ PPP has created two protocols for authentication: `Password Authentication Proto
 1. The user who wants to access a system sends an authentication identification (usually the user name) and a password.
 2. The system checks the validity of the identification and password and either accepts or denies connection.
 
-![](./static/ch11_24.png)
+![img](./pic/ch11_24.png)
 
 Three types of packets used by PAP. When a PPP frame is carrying any PAP packets, the value of the protocol field is OxC023.
 - `authenticate-request`: The first is used by the user to send the user name and password.
@@ -224,7 +224,7 @@ Three types of packets used by PAP. When a PPP frame is carrying any PAP packets
 2. The user applies a predefined function that takes the challenge value and the user's own password and creates a result. The user sends the result in the response packet to the system.
 3. The system does the same. It applies the same function to the password of the user (known to the system) and the challenge value to create a result. If the result created is the same as the result sent in the response packet, access is granted; otherwise, it is denied.
 
-![](./static/ch11_25.png)
+![img](./pic/ch11_25.png)
 
 CHAP packets are encapsulated in the PPP frame with the protocol value C223 in hexadecimal. There are four CHAP packets:
 - `challenge`: The first packet is used by the system to send the challenge value.
@@ -237,7 +237,7 @@ PPP is a multiple-network-layer protocol. It can carry a network-layer data pack
 
 **IPCP**: One NCP protocol is the `Internet Protocol Control Protocol (IPCP)`. This protocol configures the link used to carry IP packets in the Internet. Note that the value of the protocol field in hexadecimal is 8021.
 
-![](./static/ch11_26.png)
+![img](./pic/ch11_26.png)
 
 IPCP defines seven packets, distinguished by their code values:
 
@@ -254,14 +254,14 @@ Code | IPCP Packet
 ##### Data from the Network Layer
 After the network-layer configuration is completed by one of the NCP protocols, the users can exchange data packets from the network layer.
 
-![](./static/ch11_27.png)
+![img](./pic/ch11_27.png)
 
 ##### Multilink PPP
 A logical PPP frame is divided into several actual PPP frames. A segment of the logical frame is carried in the payload of an actual PPP frame.
 
-![](./static/ch11_28.png)
+![img](./pic/ch11_28.png)
 
-![](./static/ch11_29.png)
+![img](./pic/ch11_29.png)
 
 
 ## Summary

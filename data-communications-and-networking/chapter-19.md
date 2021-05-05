@@ -6,14 +6,14 @@ The network layer in version 4 can be thought of as one main protocol and three 
 - The Internet Group Management Protocol (IGMP) is used to help IPv4 in multicasting.
 - The Address Resolution Protocol (ARP) is used to glue the network and data-link layers in mapping network-layer addresses to link-layer addresses.
 
-![](./static/ch19_1.png)
+![img](./pic/ch19_1.png)
 
 IPv4 is an unreliable datagram protocol (a best-effort delivery service). IPv4 is also a connectionless protocol that uses the datagram approach.
 
 ### Datagram Format
 Packets used by the IP are called `datagrams`. A datagram is a variable-length packet consisting of two parts: header and payload (data). The header is 20 to 60 bytes in length and contains information essential to routing and delivery. It is customary in TCP/IP to show the header in 4-byte sections.
 
-![](./static/ch19_2.png)
+![img](./pic/ch19_2.png)
 
 - `Version Number`: The 4-bit version number (VER) field defines the version of the IPv4 protocol, which, obviously, has the value of 4.
 - `Header Length`: The 4-bit header length (HLEN) field defines the total length of the datagram header in 4-byte words.
@@ -23,7 +23,7 @@ Packets used by the IP are called `datagrams`. A datagram is a variable-length p
 - `Time-to-live`: The time-to-live (TTL) field is used to control the maximum number of hops (routers) visited by the datagram.
 - `Protocol`: In TCP/IP, the data section of a packet, called the payload, carries the whole packet from another protocol. The Internet authority has given any protocol that uses the service of IP a unique 8-bit number which is inserted in the protocol field.
 
- ![](./static/ch19_3.png)
+ ![img](./pic/ch19_3.png)
 - `Header checksum`: IP adds a header checksum field to check the header, but not the payload.
 - `Source and Destination Addresses`: These 32-bit source and destination address fields define the IP address of the source and destination respectively.
 - `Options`: Options can be used for network testing and debugging.
@@ -35,7 +35,7 @@ A datagram can travel through different networks. Each router decapsulates the I
 ##### Maximum Transfer Unit (MTU)
 When a datagram is encapsulated in a frame, the total size of the datagram must be less than this maximum size, which is defined by the restrictions imposed by the hardware and software used in the network.
 
-![](./static/ch19_5.png)
+![img](./pic/ch19_5.png)
 
 ##### Field Related to Fragmentation
 There are three fields in an IP datagram related to fragmentation: `identification`, `flags`, and `fragmentation offset`.
@@ -89,7 +89,7 @@ ICMP messages are divided into two broad categories: *error-reporting messages* 
 
 An ICMP message has an 8-byte header and a variable-size data section. Although the general format of the header is different for each message type, the first 4 bytes are common to all.
 
-![](./static/ch19_8.png)
+![img](./pic/ch19_8.png)
 
 - The first field, ICMP type, defines the type of the message.
 - The code field specifies the reason for the particular message type.
@@ -104,7 +104,7 @@ The following are important points about ICMP error messages:
 - No ICMP error message will be generated for a datagram having a multicast address.
 - No ICMP error message will be generated for a datagram having a special addres1s such as 127.0.0.0 or 0.0.0.0.
 
-![](./static/ch19_9.png)
+![img](./pic/ch19_9.png)
 
 Note that all error messages contain a data section that includes the IP header of the original datagram plus the first 8 bytes of data in that datagram.
 - The original datagram header is added to give the original source, which receives the error message, information about the datagram itself.
@@ -125,12 +125,12 @@ be modified.
 
 Mobile IP has two addresses for a mobile host: one home address and one care-of address. The home address is permanent; the care-of address changes as the mobile host moves from one network to another.
 
-![](./static/ch19_12.png)
+![img](./pic/ch19_12.png)
 
 ### Agents
 To make the change of address transparent to the rest of the Internet requires a `home agent` and a `foreign agent`.
 
-![](./static/ch19_13.png)
+![img](./pic/ch19_13.png)
 
 - `Home Agent`: The home agent is usually a router attached to the home network of the mobile host. The home agent acts on behalf of the mobile host when a remote host sends a packet to the mobile host. The home agent receives the packet and sends it to the foreign agent.
 - `Foreign Agent`: The foreign agent is usually a router attached to the foreign network. The foreign agent receives and delivers packets sent by the home agent to the mobile host.
@@ -139,4 +139,4 @@ To make the change of address transparent to the rest of the Internet requires a
 ### Three Phases
 To communicate with a remote host, a mobile host goes through three phases: `agent discovery`, `registration`, and `data transfer`.
 
-![](./static/ch19_14.png)
+![img](./pic/ch19_14.png)

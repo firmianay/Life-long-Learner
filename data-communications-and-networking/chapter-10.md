@@ -5,7 +5,7 @@ Whenever bits flow from one point to another, the interference can change the sh
 - `single-bit error`: only 1 bit of a given data unit is changed from 1 to 0 or from 0 to 1.
 - `burst error`: 2 or more bits in the data unit have changed from 1 to 0 or from 0 to 1.
 
-![](./static/ch10_1.png)
+![img](./pic/ch10_1.png)
 
 ### Redundancy
 The central concept in detecting or correcting errors is redundancy. To be able to detect or correct errors, we need to send some extra bits with our data.
@@ -26,7 +26,7 @@ If the following two conditions are met, the receiver can detect a change in the
 1. The receiver has (or can find) a list of valid codewords.
 2. The original codeword has changed to an invalid one.
 
-![](./static/ch10_2.png)
+![img](./pic/ch10_2.png)
 
 An error-detecting code can detect only the types of errors for which it is designed; other types of errors may remain undetected.
 
@@ -35,7 +35,7 @@ The Hamming distance between two words is the number of differences between corr
 
 **Minimum Hamming Distance for Error Detection**: the `minimum Hamming distance` is the smallest Hamming distance between all possible pairs of codewords. To guarantee the detection of up to *s* errors in all cases, the minimum Hamming distance in a block code must be *d<sub>min</sub> = s + 1*.
 
-![](./static/ch10_3.png)
+![img](./pic/ch10_3.png)
 
 ##### Linear Block Codes
 A linear block code is a code in which the exclusive XOR (addition modulo-2) of two valid codewords creates another valid codeword.
@@ -44,10 +44,10 @@ A linear block code is a code in which the exclusive XOR (addition modulo-2) of 
 
 **Parity-Cheek Code**: parity-check code is a linear block code. In this code, a *k*-bit dataword is changed to an *n*-bit codeword where *n = k + 1*. The extra bit, called the parity bit, is selected to make the total number of 1s in the codeword even.
 
-![](./static/ch10_4.png)
+![img](./pic/ch10_4.png)
 
-- The encoder uses a generator that takes a copy of a 4-bit dataword and generates a parity bit *r<sub>0</sub>*. ![](./static/ch10_f1.png), If the number of 1s is even, the result is 0; if the number of 1s is odd, the result is 1. In both cases, the total number of 1s in the codeword is even.
-- The checker at the receiver does the same thing as the generator in the sender except the addition is done over all 5 bits.The `syndrome` is 0 when the number of 1s in the received codeword is even; otherwise, it is 1. ![](./static/ch10_f2.png). If the syndrome is 0, there is no detectable error; if the syndrome is 1, the data portion of the received codeword is discarded.
+- The encoder uses a generator that takes a copy of a 4-bit dataword and generates a parity bit *r<sub>0</sub>*. ![img](./pic/ch10_f1.png), If the number of 1s is even, the result is 0; if the number of 1s is odd, the result is 1. In both cases, the total number of 1s in the codeword is even.
+- The checker at the receiver does the same thing as the generator in the sender except the addition is done over all 5 bits.The `syndrome` is 0 when the number of 1s in the received codeword is even; otherwise, it is 1. ![img](./pic/ch10_f2.png). If the syndrome is 0, there is no detectable error; if the syndrome is 1, the data portion of the received codeword is discarded.
 
 A parity-check code can detect an odd number of errors.
 
@@ -58,9 +58,9 @@ Cyclic codes are special linear block codes with one extra property. In a cyclic
 ### Cyclic Redundancy Check
 The `cyclic redundancy check (CRC)` is used in networks such as LANs and WANs.
 
-![](./static/ch10_f3.png)
+![img](./pic/ch10_f3.png)
 
-![](./static/ch10_5.png)
+![img](./pic/ch10_5.png)
 
 - In the encoder, the dataword has *k* bits (4 here); the codeword has *n* bits (7 here). The size of the dataword is augmented by adding *n - k* (3 here) 0s to the right-hand side of the word. The *n*-bit result is fed into the generator. The generator uses a divisor of size *n - k + 1* (4 here), predefined and agreed upon. The generator divides the augmented dataword by the divisor (modulo-2 division). The quotient of the division is discarded; the remainder (*r<sub>2</sub>r<sub>1</sub>r<sub>0</sub>*) is appended to the dataword to create the codeword.
 - The decoder receives the codeword. A copy of all *n* bits is fed to the checker, which is a replica of the generator. The remainder produced by the checker is a syndrome of *n - k* (3 here) bits, which is fed to the decision logic analyzer. If the syndrome bits are all 0s, the 4 left-most bits of the codeword are accepted as the dataword; otherwise, the 4 bits are discarded.
@@ -68,19 +68,19 @@ The `cyclic redundancy check (CRC)` is used in networks such as LANs and WANs.
 ##### Encoder
 The encoder takes a dataword and augments it with *n - k* number of 0s. It then divides the augmented dataword by the divisor.
 
-![](./static/ch10_6.png)
+![img](./pic/ch10_6.png)
 
 ##### Decoder
 The codeword can change during transmission. The decoder does the same division process as the encoder. The remainder of the division is the syndrome. If the syndrome is all 0s, there is no error with a high probability; the dataword is separated from the received codeword and accepted. Otherwise, everything is discarded.
 
-!][](./static/ch10_7.png)
+!][](./pic/ch10_7.png)
 
 ### Polynomials and Cyclic Code Encoder Using Polynomials
 A pattern of 0s and 1s can be represented as a polynomial with coefficients of 0 and 1. The power of each term shows the position of the bit; the coefficient shows the value of the bit.
 
-![](./static/ch10_8.png)
+![img](./pic/ch10_8.png)
 
-![](./static/ch10_9.png)
+![img](./pic/ch10_9.png)
 
 - The divisor in a cyclic code is normally called the generator polynomial or simply the generator.
 
@@ -99,7 +99,7 @@ In a cyclic code:
  - No bit is corrupted, or
  - Some bits are corrupted, but the decoder failed to detect them.
 
-We want to find the criteria that must be imposed on the generator, *g(x)* to detect the type of error we especially want to be detected. We know **Received codeword = c(x) + e(x)**, the receiver divides teh received codeword by *g(x)* to get the syndrome: ![](./static/ch10_f4.png). The first term at the right-hand side of the equality has a remainder of zero, so the syndrome is actually the remainder of the second term on the right-hand side. If this term does not have a remainder (syndrome = 0), either *e(x)* is 0 or *e(x)* is divisible by *g(x)*. Those errors that are divisible by *g(x)* are not caught.
+We want to find the criteria that must be imposed on the generator, *g(x)* to detect the type of error we especially want to be detected. We know **Received codeword = c(x) + e(x)**, the receiver divides teh received codeword by *g(x)* to get the syndrome: ![img](./pic/ch10_f4.png). The first term at the right-hand side of the equality has a remainder of zero, so the syndrome is actually the remainder of the second term on the right-hand side. If this term does not have a remainder (syndrome = 0), either *e(x)* is 0 or *e(x)* is divisible by *g(x)*. Those errors that are divisible by *g(x)* are not caught.
 
 ##### Single-Bit Error
 A single-bit error is *e(x) = x<sup>i</sup>*, where *i* is the position of the bit. If a single-bit error is caught, then *x<sup>i</sup>* is not divisible by *g(x)*. If *g(x)* has at least two terms and the coefficient of *x<sup>0</sup>* is not zero, then *e(x)* cannot be divided by *g(x)*.
@@ -107,7 +107,7 @@ A single-bit error is *e(x) = x<sup>i</sup>*, where *i* is the position of the b
 ##### Two Isolated Single-Bit Errors
 We can show this type of error as *e(x) = x<sup>j</sup> + x<sup>i</sup>*. The values of *i* and *j* define the positions of the errors, and the difference *j - i* defines the distance between the two errors.
 
-![](./static/ch10_10.png)
+![img](./pic/ch10_10.png)
 
 If a generator cannot divide *x<sup>t</sup> + 1* (t between 0 and n - 1), then all isolated double errors can be detected.
 
@@ -135,42 +135,42 @@ A good polynomial generator needs to have the following characteristics:
 - At the source, the message is first divided into m-bit units. The generator then creates an extra m-bit unit called the checksum, which is sent with the message.
 - At the destination, the checker creates a new checksum from the combination of the message and sent checksum. If the new checksum is all Os, the message is accepted; otherwise, the message is discarded.
 
-![](./static/ch10_15.png)
+![img](./pic/ch10_15.png)
 
 ### Concept
 ##### Internet Checksum
 Traditionally, the Internet has used a 16-bit checksum.
 
-![](./static/ch10_f5.png)
+![img](./pic/ch10_f5.png)
 
 ##### Algorithm
 
-![](./static/ch10_17.png)
+![img](./pic/ch10_17.png)
 
 ### Other Approaches to the Checksum
 
-![](./static/ch10_18.png)
+![img](./pic/ch10_18.png)
 
-![](./static/ch10_19.png)
+![img](./pic/ch10_19.png)
 
 
 ## Forward Error Correction
 ### Using Hamming Distance
 To detect *t* errors, we need to have *d<sub>min</sub> = 2t + 1*.
 
-![](./static/ch10_20.png)
+![img](./pic/ch10_20.png)
 
 ### Using XOR
 
-![](./static/ch10_f6.png)
+![img](./pic/ch10_f6.png)
 
 ### Chunk Interleaving
 
-![](./static/ch10_21.png)
+![img](./pic/ch10_21.png)
 
 ### Compounding High- and Low-Resolution Packets
 
-![](./static/ch10_22.png)
+![img](./pic/ch10_22.png)
 
 
 ## Summary

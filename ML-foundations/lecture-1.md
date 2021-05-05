@@ -5,25 +5,25 @@ Foundation oriented ML course.
 
 ## 2.What is Machine Learning -- use data to approximate target
 ### Machine learning:
-![](./static/lec1_1.png)
+![img](./pic/lec1_1.png)
 
 ### Key essence of machine learning:
-![](./static/lec1_2.png)
+![img](./pic/lec1_2.png)
 
 ## 3.Applications of Machine Learning -- almost everywhere
 Food, clothing, housing, transportation, education, entertainment, ...
 
 ## 4.Components of Machine Learning -- ![A][1] takes ![D][2] and ![H][3] to get ![g][4]
 ### Basic notations:
-![](./static/lec1_3.png)
+![img](./pic/lec1_3.png)
 
 ### The learning model:
-![](./static/lec1_4.png)
+![img](./pic/lec1_4.png)
 
 learning model = ![A][1] and ![H][3]
 
 ### Another definition:
-![](./static/lec1_5.png)
+![img](./pic/lec1_5.png)
 
 ## 5.Machine Learning and Other Fields -- related to DM, AI and Stats
 - `machine learning`: use data to compute hypothesis g that approximates target f.

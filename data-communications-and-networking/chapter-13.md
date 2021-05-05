@@ -2,9 +2,9 @@
 ## Ethernet Protocol
 ### IEEE Project 802
 
-![](./static/ch13_1.png)
+![img](./pic/ch13_1.png)
 
-![](./static/ch13_2.png)
+![img](./pic/ch13_2.png)
 
 
 ## Standard Ethernet
@@ -14,7 +14,7 @@ Ethernet provides a connectionless service, which means each frame sent is indep
 
 ##### Frame Format
 
-![](./static/ch13_3.png)
+![img](./pic/ch13_3.png)
 
 The Ethernet frame contains seven fields:
 - `Preamble`. This field contains 7 bytes (56 bits) of alternating Os and Is that alert the receiving system to the coming frame and enable it to synchronize its clock if it's out of synchronization. The pattern provides only an alert and a timing pulse. The `preamble` actually added at the physical layer and is not part of the frame.
@@ -37,7 +37,7 @@ Each station on an Ethernet network has its own `network interface card (NIC)`. 
 ##### Transmission of Address Bits
 The address is sent left to right, byte by byte; for each byte, it is sent right to left, bit by bit.
 
-![](./static/ch13_f1.png)
+![img](./pic/ch13_f1.png)
 
 ##### Unicast, Multicast, and Broadcast Address
 If the least significant bit of the first byte in a destination address is 0, the address is unicast; otherwise, it is multicast. The broadcast address is a special case of the multicast address, its address is forty-eight 1s.
@@ -56,35 +56,35 @@ The efficiency of the Ethernet is defined as the ratio of the time used by a sta
 
 ### Implementation
 
-![](./static/ch13_f2.png)
+![img](./pic/ch13_f2.png)
 
 The standard Ethernet uses a baseband signal, which means that the bits are changed to a digital signal and directly sent on the line.
 
-![](./static/ch13_7.png)
+![img](./pic/ch13_7.png)
 
-![](./static/ch13_8.png)
+![img](./pic/ch13_8.png)
 
-![](./static/ch13_9.png)
+![img](./pic/ch13_9.png)
 
-![](./static/ch13_10.png)
+![img](./pic/ch13_10.png)
 
 ### Changes in the Standard
 ##### Bridged Ethernet
 Bridgeds have two effects on an Ethernet LAN: raise the bandwidth and separate collision domains.
 - `Raising the Bandwidth`: A bridge divides the network into two or more networks. Bandwidthwise, each network is independent.
 
- ![](./static/ch13_12.png)
+ ![img](./pic/ch13_12.png)
 - `Separate Collision Domains`: The collision domain becomes mush smaller and the probability of collision is reduced tremendously.
 
- ![](./static/ch13_13.png)
+ ![img](./pic/ch13_13.png)
 
 ##### Switched Ethernet
 A layer-2 `switch` is an N-port bridge with additional sophistication that allows faster handling of the packets.
 
-![](./static/ch13_14.png)
+![img](./pic/ch13_14.png)
 
 ##### Full-Duplex Ethernet
-![](./static/ch13_15.png)
+![img](./pic/ch13_15.png)
 
 
 ## Fast Ethernet (100 Mbps)
@@ -104,10 +104,10 @@ Three or more stations need to be connected in a star topology with a hub or a s
 ##### Encoding
 Three different encoding schemes were chosen.
 
-![](./static/ch13_16.png)
+![img](./pic/ch13_16.png)
 
 ##### Summary
-![](./static/ch13_f3.png)
+![img](./pic/ch13_f3.png)
 
 
 ## Gigabit Ethernet
@@ -124,15 +124,15 @@ Gigabit Ethernet has two distinctive approaches for medium access: half-duplex a
 
 ### Physical Layer
 ##### Encoding
-![](./static/ch13_17.png)
+![img](./pic/ch13_17.png)
 
 ##### Summary
-![](./static/ch13_f4.png)
+![img](./pic/ch13_f4.png)
 
 
 ## 10 Gigabit Ethernet
 ##### Summary
-![](./static/ch13_f5.png)
+![img](./pic/ch13_f5.png)
 
 
 ## Summary

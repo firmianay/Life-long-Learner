@@ -6,7 +6,7 @@
 ### Routing and Forwarding
 - `Routing`: routing the packet from its source to the destination with the best route.
 - `Forwarding`: the action applied by each router when a packet arrives at one of its interfaces.
- ![](./static/ch18_2.png)
+ ![img](./pic/ch18_2.png)
 
 ### Other Services
 - `Error Control`: Network layer added a checksum field to the datagram to control any corruption in the header, but not in the whole datagram.
@@ -22,32 +22,32 @@ A packet-switched network can use two different approaches to route the packets:
 ### Datagram Approach: Connectionless Service
 When the network layer provides a connectionless service, each packet traveling in the Internet is an independent entity; there is no relationship between packets belonging to the same message. The switches in this type of network are called routers.
 
-![](./static/ch18_3.png)
+![img](./pic/ch18_3.png)
 
 Each packet is routed based on the information contained in its header: source and destination addresses. The forwarding decision is based on the destination address of the packet.
 
-![](./static/ch18_4.png)
+![img](./pic/ch18_4.png)
 
 ### Virtual-Circuit Approach: Connection-Oriented Service
 In a connection-oriented service, there is a relationship between all packets belonging to a message. Before all datagrams in a message can be sent, a virtual connection should be set up to define the path for the datagrams. After connection setup, the datagrams can all follow the same path. In this type of service, not only must the packet contain the source and destination addresses, it must also contain a flow label, a virtual circuit identifier that defines the virtual path the packet should follow. Each packet is forwarded based on the label in the packet. To create a connection-oriented service, a three-phase process is used: setup, data transfer, and teardown.
 
-![](./static/ch18_5.png)
+![img](./pic/ch18_5.png)
 
-![](./static/ch18_6.png)
+![img](./pic/ch18_6.png)
 
 ##### Setup Phase
 In the setup phase, a router creates an entry for a virtual circuit. Two auxiliary packets need to be exchanged between the sender and the receiver: the request packet and the acknowledgment packet.
 - `request packet`: A request packet is sent from the source to the destination. This auxiliary packet carries the source and destination addresses.
 - `acknowledgment packet`: A special Packet, called the acknowledgment packet, completes switching tables.
 
-![](./static/ch18_7.png)
+![img](./pic/ch18_7.png)
 
-![](./static/ch18_8.png)
+![img](./pic/ch18_8.png)
 
 ##### Data-Transfer Phase
 After all routers have created their forwarding table for a specific virtual circuit, then the network-layer packets belonging to one message can be sent one after another.
 
-![](./static/ch18_9.png)
+![img](./pic/ch18_9.png)
 
 ##### Teardown Phase
 After sending all packets, sender sends a special packet called a teardown packet, receiver responds with a confirmation packet. All routers delete the corresponding entries from their tables.
@@ -68,7 +68,7 @@ Total Delay: **Total delay = (n + 1)(Delay<sub>tr</sub> + Delay<sub>pg</sub> + D
 ### Throughput
 Throughput at any point in a network is defined as the number of bits passing through the point in a second, which is actually the transmission rate of data at that point.
 
-![](./static/ch18_10.png)
+![img](./pic/ch18_10.png)
 
 ### Packet Loss
 A time may come when the buffer is full and the next packet needs to be dropped.
@@ -76,7 +76,7 @@ A time may come when the buffer is full and the next packet needs to be dropped.
 ### Congestion Control
 Congestion at the network layer is related to two issues, throughput and delay.
 
-![](./static/ch18_13.png)
+![img](./pic/ch18_13.png)
 
 ##### Congestion Control
 We can divide congestion control mechanisms into two broad categories: `open-loop congestion control` (prevention) and `closed-loop congestion control` (removal).
@@ -89,7 +89,7 @@ An IPv4 address is a 32-bit address that uniquely and universally defines the co
 An address space is the total number of addresses used by the protocol. IPv4 uses 32-bit addresses, which means that the address space is 2<sup>32</sup>.
 
 ##### Notation
-![](./static/ch18_16.png)
+![img](./pic/ch18_16.png)
 
 ##### Hierarchy in Addressing
 A 32-bit IPv4 address is divided into two parts:
@@ -98,22 +98,22 @@ A 32-bit IPv4 address is divided into two parts:
  - variable length: classless addressing
 - `suffix`: defines the node
 
-![](./static/ch18_17.png)
+![img](./pic/ch18_17.png)
 
 ### Classful Addressing
 Three fixed-length prefixes were designed instead of one (n = 8, n = 16, and n = 24). The whole address space was divided into five classes (class A, B, C, D, and E).
 
-![](./static/ch18_18.png)
+![img](./pic/ch18_18.png)
 
 ### Classless Addressing
 In classless addressing, variable-length blocks are used that belong to no classes.
 
-![](./static/ch18_19.png)
+![img](./pic/ch18_19.png)
 
 ##### Prefix Length: Slash Notation
 The prefix length, *n*, is added to the address, separated by a slash. The notation is informally referred to as `slash notation` and formally as `classless interdomain routing or CIDR` strategy.
 
-![](./static/ch18_20.png)
+![img](./pic/ch18_20.png)
 
 ##### Extracting Information from an Address
 We normally like to know three pieces of information about the block to which the address belongs: the number of addresses, the first address in the block, and the last address.
@@ -121,7 +121,7 @@ We normally like to know three pieces of information about the block to which th
 2. To find the first address, we keep the *n* leftmost bits and set the (*32 - n*) rightmost bits all to 0s.
 3. To find the last address, we keep the *n* leftmost bits and set the (*32 - n*) rightmost bits all to 1s.
 
-![](./static/ch18_21.png)
+![img](./pic/ch18_21.png)
 
 ##### Address Mask
 The address mask is a 32-bit number in which the *n* leftmost bits are set to 1s and the rest of the bits (*32 - n*) are set to 0s.
@@ -134,7 +134,7 @@ It can be used by a computer program to extract the information in a block, usin
 ##### Network Address
 The first address, the network address, is particularly important because it is used in routing a packet to its destination network.
 
-![](./static/ch18_22.png)
+![img](./pic/ch18_22.png)
 
 ##### Block Allocation
 The ultimate responsibility of block allocation is given to a global authority called the Internet Corporation for Assigned Names and Numbers (ICANN). It assigns a large block of addresses to an ISP. For the proper operation of the CIDR, two restrictions need to be applied to the allocated block.
@@ -151,7 +151,7 @@ More levels of hierarchy can be created using subnetting.
 ##### Address Aggregation
 When blocks of addresses are combined to create a larger block, routing can be done based on the prefix of the larger block.
 
-![](./static/ch18_24.png)
+![img](./pic/ch18_24.png)
 
 ##### Special Addresses
 Five special addresses that are used for special purposes:
@@ -167,14 +167,14 @@ Address assignment in an organization can be done automatically using the `Dynam
 ##### DHCP Message Foramt
 DHCP is client-server protocol in which the client sends a request message and the server returns a response message.
 
-![](./static/ch18_25.png)
+![img](./pic/ch18_25.png)
 
 The server uses a number, called a `magic cookie`, in the format of an IP address with the value of 99.130.83.99. When the client finishes reading the message, it looks for this magic cookie. If present, the next 60 bytes are options.
 
-![](./static/ch18_26.png)
+![img](./pic/ch18_26.png)
 
 ##### DHCP Operation
-![](./static/ch18_27.png)
+![img](./pic/ch18_27.png)
 
 1. The joining host creates a `DHCPDISCOVER` message in which only the transaction ID field is set to a random number. No other field can be set because the host has no knowledge with which to do so. This message is encapsulated in a UDP user datagram with the source port set to 68 and the destination port set to 67. The user datagram is encapsulated in an IP datagram with the source address set to **0.0.0.0** (this host) and the destination address set to **255.255.255.255** (broadcast address). The reason is that the joining host knows neither its own address nor the server address.
 2. The DHCP servers respond with a `DHCPOFFER` message in which the your address field defines the offered IP address for the joining host and the server address field includes the IP address of the server. The message also includes the lease time for which the host can keep the IP address. This message is encapsulated in a user datagram with the same port numbers, but in the reverse order. The user datagram in turn is encapsulated in a datagram with the server address as the source IP address, but the destination address is a broadcast address, in which the server allows other DHCP servers to receive the offer and give a better offer if they can.
@@ -182,28 +182,28 @@ The server uses a number, called a `magic cookie`, in the format of an IP addres
 4. Finally, the selected server responds with a `DHCPACK` message to the client if the offered IP address is valid. If the server cannot keep its offer, the server sends a DHCPNACK message and the client needs to repeat the process. This message is also broadcast to let other servers know that the request is accepted or rejected.
 
 ##### Transition States
-![](./static/ch18_28.png)
+![img](./pic/ch18_28.png)
 
 ### Network Address Resolution (NAT)
 A technology that can provide the mapping between the private and universal addresses, and at the same time support virtual private networks is `Network Address Translation (NAT)`. The technology allows a site to use a set of private addresses for internal communication and a set of global Internet addresses for communication with the rest of the world. The site must have only one connection to the global Internet through a NAT-capable router that runs NAT software.
 
-![](./static/ch18_29.png)
+![img](./pic/ch18_29.png)
 
 ##### Address Translation
-![](./static/ch18_30.png)
+![img](./pic/ch18_30.png)
 
 ##### Translation Table
 The problem how does the NAT router know the destination address for a packet coming from the Internet is solved if the NAT router has a translation table.
 
 **Using One IP Address**: In this strategy, communication must always be initiated by the private network. The NAT mechanism described requires that the private network start the communication.
 
-![](./static/ch18_31.png)
+![img](./pic/ch18_31.png)
 
 **Using a Pool of IP Addresses**: The use of only one global address by the NAT router allows only one private-network host to access a given external host. To remove this restriction, the NAT router can use a pool of global addresses.
 
 **Using Both IP Addresses and Port Addresses**: To allow a many-to-many relationship between private-network hosts and external server programs, we need more information in the translation table.
 
-![](./static/ch18_f1.png)
+![img](./pic/ch18_f1.png)
 
 
 ## Forwarding of IP Packets
@@ -212,20 +212,20 @@ When IP is used as a connectionless protocol, forwarding is based on the destina
 ### Forwarding Based on Destination Address
 A classless forwarding table needs to include four pieces of information: the mask, the network address, the interface number, and the IP address of the next router. The job of the forwarding module is to search the table, row by row. In each row, the *n* leftmost bits of the destination address (prefix) are kept and the rest of the bits (suffix) are set to 0s. If the resulting address (which we call the network address), matches with the address in the first column, the information in the next two columns is extracted; otherwise the search continues. Normally, the last row has a default value in the first column, which indicates all destination addresses that did not match the previous rows.
 
-![](./static/ch18_32.png)
+![img](./pic/ch18_32.png)
 
 ##### Address Aggregation
 This is called address aggregation because the blocks of addresses for four organizations are aggregated into one larger block.
 
-![](./static/ch18_34.png)
+![img](./pic/ch18_34.png)
 
 **Longest Mask Matching**: If one of the organizations in the previous figure is not geographically close to the other three, routing in classless addressing uses `longest mask matching` principle. This principle states that the forwarding table is sorted from the longest mask to the shortest mask.
 
-![](./static/ch18_35.png)
+![img](./pic/ch18_35.png)
 
 **Hierarchical Routing**: To solve the problem of gigantic forwarding tables, we can create a sense of hierarchy in the forwarding tables.
 
-![](./static/ch18_36.png)
+![img](./pic/ch18_36.png)
 
 ### Forwarding Based on Label
 - In a connectionless network (datagram approach), a router forwards a packet based on the destination address in the header of the packet.
@@ -233,20 +233,20 @@ This is called address aggregation because the blocks of addresses for four orga
 - In a connection-oriented network (virtual-circuit approach), a switch forwards a packet based on the label attached to the packet.
  - Switching can be done by accessing a table using an index.
 
-![](./static/ch18_37.png)
+![img](./pic/ch18_37.png)
 
-![](./static/ch18_38.png)
+![img](./pic/ch18_38.png)
 
 ##### Multi-Protocol Label Switching (MPLS)
 A MPLS can behave like a router and a switch. When behaving like a router, MPLS can forward the packet based on the destination address; when behaving like a switch, it can forward a packet based on the label.
 
 **A New Header**: To simulate connection-oriented switching using a protocol like IP, the first thing that is needed is to add a field to the packet that carries the label. The IPv4 packet format does not allow this extension. The solution is to encapsulate the IPv4 packet in an MPLS packet. The whole IP packet is encapsulated as the payload in an MPLS packet and an MPLS header is added.
 
-![](./static/ch18_39.png)
+![img](./pic/ch18_39.png)
 
 The MPLS header is actually a stack of subheaders that is used for multilevel hierarchical switching.
 
-![](./static/ch18_40.png)
+![img](./pic/ch18_40.png)
 
 The following is a brief description of each field:
 - `Label`: This 20-bit field defines the label that is used to index the forwarding table in the router.

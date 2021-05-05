@@ -2,12 +2,12 @@
 ## Connecting Devices
 We use `connecting devices` to connect hosts together to make a network or to connect networks together to make an internet.
 
-![](./static/ch17_1.png)
+![img](./pic/ch17_1.png)
 
 ### Hubs
 A hub is a physical-layer device. They do not have a link-layer address and they do not check the link-layer address of the received frame. They just regenerate the corrupted bits and send them out from every port.
 
-![](./static/ch17_2.png)
+![img](./pic/ch17_2.png)
 
 ### Link-Layer Switches
 A link-layer operates in both the physical and the data-link layers.
@@ -15,7 +15,7 @@ A link-layer operates in both the physical and the data-link layers.
 ##### Filtering
 A link-layer switch has a table used in filtering decisions. A link-layer switch does not change the link-layer (MAC) addresses in a frame.
 
-![](./static/ch17_3.png)
+![img](./pic/ch17_3.png)
 
 ##### Transparent Switches
 A `transparent switch` is a switch in which the stations are completely unaware of the switch's existence. A system equipped with transparent switches must meet three criteria:
@@ -25,7 +25,7 @@ A `transparent switch` is a switch in which the stations are completely unaware 
 
 **Learning**: The switch inspects both the destination and the source addresses in each frame that passes through the switch. The destination address is used for the forwarding decision (table lookup); the source address is used for adding entries to the table and for updating purposes.
 
-![](./static/ch17_4.png)
+![img](./pic/ch17_4.png)
 
 ##### Adcantages of Switches
 - `Collision Elimination`: In a switched LAN, there is no need for carrier sensing and collision detection; each host can transmit at any time.
@@ -37,7 +37,7 @@ A router is a three-layer (physical, data-link, and network) device. A router co
 2. A router acts only on those packets in which the link-layer destination address matches the address of the interface at which the packet arrives.
 3. A router changes the link-layer address of the packet (both source and destination) when it forwards the packet.
 
-![](./static/ch17_9.png)
+![img](./pic/ch17_9.png)
 
 A router changes the link-layer addresses in a packet.
 
@@ -45,7 +45,7 @@ A router changes the link-layer addresses in a packet.
 ## Virtual LANs
 We can roughly define a `virtual local area network (VLAN)` as a local area network configured by software, not by physical wiring. A LAN can be divided into several logical LANs, called `VLANs`. VLAN technology even allows the grouping of stations connected to different switches in a VLAN.
 
-![](./static/ch17_12.png)
+![img](./pic/ch17_12.png)
 
 
 ### Membership

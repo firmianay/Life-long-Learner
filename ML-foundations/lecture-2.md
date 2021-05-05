@@ -5,22 +5,22 @@
 
 ![Y][3]
 
-![](./static/lec2_1.png)
+![img](./pic/lec2_1.png)
 
 ## 2. Percepptron Learning Algorithm (PLA) -- correct mistakes and improve iteratively
 Start from some ![W0][4] (say, `0`), and 'correct' its mistakes on ![D][5]
 
-![](./static/lec2_2.png)
+![img](./pic/lec2_2.png)
 
 ## 3. Guarantee of PLA -- no mistake eventually if linear separable
 ### There are two cases: linear separable and not linear separable:
 
-![](./static/lec2_3.png)
+![img](./pic/lec2_3.png)
 
 ### if linear separable:
 1. With the number of `t` increases, ![Wt][6] gradually moves closer to ![Wf][7].
 
-![](./static/lec2_4.png)
+![img](./pic/lec2_4.png)
 
 next we need formular:
 
@@ -28,9 +28,9 @@ next we need formular:
 
 2.
 
-![](./static/lec2_5.png)
+![img](./pic/lec2_5.png)
 
-![](./static/lec2_6.png)
+![img](./pic/lec2_6.png)
 
 next we need formular:
 
@@ -54,7 +54,7 @@ When ![W0=0][14]:
 
 ![f6][13]
 
-among them: ![][15]
+among them: ![img][15]
 
 So evidence. (Because of the left of the above ≤ 1)
 
@@ -71,7 +71,7 @@ So evidence. (Because of the left of the above ≤ 1)
 ### if not linear separable:
 modify PLA Algorithm by keeping best weights in pocket.
 
-![](./static/lec2_7.png)
+![img](./pic/lec2_7.png)
 
 The efficiency is much slower than PLA.
 

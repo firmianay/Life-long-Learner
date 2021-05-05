@@ -1,7 +1,7 @@
 # Chapter 12: Media Access Control (MAC)
 When nodes or stations are connected and use a common link, called a `multipoint` or `broadcast link`, we need a multiple-access protocol to coordinate access to the link. All of the these protocols belong to a sublayer in the data-link layer called `media access control (MAC)`.
 
-![](./static/ch12_1.png)
+![img](./pic/ch12_1.png)
 
 ## Random Access
 The `random-access` or `contention` methods has two features:
@@ -22,41 +22,41 @@ The pure ALOHA protocol relies on acknowledgments from the receiver. If the ackn
 
 A collision involves two or more stations. If all these stations try to resend their frames after the time-out, the frames will collide again. Pure ALOHA dictates that when the time-out period passes, each station waits a random amount of time before resending its frame. The randomness will help avoid more collisions. We call this time the *backoff time T<sub>B</sub>*. Pure ALOHA has a second method to prevent congesting the channel with retransmitted frames. After a maximum number of retransmission attempts *K<sub>max</sub>* a station must give up and try later.
 
-![](./static/ch12_3.png)
+![img](./pic/ch12_3.png)
 
 **Vulnerable time**: the length of time in which there is a possibility of collision. The vulnerable time during which a collision may occur in pure ALOHA is 2 times the frame transmission time.
 
-![](./static/ch12_4.png)
+![img](./pic/ch12_4.png)
 
 **Throughput**: The throughput for pure ALOHA is *S = G x e<sup>-2G</sup>*. The maximum throughput *S<sub>max</sub> = 1/(2e)* = 0.184 when *G =(1/2)*.
 
 ##### Slotted ALOHA
 In slotted ALOHA we divide the time into slots of *T<sub>jr</sub>* seconds and force the station to send only at the beginning of the time slot.
 
-![](./static/ch12_5.png)
+![img](./pic/ch12_5.png)
 
 **Vulnerable time**: There is still the possibility of collision if two stations try to send at the beginning of the same time slot. However, the vulnerable time is now reduced to one-half, equal to *T<sub>jr</sub>*.
 
-![](./static/ch12_6.png)
+![img](./pic/ch12_6.png)
 
 **Throughput**: The throughput for slotted ALOHA is *S = G x e<sup>-G</sup>*. The maximum throughput *S<sub>max</sub> = 0.368* when *G = 1*.
 
 ### CSMA
 `Carrier sense multiple access (CSMA)` requires that each station first listen to the medium (or check the state of the medium) before sending.
 
-![](./static/ch12_7.png)
+![img](./pic/ch12_7.png)
 
 ##### Vulnerable Time
 The vulnerable time for CSMA is the propagation time *T<sub>p</sub>*.
 
-![](./static/ch12_8.png)
+![img](./pic/ch12_8.png)
 
 ##### Persistence Methods
 There are three methods have been devised: the `1-persistent method`, the `nonpersistent method`, and the `p-persistent method`.
 
-![](./static/ch12_9.png)
+![img](./pic/ch12_9.png)
 
-![](./static/ch12_10.png)
+![img](./pic/ch12_10.png)
 
 - `1-Persistent`: this method, after the station finds the line idle, it sends its frame immediately (with probability 1).
 - `Nonpersistent`: In the nonpersistent method, a station that has a frame to send senses the line. If the line is idle, it sends immediately. If the line is not idle, it waits a random amount of time and then senses the line again.
@@ -69,14 +69,14 @@ There are three methods have been devised: the `1-persistent method`, the `nonpe
 ### CSMA/CD
 `Carrier sense multiple access with collision detection (CSMA/CD)` augments the algorithm to handle the collision. In this method, a station monitors the medium after it sends a frame to see if the transmission was successful. If so, the station is finished. If, however, there is a collision, the frame is sent again.
 
-![](./static/ch12_12.png)
+![img](./pic/ch12_12.png)
 
 ##### Minimum Frame Size
 For CSMA/CD to work, we need a restriction on the frame size. Before sending the last bit of the frame, the sending station must detect a collision, and abort the transmission. This is so because the station, once the entire frame is sent, does not keep a copy of the frame and does not monitor the line for collision detection. Therefore, the frame transmission time *T<sub>fr</sub>* must be at least two times the maximum propagation time *T<sub>p</sub>*.
 
 ##### Procedure
 
-![](./static/ch12_13.png)
+![img](./pic/ch12_13.png)
 
 It is similar to the one for the ALOHA protocol, but three differences:
 - The first is the addition of the persistence process. We need to sense the channel before we start sending the frame.
@@ -86,7 +86,7 @@ It is similar to the one for the ALOHA protocol, but three differences:
 ##### Energy Level
 The level of energy in a channel can have three values: zero, normal, and abnormal.
 
-![](./static/ch12_14.png)
+![img](./pic/ch12_14.png)
 
 ##### Throughput
 The maximum throughput occurs at a different value of *G* and is based on the persistence method and the value of *p* in the p-persistent approach.
@@ -96,12 +96,12 @@ The maximum throughput occurs at a different value of *G* and is based on the pe
 ### CSMA/CA
 `Carrier sense multiple access with collision avoidance (CSMA/CA)` was invented for wireless networks. Collisions are avoided through the use of CSMA/CA's three strategies: the `interframe space`, the `contention window`, and `acknowledgments`.
 
-![](./static/ch12_15.png)
+![img](./pic/ch12_15.png)
 
 - `Interframe Space (IFS)`: When an idle channel is found, the station waits for a period of time called the `interframe space` or `IFS`. Even through the channel may appear idle when it is sensed, a distant station may have already started transmitting, the distant station's signal has not yet reached this station. The IFS time allows the front of the transmitted signal by the distant station to reach this station. After waiting an IFS time, if the channel is still idle, the station can send, but it still needs to wait a time equal to the contention window. The IFS variable can also be used to prioritize stations or frame types.
 - `Contention Window`: The contention window is an amount of time divided into slots. A station that is ready to send chooses a random number of slots as its wait time. The number of slots in the window changes according to the binary exponential backoff strategy. One interesting point about the contention window is that the station needs to sense the channel after each time slot. However, if the station finds the channel busy, it does not restart the process; it just stops the timer and restarts it when the channel is sensed as idle. This gives priority to the station with the longest waiting time.
 
- ![](./static/ch12_16.png)
+ ![img](./pic/ch12_16.png)
 
 - `Acknowledgment`: The positive acknowledgment and the time-out timer can help guarantee that the receiver has received the frame.
 
@@ -130,19 +130,19 @@ In `controlled access`, the stations consult one another to find which station h
 ### Reservation
 In the `reservation` method, a station needs to make a reservation before sending data. Time is divided into intervals. In each interval, a reservation frame precedes the data frames sent in that interval.
 
-![](./static/ch12_18.png)
+![img](./pic/ch12_18.png)
 
 ### Polling
 `Polling` works with topologies in which one device is designated as a `primary station` and the other devices are `secondary stations`. All data exchanges must be made through the primary device even when the ultimate destination is a secondary device.
 - The `select` function is used whenever the primary device has something to send.
 - The `poll` function is used by the primary device to solicit transmission from the secondary devices.
 
-![](./static/ch12_19.png)
+![img](./pic/ch12_19.png)
 
 ### Token Passing
 In the `token-passing` method, the stations in a network are organized in a logical ring. For each station, there is a `predecessor` and a `successor`. A special packet called a `token` circulates through the ring. The possession of the token gives the station the right to access the channel and send its data.
 
-![](./static/ch12_20.png)
+![img](./pic/ch12_20.png)
 
 
 ## Channelization
@@ -151,33 +151,33 @@ In the `token-passing` method, the stations in a network are organized in a logi
 ### FDMA
 In FDMA, the available bandwidth of the common channel is divided into bands that are separated by guard bands.
 
-![](./static/ch12_21.png)
+![img](./pic/ch12_21.png)
 
 ### TDMA
 In TDMA, the bandwidth is just one channel that is timeshared between different stations.
 
-![](./static/ch12_22.png)
+![img](./pic/ch12_22.png)
 
 ### CDMA
 In CDMA, one channel carries all transmissions simultaneously.
 
 ##### Data Representation
 
-![](./static/ch12_25.png)
+![img](./pic/ch12_25.png)
 
 ##### Encoding and Decoding
 
-![](./static/ch12_26.png)
+![img](./pic/ch12_26.png)
 
 ##### Signal Level
 
-![](./static/ch12_27.png)
+![img](./pic/ch12_27.png)
 
-![](./static/ch12_28.png)
+![img](./pic/ch12_28.png)
 
 ##### Sequence Generation
 
-![](./static/ch12_29.png)
+![img](./pic/ch12_29.png)
 
 
 ## Summary

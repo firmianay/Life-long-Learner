@@ -19,7 +19,7 @@ vulnerable
 this is a test
 ```
 
-![shellshock](./static/shellshock.png)
+![shellshock](./pic/shellshock.png)
 
 ## 0x01 Lab Tasks
 ### Task 1: Attack CGI programs

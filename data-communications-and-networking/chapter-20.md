@@ -7,7 +7,7 @@ In unicast routing, a packet is routed, hop by hop, from its source to its desti
 
 An internet is modeled as a *weighted graph*, in which each edge is associated with a cost.
 
-![](./static/ch20_1.png)
+![img](./pic/ch20_1.png)
 
 ### Least-Cost Routing
 The source router chooses a route to the destination router in such a way that the total cost for the route is the least cost among all possible routes.
@@ -15,7 +15,7 @@ The source router chooses a route to the destination router in such a way that t
 ##### Least-Cost Trees
 A least-cost tree is a tree with the source router as the root that spans the whole graph (visits all other nodes) and in which the path between the root and any other node is the shortest. In this way, we can have only one shortest-path tree for each node; we have N least-cost trees for the whole internet.
 
-![](./static/ch20_2.png)
+![img](./pic/ch20_2.png)
 
 
 ## Routing Algorithms
@@ -25,20 +25,20 @@ In `distance-vector (DV) routing`, the first thing each node creates is its own 
 ##### Bellman-Ford Equation
 This equation is used to find the least cost between a source node, and a distination node, through some intermediary nodes.
 
-![](./static/ch20_3.png)
+![img](./pic/ch20_3.png)
 
-![](./static/ch20_f1.png)
+![img](./pic/ch20_f1.png)
 
 ##### Distance Vectors
 Distance-vector routing unglues these paths and creates a distance vector, a one-dimensional array to represent the tree.
 
 Each node in an internet, when it is booted, creates a very rudimentary distance vector with the minimum information the node can obtain from its neighborhood.
 
-![](./static/ch20_5.png)
+![img](./pic/ch20_5.png)
 
 After each node has created its vector, it sends a copy of the vector to all its immediate neighbors. After a node receives a distance vecter from a neighbor, it updates its distance vector using the Bellman-Ford equation.
 
-![](./static/ch20_6.png)
+![img](./pic/ch20_6.png)
 
 We need to remember that after updating a node, it immediately sends its updated vector to all neighbors.
 
@@ -72,7 +72,7 @@ Distance_Vector_Routing()
 
 **Two-Node Loop**: One example of `count to infinity` is the `two-node loop` problem. The two-node instability can be avoided using `split horizon` combined with `poison reverse`.
 
-![](./static/ch20_7.png)
+![img](./pic/ch20_7.png)
 
 ### Link-State Routing
 `Link-state (LS) routing` uses the term `link-state` to define the characteristic of a link (an edge) that represents a network in the internet. In this algorithm the cost associated with an edge defines the state of the link.
@@ -80,11 +80,11 @@ Distance_Vector_Routing()
 ##### Link-State Databases (LSDB)
 To create a least-cost tree with this method, each node needs to have a complete map of the networ , which means it needs to know the state of each link. The collection of states for all links is called the `link-state database (LSDB)`.
 
-![](./static/ch20_8.png)
+![img](./pic/ch20_8.png)
 
 Each node can send some greeting messages to all its immediate neighbors to collect two pieces of information for each neighboring node: the identity of the node and the cost of the link. The combination of these two pieces of informationlis called the LS packet (LSP); the LSP is sent out of each interface.
 
-![](./static/ch20_9.png)
+![img](./pic/ch20_9.png)
 
 ##### Formation of Least-Cost Trees
 To create a least-cost tree for itself, using the shared LSDB, each node needs to run the famous `Dijkstra Algorithm`.
@@ -120,7 +120,7 @@ Dijkstra's Algorithm()
 } // End of Dijkstra
 ```
 
-![](./static/ch20_10.png)
+![img](./pic/ch20_10.png)
 
 ### Path-Vector Routing
 To provide safety, security, and to allow the packet to reach its destination more efficiently without assigning costs to the route, `path-vector (PV) routing` has been devised. The best route is determined by the source using the policy it imposes on the route.
@@ -128,18 +128,18 @@ To provide safety, security, and to allow the packet to reach its destination mo
 ##### Spanning Trees
 In path-vector routing, the path from a source to all destinations is also determined by the best spanning tree.
 
-![](./static/ch20_11.png)
+![img](./pic/ch20_11.png)
 
 ##### Creation of Spanning Trees
 When  a node is booted, it creates a path vector based on the information it can obtain about its immediate neighbor.
 
-![](./static/ch20_12.png)
+![img](./pic/ch20_12.png)
 
 Each node, after the creation of the initial path vector, sends it to all its immediate neighbors. Each node, when it receives a path vector from a neighbor, updates its path vector using an equation similar to the Bellman-Ford, but applying its own policy instead of looking for the least cost.
 
-![](./static/ch20_f2.png)
+![img](./pic/ch20_f2.png)
 
-![](./static/ch20_13.png)
+![img](./pic/ch20_13.png)
 
 ##### Path-Vector Algorithm
 ```
@@ -181,19 +181,19 @@ The `Routing Information Protocol (RIP)` is based on the distance-vector routing
 ##### Hop Count
 The cost is defined as the number of hops, which means the number of networks a packet needs to travel through from the source router to the final destination host. However, the maximum cost of a path can be 15.
 
-![](./static/ch20_15.png)
+![img](./pic/ch20_15.png)
 
 ##### Forwarding Tables
 A forwarding table in RIP is a three-column table in which the first column is the address of the destination network, the second column is the address of the next router to which the packet should be forwarded, and the third column is the cost to reach the destination network.
 
-![](./static/ch20_16.png)
+![img](./pic/ch20_16.png)
 
 ##### RIP Implementation
 RIP is implemented as a process that uses the service of UDP on the well-known port number 520. Although RIP is a routing protocol to help IP route its datagrams through the AS, the RIP messages are encapsulated inside UDP user datagrams, which in turn are encapsulated mside IP datagrams. RIP has gone through two versions: RIP-1 and RIP-2.
 
 **RIP Messages**: Two RIP processes, a client and a server need to exchange messages. Part of the message, which we call `entry`, can be repeated as needed in a message. Each entry carries tre information related to one line in the forwarding table of the router that sends the message.
 
-![](./static/ch20_17.png)
+![img](./pic/ch20_17.png)
 
 RIP Ihas two types of messages: `request` and `response`.
 - A request message is sent by a router that has just come up or by a router that has some time-out entries. A request message can ask about specific entries or all entries.
@@ -207,7 +207,7 @@ RIP Ihas two types of messages: `request` and `response`.
  - If the cost of the received route is higher than the cost of the old one, but the value of the next router is the same in both routes, the received route should be selected as the new one. This is the case where the route was actually advertised by the same router in the past, but now the situation has been changed.
 - The new forwarding table needs to be sorted according to the destination route.
 
-![](./static/ch20_18.png)
+![img](./pic/ch20_18.png)
 
 **Timers in RIP**: RIP uses three timers to support its operation.
 - The `periodic timer` controls the advertising of regular update messages.
@@ -220,22 +220,22 @@ RIP Ihas two types of messages: `request` and `response`.
 ##### Metric
 In OSPF, like RIP, the cost of reaching a destination from the host is calculated from the source router to the destination network. However, each link can be assigned a weight based on the throughput, round-trip time, reliability, and so on.
 
-![](./static/ch20_19.png)
+![img](./pic/ch20_19.png)
 
 ##### Forwarding Tables
 Each OSPF router can create a forwarding table after finding the shortest-path tree between itself and the destination using Dijkstra's algorithm.
 
-![](./static/ch20_20.png)
+![img](./pic/ch20_20.png)
 
 ##### Areas
 The formation of shortest-path trees in OSPF requires that all routers flood the whole AS with their LSPs to creat the global LSDB. The AS is divided into small sections called `areas`. One of the areas in the AS is designated as the `backbone area`, responsible for gluing the areas together.
 
-![](./static/ch20_21.png)
+![img](./pic/ch20_21.png)
 
 ##### Link-State Advertisement
 We need different types of advertisements, each capable of advertising different situations.
 
-![](./static/ch20_22.png)
+![img](./pic/ch20_22.png)
 
 - `Router link`
  - A `transient link` announces a link to a transient network, a network that is connected to the rest of the networks by one or more routers.
@@ -256,7 +256,7 @@ OSPF is implemented as a program in the network layer, using the service of the 
 - The `link-state update message` (type 4) is the main OSPF message used for building the LSDB.
 - The `link-state acknowledgment message` (type 5) is used to create reliabilit in OSPF.
 
-![](./static/ch20_23.png)
+![img](./pic/ch20_23.png)
 
 **OSPF Algorithm**: OSPF implements the link-state routing algorithm but some changes need to be added:
 - After each router has created the shortest-path tree, the algorithm needs to use it to create the corresponding routing algorithm.
@@ -271,7 +271,7 @@ The `Border Gateway Protocol version 4 (BGP4)` is based on the path-vector algor
 ##### Operation of External BGP (eBGP)
 The eBGP variation of BGP allows two physically connected border routers in two different ASs to form pairs of eBGP speakers and exchange messages. However, there is a need for a logical TCP connection to be created to make the exchange of information possible. Each logical connectionlin BGP parlance is referred to as a session.
 
-![](./static/ch20_25.png)
+![img](./pic/ch20_25.png)
 
 There are two problems that need to be addressed:
 - Some border routers do not know how to route a packet destined for nonneighbor ASs.
@@ -282,24 +282,24 @@ The iBGP protocol is similar to the eBGP protocol in that it uses the service of
 - if an AS has only one router, there cannot be an iBGP session.
 - if there are n routers in an autonomous system, there should be [n x (n - 1) / 2] iBGP sessions in that autonomous system to prevent loops in the system.
 
-![](./static/ch20_26.png)
+![img](./pic/ch20_26.png)
 
-![](./static/ch20_27.png)
+![img](./pic/ch20_27.png)
 
 ##### Injection of Information into Intradomain Routing
 The role of an interdomain routing protocol such as BGP is to help the routers inside the AS to augment their routing information. The cost is seted to the foreign networks at the same cost value as to reach the first AS in the path.
 - In the case of a stub AS, the only area border router adds a default entry at the end of its forwarding table and defines the next router to be the speaker router at the end of the eBGP connection.
 - In the case of a transient AS, it needs to inject the whole contents of the path table.
 
-![](./static/ch20_28.png)
+![img](./pic/ch20_28.png)
 
 ##### Path Attributes
 BGP allows a destination to be associated with up to seven path attributes. Path attri are divided into two broad categories: `well-known` and `optional`. All attributes are inserted after the corresponding destination prefix in an update message.
 
-![](./static/ch20_29.png)
+![img](./pic/ch20_29.png)
 
 ##### Route Selection
-![](./static/ch20_30.png)
+![img](./pic/ch20_30.png)
 
 ##### Messages
 BGP uses four types of messages for communication between the BGP speakers across the ASs and inside an AS:
@@ -308,7 +308,7 @@ BGP uses four types of messages for communication between the BGP speakers acros
 - `Keepalive Message`: The BGP peers that are running exchange keepalive messages regularly to tell each other that they are alive.
 - `Notification`: A notification message is sent by a router whenever an error condition is defected or a router wants to close the session.
 
-![](./static/ch20_31.png)
+![img](./pic/ch20_31.png)
 
 ## Summary
 - In unicast routing, a packet is routed, hop by hop, from its source to its destination by the help of forwarding tables.

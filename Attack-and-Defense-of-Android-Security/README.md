@@ -1,8 +1,9 @@
 # Android 安全攻防实战
 
-
 ## 第一章 Android开发工具
-#### 使用命令行创建 Android 虚拟设备（AVD）：
+
+### 使用命令行创建 Android 虚拟设备（AVD）
+
 1. 获得可以使用的系统镜像列表
 ```
 [path-to-sdk-install]/tools/android list targets
@@ -25,7 +26,8 @@
 扩展阅读：
 https://developer.android.com/studio/tools/help/android.html
 
-#### 使用 Android 调试桥（ADB）与 AVD 交互
+### 使用 Android 调试桥（ADB）与 AVD 交互
+
 1. 启动指定的 AVD
 ```
 [path-to-sdk-install]/tools/emulator -avd [name]
@@ -42,7 +44,8 @@ https://developer.android.com/studio/tools/help/android.html
 扩展阅读：
 https://developer.android.com/studio/command-line/adb.html
 
-#### 从AVD 上复制出/复制入文件
+### 从AVD 上复制出/复制入文件
+
 1. 从 AVD 上把文件复制出来
 ```
 adb {options} pull [path to copy from] [local path to copy to]
@@ -52,13 +55,16 @@ adb {options} pull [path to copy from] [local path to copy to]
 adb {options} push [local path to copy from] [path to copy to on AVD]
 ```
 
-#### 通过 ADB 在 AVD 中安装 app
+### 通过 ADB 在 AVD 中安装 app
+
 ```
 adb {options} install [path to apk]
 ```
 
 ## 第二章 实践 app 安全
-#### 检查 app 的证书和签名
+
+### 检查 app 的证书和签名
+
 1. 从 Android 中取出一个 app
 ```
 /sdk/platform-tools/adb pull /system/app/Calendar/Calendar.apk
@@ -87,7 +93,8 @@ openssl pkcs7 -inform DER -in META-INF/CERT.RSA -noout -print_certs -text
 https://datatracker.ietf.org/doc/rfc2459/?include_text=1
 http://docs.oracle.com/javase/6/docs/technotes/guides/security/cert3.html
 
-#### 对 Android app 签名
+### 对 Android app 签名
+
 先删掉现有的 `META-INF` 文件夹，然后建立签名。
 1. 建立一个密钥储存器（keystore），用来存放签名 app 时要用的私钥。并把这个密钥存储器放在一个安全的地方。
 ```
@@ -132,12 +139,14 @@ jarsigner -verbose -sigalg MD5withRSA -digestalg SHA1 -keystore [name of your ke
 - http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html
 - https://developer.android.com/studio/publish/app-signing.html
 
-#### 验证 app 的签名
+### 验证 app 的签名
+
 ```
 jarsigner -verify -verbose [path-to-yout-apk]
 ```
 
-#### 探索 AndroidManifest.xml 文件
+### 探索 AndroidManifest.xml 文件
+
 从 apk 包里提取出 AndroidManifest.xml 文件。
 ```
 apktool d -f -s [apk file] -o decoded-data/
@@ -147,7 +156,8 @@ apktool d -f -s [apk file] -o decoded-data/
 扩展阅读：
 https://developer.android.com/guide/topics/manifest/manifest-intro.html
 
-#### 通过 ADB 与 activity 管理器交互
+### 通过 ADB 与 activity 管理器交互
+
 1. 获取一个 shell
 ```
 adb shell
@@ -188,7 +198,8 @@ kill < --user UID | current > <package>
 扩展阅读：
 https://developer.android.com/studio/command-line/adb.html
 
-#### 通过 ADB 提取 app 里的资源
+### 通过 ADB 提取 app 里的资源
+
 1. 获取一个 shell 并切换到 `/data/data/` 目录
 ```
 adb shell
@@ -208,12 +219,15 @@ adb pull /data/data/[package-name]/[filepath]
 ```
 
 ## 第三章 Android 安全评估工具
-#### 简介
+
+### 简介
+
 Santoku：基于 Debian 的 Linux 发行版，用于移动安全评估。
 
 Drozer：漏洞利用和 Android 安全评估框架。Drozer 分为两部分，一个是 console ，运行在本地计算机上，一个是 server，是一个安装在目标 Android 设备上的 app。在使用 console 和 Android 设备交互时，就是把 Java 代码输入到运行在实际设备上的 drozer 代理中。
 
-#### 运行一个 drozer 会话
+### 运行一个 drozer 会话
+
 1. 使用 ADB，设置好端口转发
 ```
 adb forward tcp:31415 tcp:31415
@@ -224,7 +238,8 @@ adb forward tcp:31415 tcp:31415
 drozer console connect
 ```
 
-#### 枚举已安装的包
+### 枚举已安装的包
+
 ```
 dz> run app.package.list
 
@@ -239,6 +254,7 @@ dz> run app.package.info -p [permission label]
 
 工作原理：
 https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/package.py
+
 ```
     def add_arguments(self, parser):
         parser.add_argument("-a", "--package", default=None, help="the identifier of the package to inspect")
@@ -266,11 +282,13 @@ https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/package.py
         activities = package.activities
         services = package.services
 ```
+
 只要在 drozer console 中使用 `app.activity.info` 模块，就会调用 `execute()` 方法。
 
 我们看到它调用了包管理器中的 API －－ `self.packageManager().getPackages(...)`。这个包返回一个带有各个包的权限、配置、GID，以及共享库的所有包对象的列表(list)。这个脚本对列表中的每个对象调用一次 `self.__get_package()` 函数，把它打印到 drozer console 的屏幕上。
 
-#### 枚举 activity
+### 枚举 activity
+
 ```
 dz> run app.activity.info
 
@@ -286,7 +304,8 @@ dz> run app.activity.info -a [package name]
 扩展阅读：
 https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/activity.py
 
-#### 枚举 content provider
+### 枚举 content provider
+
 ```
 dz> run app.provider.info
 
@@ -301,6 +320,7 @@ dz> run app.provider.info -p [permission label]
 
 工作原理：
 https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/provider.py
+
 ```
     def execute(self, arguments):
         if arguments.package == None:
@@ -321,12 +341,14 @@ https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/provider.p
             
             providers = set(r_providers + w_providers)
 ```
+
 这个脚本通过调用 Android 包管理器，并传给它一些标志位提取出一个包的列表。我们看到，一旦包管理器收集到这些关于 `content proviser` 的详细信息后，脚本会调用一个名为 `__get_provider()` 方法，这个方法提取了 `provider` 的读和写的权限。`__get_provider()` 方法的作用基本上就是在定义了 `content provider` 权限的段中寻找一些字符串值，它调用 `math_filters()` 执行一些简单的字符串匹配，如果 `content provider` 所需的权限是读，这个字符串会被标上 `readPermission`；如果 `content provider` 所需权限是写，它会被标上 `writePermission`。之后，它会设置一个 provider 对象，然后把结果输出到 console 上。
 
 扩展阅读：
 https://developer.android.com/guide/topics/providers/content-providers.html
 
-#### 枚举 service
+### 枚举 service
+
 ```
 dz> run app.service.info
 
@@ -346,6 +368,7 @@ dz> run app.service.info -u
 ```
 
 工作原理：
+
 ```
     def execute(self, arguments):
         if arguments.package == None:
@@ -356,6 +379,7 @@ dz> run app.service.info -u
 
             self.__get_services(arguments, package)
 ```
+
 这个脚本会检查特定的包是否需要传入一个参数，如果不需要参数，或者包名已经定义，这个脚本会提取出一张包的列表，并在循环中，对其中的每个包调用一次 `self.__get_services()` 方法，在提取包列表时，根据对方法 `self.packageManager().getPackageInfo(arguments.package, common, PackageManager.GET_SERVICES | common.PackageManager.GET_PERMISSIONS)` 返回的数据进行字符串匹配的结果，可以对包的某些属性进行过滤。
 
 扩展阅读：
@@ -364,7 +388,8 @@ dz> run app.service.info -u
 - https://developer.android.com/reference/android/app/Service.html
 - https://developer.android.com/guide/components/bound-services.html
 
-#### 枚举 broadcast receiver
+### 枚举 broadcast receiver
+
 ```
 dz> run app.broadcast.info
 
@@ -385,14 +410,17 @@ dz> run app.broadcast.info -u
 - https://developer.android.com/reference/android/content/BroadcastReceiver.html
 - https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/broadcast.py
 
-#### 确定 app 的受攻击面（attack surface）
+### 确定 app 的受攻击面（attack surface）
+
 一个 app 的受攻击面就是它导出组件的数量。
+
 ```
 dz> run app.package.attacksurface [package name]
 ```
 
 工作原理：
 https://github.com/mwrlabs/drozer/blob/develop/src/drozer/modules/app/package.py
+
 ```
 from drozer import android
 from drozer.modules import common, Module
@@ -422,9 +450,11 @@ class AttackSurface(Module, common.Filters, common.PackageManager):
         else:
             self.stdout.write("No package specified\n")
 ```
+
 这个模块会通过包管理器 API 提取关于 `service`、`activity`、`broadcast receiver` 和 `content provider` 的信息，然后根据得到的信息，确定它们是不是被导出。
 
-#### 运行 activity
+### 运行 activity
+
 1. 寻找一些 activity
 ```
 dz> run app.activity.info --package [package name]
@@ -435,8 +465,10 @@ dz> run app.activity.start --action [intent action] --category [intent category]
 
 dz> run app.activity.forintent --action [intent action] -category [intent category]
 ```
+
 工作原理：
 https://raw.githubusercontent.com/mwrlabs/drozer/develop/src/drozer/modules/app/activity.py
+
 ```
     def execute(self, arguments):
         intent = android.Intent.fromParser(arguments)
@@ -449,6 +481,7 @@ https://raw.githubusercontent.com/mwrlabs/drozer/develop/src/drozer/modules/app/
         else:
             self.stderr.write("invalid intent: one of action or component must be set\n")
 ```
+
 drozer 把通过参数解析器拿到的用户输入的参数放到一个 `intent` 里，检查是否有效后，就发送出去。
 
 扩展阅读：
@@ -461,7 +494,9 @@ drozer 把通过参数解析器拿到的用户输入的参数放到一个 `inten
 - https://github.com/mwrlabs/drozer/wiki/Writing-a-Module
 
 ## 第四章 利用 app 中的漏洞
-#### 收集 logcat 泄漏的信息
+
+### 收集 logcat 泄漏的信息
+
 ```
 adb logcat [options] [filter]
 
@@ -480,7 +515,8 @@ adb shell monkey -p [package] -v [event count]
 - https://developer.android.com/studio/command-line/adb.html#logcat
 - http://www.vogella.com/tutorials/AndroidTesting/article.html
 
-#### 检查网络流量
+### 检查网络流量
+
 确认 tcpdump 和 netcat 已经安装在 Android 设备后，可以抓取网络流量
 ```
 tcpdump -w - | nc -l -p 31337
@@ -501,7 +537,8 @@ adb forward tcp:12345 tcp:31337
 - http://www.tcpdump.org/tcpdump_man.html
 - https://www.wireshark.org/docs/wsug_html_chunked/
 
-#### 攻击 service
+### 攻击 service
+
 1. 针对给定的 app，寻找哪些 service 是导出的
 ```
 dz> run app.service.info --permission null
@@ -526,10 +563,12 @@ dz> run app.service.start --component com.linkedin.android com.linkedin.android.
 扩展阅读：
 https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4276&cid=6
 
-#### 攻击 broadcast receiver
+### 攻击 broadcast receiver
+
 在阅读漏洞源码时特备注意 broadcast receiver 中的 `intent filter` 的定义。
 
-向 broadcast receiver 发送一个 intent 
+向 broadcast receiver 发送一个 intent
+
 ```
 dz> run app.broadcast.send --action [ACTION] --category [CATEGORY] --component [PACKAGE COMPONENT] --data-uri [DATA-URI] -extra [TYPE KEY VALUE] -flags [FLAGS*] -mimetype [MIMETYPE]
 ```
@@ -538,7 +577,8 @@ dz> run app.broadcast.send --action [ACTION] --category [CATEGORY] --component [
 - http://www.cs.wustl.edu/~jain/cse571-11/ftp/trojan/index.html
 - https://blog.lookout.com/blog/2010/08/10/security-alert-first-android-sms-trojan-found-in-the-wild/
 
-#### 枚举有漏洞的 content provider
+### 枚举有漏洞的 content provider
+
 1. 枚举不需要权限的 content provider
 ```
 dz> run app.provider.info --permission null
@@ -587,7 +627,8 @@ dz> run app.provider.finduri [package]
 - https://developer.android.com/guide/topics/security/permissions.html#uri
 - https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-2318&cid=3
 
-#### 从有漏洞的 content provider 中提取数据
+### 从有漏洞的 content provider 中提取数据
+
 1. 得到有漏洞的 content provider
 ```
 run app.provider.info --permission null
@@ -603,7 +644,8 @@ dz> run app.provider.download [URI]
 - http://www.cvedetails.com/cve/CVE-2010-4804/
 - http://vuln.sg/winzip101-en.html
 
-#### 向 content provider 插入数据
+### 向 content provider 插入数据
+
 1. 列出数据的结构和各列的名称等信息
 ```
 dz> run app.provider.columns [URI]
@@ -613,7 +655,8 @@ dz> run app.provider.columns [URI]
 dz> run app.provider.insert [URI] [--boolean [name] [value]] [--integer [name] [value]] [--string [name] [value]]...
 ```
 
-#### 枚举有 SQL 注入漏洞的 content provider
+### 枚举有 SQL 注入漏洞的 content provider
+
 ```
 dz> run app.provider.query [URI] --selection "1=1"
 dz> run app.provider.query [URI] --selection "1-1=0"
@@ -624,7 +667,8 @@ dz> run app.provider.query [URI] --selection "1-1=0"
 - http://www.sqlite.org/lang.html
 - https://www.owasp.org/index.php/SQL_Injection
 
-#### 利用可调试的 app
+### 利用可调试的 app
+
 1. 检查一个 app 是不是可调试的，可以直接查看在 app 中的 manifest，也可以执行
 ```
 dz> run app.package.debuggable
@@ -670,7 +714,9 @@ classes
 - https://android.googlesource.com/platform/dalvik/+/kitkat-release/vm/jdwp/JdwpAdb.cpp
 
 ## 第五章 保护 app
-#### 包含 app 的组件
+
+### 包含 app 的组件
+
 两种方法：其一是正确使用 `AndroidManifest.xml` 文件，其二是代码级别上强制进行权限检查。
 
 如果某个组件不需要被其他 app 调用，或者需要明确与其他部分的组件隔离，在该组件的 XML 元素中加入下面属性
@@ -688,7 +734,8 @@ classes
 - https://developer.android.com/reference/android/content/Context.html
 - https://developer.android.com/reference/android/app/Activity.html
 
-#### 通过定制权限保护组件
+### 通过定制权限保护组件
+
 1. 声明表示 `permission` 标签的字符串，编辑 `res/values/strings.xml` 文件
 ```
 <string name="custom_permission_label">Custom Permission</string>
@@ -738,7 +785,8 @@ classes
 - https://developer.android.com/guide/topics/manifest/permission-group-element.html
 - https://developer.android.com/reference/android/Manifest.permission.html
 
-#### 保护 content provider 的路径
+### 保护 content provider 的路径
+
 1. 设置一个用于管理所有与你的认证相关路径的读和写权限的 permission，在 `manifest` 中添加下面的元素，其中的 `[permission name]` 是其他 app 在读或写任何 content provider 路径时必须拥有的权限。
 ```
 <provider android:enabled="true"
@@ -760,7 +808,8 @@ classes
 - https://developer.android.com/guide/topics/manifest/provider-element.html
 - https://developer.android.com/guide/topics/manifest/path-permission-element.html
 
-#### 防御 SQL 注入攻击
+### 防御 SQL 注入攻击
+
 1. 实例化一个 RssItemDAO 对象时，把 insertStatement 对象编译成一个参数化的 SQL insert 语句字符串
 ```
 public class RssItemDAO {
@@ -810,7 +859,8 @@ public List<RssItem> fetchRssItemsByTitle(String searchTerm) {
 - https://www.owasp.org/index.php/Query_Parameterization_Cheat_Sheet
 - http://www.sqlite.org/lang_expr.html
 
-#### 验证 app 的签名
+### 验证 app 的签名
+
 确保已经有一个签名私钥，没有的话使用下面的方法创建
 ```
 keytool -genkey -v -keystore your_app.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
@@ -881,7 +931,8 @@ CERTIFICATE_SHA1.equalsIgnoreCase(currentSignature);
 - http://www.saurik.com/id/17
 - http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html
 
-#### 通过检测安装程序、模拟器、调试标志位反逆向工程
+### 通过检测安装程序、模拟器、调试标志位反逆向工程
+
 1. 检查安装程序是不是谷歌应用商店
 ```
 public static boolean checkGooglePlayStore(Context context) {
@@ -923,7 +974,8 @@ public static boolean isDebuggable(Context context){
 - https://developer.android.com/reference/android/content/pm/PackageManager.html
 - https://developer.android.com/reference/android/content/pm/ApplicationInfo.html
 
-#### 使用 ProGuad
+### 使用 ProGuad
+
 1. Android Studio下，需要在 Gradle Build 系统中 `buildType` 的 release 部分加入下面代码
 ```
 android {
@@ -945,7 +997,9 @@ android {
 - http://proguard.sourceforge.net/index.html#manual/examples.html
 
 ## 第六章 逆向 app
-#### 把 Java 源码编译成 DEX 文件
+
+### 把 Java 源码编译成 DEX 文件
+
 1. 打开文本编辑器，创建一个文件
 ```
 public class Example{
@@ -963,7 +1017,8 @@ javac -source 1.6 -target 1.6 Example.java
 /sdk/build-tools/25.0.0/dx --dex --output=Example.dex Example.class
 ```
 
-#### 解析 DEX 文件格式
+### 解析 DEX 文件格式
+
 https://github.com/android/platform_dalvik/blob/master/libdex/DexFile.h
 
 DEX 文件的格式：
@@ -1122,7 +1177,8 @@ dx --dex --verbose-dump -dump-to=[output-file].txt [input-file].class
 - https://github.com/android/platform_dalvik/tree/master/libdex
 - http://source.android.com/devices/tech/dalvik/dex-format.html
 
-#### 解释 Dalvik 字节码
+### 解释 Dalvik 字节码
+
 使用 baksmali 工具把 DEX 文件反编译成语法格式良好的 smali 文件。
 ```
 baksmali [dex filename].dex
@@ -1132,14 +1188,16 @@ baksmali [dex filename].dex
 - http://source.android.com/devices/tech/dalvik/instruction-formats.html
 - http://source.android.com/devices/tech/dalvik/dalvik-bytecode.html
 
-#### 把 DEX 反编译回 Java
+### 把 DEX 反编译回 Java
+
 1. 使用 Dex2jar 工具把 DEX 文件转换成 .class 文件
 ```
 dex2jar [dex file].dex
 ```
 2. 使用 jd-gui 工具得到源文件
 
-#### 反编译 app 的原生库
+### 反编译 app 的原生库
+
 Android NDK 中 toolchain 里提供的 objdump。
 ```
 objdump -D [native library].so
@@ -1151,7 +1209,8 @@ objdump -D [native library].so
 - http://www.arm.com/products/processors/instruction-set-architectures/index.php
 - http://refspecs.linuxbase.org/elf/elf.pdf
 
-#### 使用 GDB server 调试 Android 进程
+### 使用 GDB server 调试 Android 进程
+
 1. 确保设备上安装了 gdbserver，然后查看正在运行的所有进程
 ```
 ps
@@ -1185,7 +1244,9 @@ target remote :[PID]
 - https://www.imperialviolet.org/2011/05/04/pinning.html
 
 ## 第八章 原生代码中漏洞的利用与分析
-#### 检查文件权限
+
+### 检查文件权限
+
 首先安装 busybox 工具。
 
 列出所有用户都可读的文件：
@@ -1239,7 +1300,8 @@ ls -al /data/data/
 - http://www.tldp.org/HOWTO/HighQuality-Apps-HOWTO/fhs.html
 - http://www.pathname.com/fhs/pub/fhs-2.3.pdf
 
-#### 交叉编译原生可执行程序
+### 交叉编译原生可执行程序
+
 使用 Android 原生开发工具包（NDK）。
 
 1. 为代码建一个目录，例如“buffer-overflow”，这个目录下必须建立一个名为 `jni` 的子目录，因为 NDK 的编译脚本会专门寻找这个目录。
@@ -1294,7 +1356,8 @@ int main(int argc, char **argv) {
 - https://android.googlesource.com/platform/bionic/
 - https://android.googlesource.com/platform/bionic/+/jb-mr0-release/libc/bionic/dlmalloc.c
 
-#### 利用竞争条件引发的漏洞
+### 利用竞争条件引发的漏洞
+
 竞争条件问题是当进程运行在使用抢占式进程调度系统的多线程系统中时，由于缺乏强制互斥条件而引发的。抢占式调度允许任务调度器强制中断一个正在运行中的线程或进程。
 
 要利用竞争条件漏洞，必须至少具备一下条件：
@@ -1303,7 +1366,7 @@ int main(int argc, char **argv) {
 3. 使用时间/检查时间（TOU/TOC）的窗口大小
 
 我们先准备一个例子，使用 Jelly Bean 模拟器：
-```
+```c
 #include<stdio.h>
 #include<unistd.h>
 #include<errno.h>
@@ -1359,14 +1422,16 @@ echo "/system/bin/sh" >> /data/race-condition/commands.txt
 - https://packetstormsecurity.com/files/122145/Sprite-Software-Android-Race-Condition.html
 - http://www.wright.edu/static/cats/maint/maintenance.html
 
-#### 栈溢出漏洞的利用
+### 栈溢出漏洞的利用
+
 - https://www.exploit-db.com/docs/24493.pdf
 - http://phrack.org/issues/49/14.html#article
 - http://thinkst.com/stuff/bh10/BlackHat-USA-2010-Meer-History-of-Memory-Corruption-Attacks-wp.pdf
 - http://cseweb.ucsd.edu/~hovav/dist/noret-ccs.pdf
 - https://www.informatik.tu-darmstadt.de/fileadmin/user_upload/Group_TRUST/PubsPDF/ROP-without-Returns-on-ARM.pdf
 
-#### 自动 fuzzing 测试 Android 原生代码
+### 自动 fuzzing 测试 Android 原生代码
+
 - http://www.linuxjournal.com/article/10844
 - https://code.google.com/archive/p/ouspg/wikis/Radamsa.wiki
 - https://code.google.com/archive/p/ouspg/wikis/Blab.wiki

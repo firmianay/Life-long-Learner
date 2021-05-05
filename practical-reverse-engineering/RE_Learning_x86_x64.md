@@ -6,8 +6,8 @@ The x86 is little-endian architecture based on the Intel 8086 processor. General
 
 x86 supports the concept of privilege seperation through a abstraction called `ring level`. The processor supports four ring levels, numbered from 0 to 3, ring 0 is the highest privilege level and can modify all system settings, ring 3 is the lowest privileged level and can only read/modify a subset of system settings. Hence, modern operating systems typically implement user/kernel privilege separation by having user-mode applications run in ring 3, and the kernel in ring 0.
 
-
 ## 0x01 Register Set and Data Types
+
 When operating in protected mode, the x86 architecture has eight 32-bit general-purpose registers (GPRs): `EAX`, `EBX`, `ECX`, `EDX`, `EDI`, `ESI`, `EBP`, and `ESP`. Some of them can be further divided into 8- and 16-bit registers.
 
 ![Practical_Reverse1](./pic/Practical_Reverse1.png)
@@ -33,9 +33,10 @@ Some data type:
 
 The 32-bit `EFLAGS` register is used to store the status of arithmetic operations and other execution states. The flags in `EFLAGS` are primarily used to implement conditional branching. And the `EIP` register is used to store the instruction pointer.
 
-
 ## 0x02 Instruction Set
+
 The x86 instruction set allow a high level of flexibility in terms of data movement between registers and memory. The movement can be classified into five general methods:
+
 - Immediate to register
 - Register to register
 - Immediate to memory
@@ -47,13 +48,16 @@ The first four methods are supported by all modern architectures, but the last o
 Another important characteristic is that x86 uses variable-length instruction size: the instruction length can range from 1 to 15 bytes.
 
 ### Syntax
+
 Depending on the assembler/disassembler, there are two syntax notations for x86 assembly code, Intel and AT&T. Disassamblers/assemblers and other reverse-engineering tools (IDA Pro, OllyDbg, MASM, etc.) on Windows typically use Intel notation, where those on UNIX frequently follow AT&T notation (GCC).
+
 ```text
 // Intel
 mov ecx, AABBCCDDh
 mov ecx, [eax]
 mov ecx, eax
 ```
+
 ```text
 // AT&T
 movl $0xAABBCCDD, %ecx
@@ -62,12 +66,15 @@ movl %eax, %ecx
 ```
 
 We can find that there are several differences between Intel and AT&T notation:
+
 - AT&T prefixes the register with %, and immediates with $. Intel does not do this
 - AT&T adds a prefix to the instruction to indicate operation width. For example, MOVL(long), MOVB(byte), etc. Intel does not do this.
 - AT&T puts the source operand before the destination. Intel does not do this.
 
 ### Data Movement
+
 Instructions operate on values that come from registers or main memory. The most common instruction for moving data is `MOV`. Similar to other assembly language conventions, x86 uses square brackets([]) to indicate memory access.
+
 ```text
 // Assembly
 
@@ -84,6 +91,7 @@ Instructions operate on values that come from registers or main memory. The most
 06: 8B 14 01           mov  edx, [ecx+eax]
 ; set EDX to the value at address (ECX+EAX)
 ```
+
 ```text
 // Pseudo C
 
@@ -94,7 +102,9 @@ Instructions operate on values that come from registers or main memory. The most
 05: eax = *(esi+34);
 06: edx = *(ecx+eax);
 ```
+
 These examples demonstrate memory access through a base register and offset, where offset can be a register or immediate. This form is commonly used to access structure members or data buffers at a location computed at runtime. For example, suppose that `ECX` points to a structure of type `KDPC` with the layout:
+
 ```text
 kd> dt nt!_KDPC
     +0x000 Type             : UChar
@@ -107,7 +117,9 @@ kd> dt nt!_KDPC
     +0x018 SystemArgument2  : Ptr32 Void   
     +0x01c DpcData          : Ptr32 Void
 ```
+
 and used in the following context:
+
 ```text
 // Assembly
 01: 8B 45 0C         mov   eax, [ebp+0Ch]
@@ -117,6 +129,7 @@ and used in the following context:
 05: C7 01 13 01 00+  mov   dword ptr [ecx], 113h
 06: 89 41 10         mov   [ecx+10h], eax
 ```
+
 ```text
 // Pseudo C
 KDPC *p = ...;
@@ -125,6 +138,7 @@ p->DeferredRoutine = ...;
 *(int *)p = 0x113;
 p->DeferredContext = ...;
 ```
+
 Line 1 reads a value from memory and stores it in EAX. The `DeferredRoutine` field is set to this value in line 3. Line 2 clears the `DpcData` field by `AND`'ing it with 0. Line 4 reads another value from memory and stores it in EAX. The `DeferredContext` field is set to this value in line 6.
 
 Line 5 writes the double-word value 0x113 to the base of the structure. The first field is only 1 byte in size. So, the `Typt` field is set to 0x13, `Importance` is set to 0x1, and `Number` is set to 0x0.
@@ -134,6 +148,7 @@ Line 5 writes the double-word value 0x113 to the base of the structure. The firs
 By writing one value, the code managed to initialize three fields with a single instruction! The following two codes are same. Another interesting thing is that memory access can be done at three granularity levels: byte, word, and double-word. The default granularity is 4 bytes,
 which can be changed to 1 or 2 bytes with an override prefix. In the example,
 the override prefix bytes are `C6` and `66`.
+
 ```text
 // first type
 05: C7 01 13 01 00+     mov dword ptr [ecx], 113h
@@ -145,6 +160,7 @@ the override prefix bytes are `C6` and `66`.
 ```
 
 The next memory access form is commonly used to access array-type objects. Generally, the format is as follows: [Base + Index * scale].
+
 ```text
 01: 8B 34 B5 40 05+        mov esi, _KdLogBuffer[esi*4]
 ; always written as mov esi, [_KdLogBuffer + esi * 4]
@@ -155,7 +171,9 @@ The next memory access form is commonly used to access array-type objects. Gener
 ; here is EDI is the array base address; ESI is the array
 ; index; element size is 8.
 ```
+
 In practice, this is observed in code looping over an array.
+
 ```text
 01:                 loop_start:
 02: 8B 47 04            mov     eax, [edi+4]
@@ -168,7 +186,9 @@ In practice, this is observed in code looping over an array.
 08: 3B 1F               cmp     ebx, [edi]
 09: 7C DD               jl      short loop_start
 ```
+
 Line 2 reads a double-word from offset +4 from `EDI` and then uses it as the base address into an array in line 3; hence, you know that `EDI` is likely a structure that has an array at +4. Line 7 increments the index. Line 8 compares the index against a value at offset +0 in the same structure. This small loop can be decompiled as follows:
+
 ```c
 typedef struct_FOO
 {
@@ -182,7 +202,9 @@ for (i = ...; i < bar->size; i++) {
     }
 }
 ```
+
 The `MOVSB/MOVSW/MOVSD` instructions move data with 1-, 2-, or 4-byte granularity between two memory addresses. They implicitly use `EDI/ESI` as the destination/source address, respectively. In addition, they also automatically update the source/destination address depending on the direction flag (`DF`) flag in `EFLAGS`. If `DF` is 0, the addresses are decremented; otherwise, they are incremented. These instructions are typically used to implement string or memory copy functions when the length is known at compile time. In some cases, they are accompanied by the `REP` prefix, which repeats an instruction up to `ECX` times.
+
 ```text
 // Assembly
 01: BE 28 B5 41 00      mov esi, offset _RamdiskBootDiskGuid
@@ -198,6 +220,7 @@ The `MOVSB/MOVSW/MOVSD` instructions move data with 1-, 2-, or 4-byte granularit
 06: A5                  movsd
 ; same as above
 ```
+
 ```text
 // Pseudo C
 // a GUID is 16-byte structure
@@ -206,9 +229,11 @@ GUID RamDiskBootDiskGuid = ...; // global
 GUID foo;
 memcpy(&foo, &RamdiskBootDiskGuid, sizeof(GUID));
 ```
+
 Line 2 deserves some special attention. Although the `LEA` instruction uses `[]`, it actually does not read from a memory address; it simply evaluates the expression in square brackets and puts the result in the destination register. For example, if `EBP` were 0x1000, then `EDI` would be 0xF40 (=0x1000 – 0xC0) after executing line 2. The point is that `LEA` does not access memory, despite the misleading syntax.
 
 The following example, from  `nt!KiInitSystem` , uses the `REP` prefix:
+
 ```text
 01: 6A 08               push 8      ; push 8 on the stack
 02: ...
@@ -220,11 +245,15 @@ The following example, from  `nt!KiInitSystem` , uses the `REP` prefix:
 ; from this we can deduce that whatever these two objects are, they are
 ; likely to be 32 bytes in size.
 ```
+
 The rough C equivalent of this would be as follows:
+
 ```c
 memcpy(&KeServiceDescriptorTableShadow, &KeServiceDescriptorTable, 32);
 ```
+
 The final example, `nt!MmInitializeProcessAddressSpace`, uses a combination of these instructions because the copy size is not a multiple of 4:
+
 ```text
 01: 8D B0 70 01 00+     lea esi, [eax+170h]
 ; EAX is likely the base address of a structure. Remember what we said
@@ -237,9 +266,11 @@ The final example, `nt!MmInitializeProcessAddressSpace`, uses a combination of t
 06: 66 A5               movsw
 07: A4                  movsb
 ```
+
 After lines 1–2, you know that `EAX` and `EBX` are likely to be of the same type because they are being used as source/destination and the offset is identical. This code snippet simply copies 15 bytes from one structure field to another. Note that the code could also have been written using the `MOVSB` instruction with a `REP` prefix and `ECX` set to 15; however, that would be inefficient because it results in 15 reads instead of only five.
 
 Another class of data movement instructions with implicit source and destination includes the `SCAS` and `STOS` instructions. Similar to `MOVS`, these instructions can operate at 1-, 2-, or 4-byte granularity. `SCAS` implicitly compares  `AL/AX/EAX` with data starting at the memory address `EDI`; `EDI` is automatically incremented/decremented depending on the `DF` bit in `EFLAGS`. Given its semantic, `SCAS` is commonly used along with the `REP` prefix to find a byte, word, or double-word in a buffer. For example, the C `strlen()` function can be implemented as follows:
+
 ```text
 01: 30 C0           xor     al, al
 ; set AL to 0 (NUL byte). You will frequently observe the XOR reg, reg pattern in code.
@@ -251,7 +282,9 @@ Another class of data movement instructions with implicit source and destination
 04: 29 DF           sub     edi, ebx
 ; edi is now the NUL byte location. Subtract that from the original pointer to the length.
 ```
+
 `STOS` is the same as `SCAS` except that it writes the value `AL/AX/EAX` to `EDI`. It is commonly used to initialize a buffer to a constant value (such as `memset()`). Here is an example:
+
 ```text
 01: 33 C0           xor     eax, eax
 ; set EAX to 0
@@ -265,10 +298,13 @@ Another class of data movement instructions with implicit source and destination
 ; write 36 bytes of zero to the destination buffer (STOSD repeated 9 times)
 ; this is equivalent lent to memset(edi, 0, 36)
 ```
+
 `LODS` is another instruction from the same family. It reads a 1-, 2-, or 4-byte value from `ESI` and stores it in `AL`, `AX`, or `EAX`.
 
 ### Arithmetic Operations
+
 Fundamental arithmetic operations such as addition, subtraction, multiplication, and division are natively supported by the instruction set. Bit-level operations such as `AND`, `OR`, `XOR`, `NOT`, and left and right shift also have native corresponding instructions.
+
 ```text
 01: 83 C4 14        add     esp, 14h        ; esp = esp + 0x14
 02: 2B C8           sub     ecx, eax        ; ecx = ecx - eax
@@ -284,21 +320,26 @@ Fundamental arithmetic operations such as addition, subtraction, multiplication,
 12: C0 C0 03        rol     al, 3           ; rotate AL left 3 positions
 13: D0 C8           ror     al, 1           ; rotate AL right 1 position
 ```
+
 The left and right shift instructions are frequently observed in real-life code. These instructions are typically used to optimize multiplication and division operations where the multiplicand and divisor are a power of two.
 
 Unsigned and signed multiplication is done through the `MUL` and `IMUL` instructions, respectively. The `MUL` instruction has the following general form: `MUL reg/memory`. That is, it can only operate on register or memory values. The register is multiplied with `AL`, `AX`, or `EAX` and the result is stored in `AX`, `DX:AX`, or `EDX:EAX`, depending on the operand width.
+
 ```text
 01: F7 E1           mul ecx                 ; EDX:EAX = EAX * ECX
 02: F7 66 04        mul dword ptr [esi+4]   ; EDX:EAX = EAX * dword_at(ESI+4)
 03: F6 E1           mul cl                  ; AX = AL * CL
 04: 66 F7 E2        mul dx                  ; DX:AX = AX * DX
 ```
+
 `IMUL` has three forms:
+
 - `IMUL reg/mem              (Same as MUL)`
 - `IMUL reg1, reg2/mem       (reg1 = reg1 * reg2/mem)`
 - `IMUL reg1, reg2/mem, imm  (reg1 = reg2 *imm)`
 
 Unsigned and signed division is done through the `DIV` and `IDIV` instructions, respectively. They take only one parameter (divisor) and have the following form: `DIV/IDIV reg/mem`. Depending on the divisor’s size, `DIV` will use either `AX`, `DX:AX`, or `EDX:EAX` as the dividend, and the resulting quotient/remainder pair are stored in `AL/AH`, `AX/DX`, or `EAX/EDX`.
+
 ```text
 01: F7 F1           div ecx         ; EDX:EAX / ECX, quotient in EAX,
 02: F6 F1           div cl          ; AX / CL, quotient in AL, remainder in AH
@@ -312,9 +353,11 @@ Unsigned and signed division is done through the `DIV` and `IDIV` instructions, 
 ```
 
 ### Stack Operations and Function Invocation
+
 The stack is a fundamental data structure in programming languages and operating systems. A stack is a last-in first-out data structure supporting two operations: push and pop. Push means to put something on top of the stack; pop means to remove an item from the top. Concretely speaking, on x86, a stack is a contiguous memory region pointed to by `ESP` and it grows downwards. Push/pop operations are done through the PUSH/POP instructions and they implicitly modify `ESP`. The PUSH instruction decrements `ESP` and then writes data at the location pointed to by `ESP`; POP reads the data and increments `ESP`. The default auto-increment/decrement value is 4, but it can be changed to 1 or 2 with a prefix override. In practice, the value is almost always 4 because the OS requires the stack to be double-word aligned.
 
 Suppose that `ESP` initially points to 0xb20000 and you have the following code:
+
 ```text
 ; initial ESP = 0xb20000
 01: B8 AA AA AA AA      mov     eax,0AAAAAAAAh
@@ -334,6 +377,7 @@ Suppose that `ESP` initially points to 0xb20000 and you have the following code:
 ![Practical_Reverse3](./pic/Practical_Reverse3.png)
 
 At the lowest level, the processor operates only on concrete objects, such as registers or data coming from memory. So functions are implemented through the stack data structure. Consider the following function:
+
 ```c
 // C
 int
@@ -342,6 +386,7 @@ __cdecl addme(short a, short b)
 return a+b;
 }
 ```
+
 ```text
 01: 004113A0 55             push    ebp
 02: 004113A1 8B EC          mov     ebp, esp
@@ -354,11 +399,14 @@ return a+b;
 09: 004113CD 5D             pop     ebp
 10: 004113CE C3             retn
 ```
+
 The function is invoked with the following code:
+
 ```c
 // C
 sum = addme(x, y);
 ```
+
 ```text
 // Assembly
 01: 004129F3 50              push  eax
@@ -367,15 +415,19 @@ sum = addme(x, y);
 04: 004129F9 E8 F1 E7 FF FF  call  addme
 05: 004129FE 83 C4 08        add   esp, 8
 ```
+
 Before going into the details, first consider the `CALL/RET` instructions and calling conventions. The `CALL` instruction performs two operations:
+
 1. It pushes the return address (address immediately after the `CALL` instruction) on the stack.
 2. It changes `EIP` to the call destination. This effectively transfers control to the call target and begins execution there.
 
 `RET` simply pops the address stored on the top of the stack into `EIP` and transfers control to it (literally like a "`POP EIP`" but such instruction sequence does not exist on x86). For example, if you want to begin execution at 0x12345678, you can just do the following:
+
 ```text
 01: 68 78 56 34 12   push 0x12345678
 02: C3               ret
 ```
+
 A calling convention is a set of rules dictating how function calls work at the machine level. It is defined by the Application Binary Interface (ABI) for a particular system. For example, should the parameters be passed through the stack, in registers, or both? Should the parameters be passed in from left-to-right or right-to-left? Should the return value be stored on the stack, in registers, or both? The most popular calling conventions are `CDECL`, `STDCALL`, `THISCALL`, and `FASTCALL`.
 
 ||CDECL|STDCALL|FASTCALL|
@@ -392,7 +444,9 @@ After line 4 executes, we are now in the `addme` function body. Line 1 pushes `E
 If the function `addme` had local variables, the code would need to grow the stack by subtracting `ESP` after line 2. All local variables would then be accessible through a negative offset from `EBP`.
 
 ### Control Flow
+
 This section describes how the system implements conditional execution for higher-level constructs like if/else, switch/case, and while/for. All of these are implemented through the `CMP`, `TEST`, `JMP`, and `Jcc` instructions and `EFLAGS` register. The following list summarizes the common flags in `EFLAGS`:
+
 - ZF (Zero flag): Set if the result of the previous arithmetic operation is zero.
 - SF (Sign flag): Set to the most significant bit of the result.
 - CF (Carry flag): Set when the result requires a carry. It applies to unsigned numbers.
@@ -412,7 +466,9 @@ The `Jcc` instructions, where "`cc`" is a conditional code, changes control flow
 The `CMP` instruction compares two operands and sets the appropriate conditional code in `EFLAGS`; it compares two numbers by subtracting one from another without updating the result. The `TEST` instruction does the same thing except it performs a logical `AND` between the two operands.
 
 #### If-Else
+
 If-else constructs are quite simple to recognize because they involve a compare/test followed by a `Jcc`.
+
 ```text
 // Assembly
 
@@ -432,6 +488,7 @@ If-else constructs are quite simple to recognize because they involve a compare/
 14:   retn  4
 15: _FsRtlUninitializeLargeMcb@4 endp
 ```
+
 ```text
 // Pseudo C
 
@@ -453,12 +510,15 @@ if (*esi != 0) {
 }
 return;
 ```
+
 Line 2 reads a value at location `ESI` and stores it in `EDX`. Line 3 `ANDs EDX` with itself and sets the appropriate flags in `EFLAGS`. Note that this pattern is commonly used to determine whether a register is zero. Line 4 jumps to loc_4E31F9 (line 12) if ZF=1. If ZF=0, then it executes line 5 and continues until the function returns.
 
 Note that there are two slightly different but logically equivalent C translations for this snippet.
 
 #### Switch-Case
+
 A switch-case block is a sequence of if/else statements. For example:
+
 ```c
 // Switch-Case
 
@@ -475,6 +535,7 @@ switch(ch) {
 domore();
 ...
 ```
+
 ```c
 // If-Else
 
@@ -487,7 +548,9 @@ if (ch == 'h') {
 domore();
 ...
 ```
+
 Hence, the machine code translation will be a series if/else.
+
 ```text
 // Assembly
 
@@ -520,6 +583,7 @@ Hence, the machine code translation will be a series if/else.
 27:   pop   ebp
 28:   retn
 ```
+
 ```c
 // C
 
@@ -545,7 +609,9 @@ unsigned char switchme(int a)
 ```
 
 ### Loops
+
 At the machine level, loops are implemented using a combination of `Jcc` and `JMP` instructions. In other words, they are implemented using `if/else` and `goto` constructs.
+
 ```c
 // Using for
 for (int i=0; i<10; i++) {
@@ -553,6 +619,7 @@ for (int i=0; i<10; i++) {
 }
 printf("done!\n");
 ```
+
 ```c
 // Using if/else and goto
 int i = 0;
@@ -564,7 +631,9 @@ loop_start:
     }
 printf("done!n");
 ```
+
 When compiled, both versions are identical at the machine-code level:
+
 ```text
 01: 00401002   mov      edi, ds:__imp__printf
 02: 00401008   xor      esi, esi
@@ -581,6 +650,7 @@ When compiled, both versions are identical at the machine-code level:
 13: 00401026   call     edi                     ; __imp__printf
 14: 00401028   add      esp, 4
 ```
+
 Line 1 sets `EDI` to the `printf` function. Line 2 sets `ESI` to 0. Line 4 begins the loop; however, note that it does not begin with a comparison. There is no comparison here because the compiler knows that the counter was initialized to 0 (see line 2) and is obviously going to be less than 10 so it skips the check. Lines 5–7 call the `printf` function with the right parameters (format specifier and our number). Line 8 increments the number. Line 9 cleans up the stack because `printf` uses the `CDECL` calling convention. Line 10 checks to see if the
 counter is less than 0xA. If it is, it jumps back to `loc_401010`. If the counter is not less than 0xA, it continues execution at line 12 and finishes with a `printf`.
 
@@ -588,6 +658,7 @@ One important observation to make is that the disassembly allowed us to infer th
 
 Outside of the normal Jcc constructs, certain loops can be implemented using the `LOOP` instruction. The `LOOP` instruction executes a block of code up to `ECX`
 time.
+
 ```text
 // Assembly
 01: 8B CA       mov ecx, edx
@@ -597,6 +668,7 @@ time.
 05: AB          stosd
 06: E2 FA       loop loc_CFB8F
 ```
+
 ```text
 // Rough C
 while (ecx != 0) {
@@ -607,10 +679,11 @@ while (ecx != 0) {
     ecx--;
 }
 ```
+
 Line 1 reads the counter from `EDX`. Line 3 is the loop start; it reads in a double-word at the memory address `EDI` and saves that in `EAX`; it also increments `EDI` by 4. Line 4 performs the `NOT` operator on the value just read. Line 5 writes the modified value to the memory address `ESI` and increments `ESI` by 4. Line 6 checks to see if `ECX` is 0; if not, execution is continued at the loop start.
 
-
 ## Walk-Through
+
 ```text
 01:     ; BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 02:                 _DllMain@12 proc near
@@ -712,9 +785,11 @@ Line 1 reads the counter from `EDX`. Line 3 is the loop start; it reads in a dou
 98: C2 0C 00            retn    0Ch
 99:                 _DllMain@12 endp
 ```
+
 Lines 3–4 set up the function prologue, which saves the previous base frame pointer and establishes a new one. Line 5 reserves 0x130 bytes of stack space. Line 6 saves `EDI`. Line 7 executes the `SIDT` instruction, which writes the 6-byte `IDT` register to a specified memory region. Line 8 reads a double-word at `EBP-6` and saves it in `EAX`. Lines 9–10 check if `EAX` is below-or-equal to 0x8003F400. If it is, execution is transferred to line 18; otherwise, it continues executing at line 11. Lines 11–12 do a similar check except that the condition is not-below 0x80047400. If it is, execution is transferred to line 18; otherwise, it continues executing at line 13. Line 13 clears `EAX`. Line 14 restores the saved `EDI` register in line 6. Lines 15–16 restore the previous base frame and stack pointer. Line 17 adds 0xC bytes to the stack pointer and then returns to the caller.
 
 Before discussing the next area, note a few things about these first 17 lines. The `SIDT` instruction (line 7) writes the content of the IDT register to a 6-byte memory location. What is the IDT register? The Intel/AMD reference manual states that IDT is an array of 256 8-byte entries, each containing a pointer to an interrupt handler, segment selector, and offset. When an interrupt or exception occurs, the processor uses the interrupt number as an index into the IDT and calls the entry's specified handler. The IDT register is a 6-byte register; the top 4 bytes contain the base of the IDT array/table and the bottom 2 bytes store the table limit. With this in mind, you now know that line 8 is actually reading the IDT base address. Lines 9 and 11 check whether the base address is in the range (0x8003F400, 0x80047400). And we know that 0x8003F400 is an IDT base address on Windows XP on x86. Why does the code check for this behavior? One possible explanation is that the developer assumed that an IDT base address falling in that range is considered "invalid" or may be the result of being virtualized. The function automatically returns zero if the IDTR is "invalid". You can decompile this code to C as follows:
+
 ```c
 typedef struct _IDTR {
     DWORD base;
@@ -729,14 +804,18 @@ BOOL __stdcall DllMain (HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     ...
 }
 ```
+
 If the IDT base seems valid, the code continues execution at line 18. Lines 19–20 clear `EAX` and set `ECX` to 0x49. Line 21 uses sets `EDI` to whatever `EBP-0x12C` is; since `EBP` is the base frame pointer, `EBP-0x12C` is the address of a local variable. Line 22 writes zero at the location pointed to by `EBP-0x130`. Lines 23–24 push `EAX` and `2` on the stack. Line 25 zeroes a 0x124-byte buffer starting from `EBP-0x12C`. Line 26 calls `CreateToolhelp32Snapshot`:
+
 ```c
 HANDLE WINAPI CreateToolhelp32Snapshot(
     _In_  DWORD dwFlags,
     _In_  DWORD th32ProcessID
 );
 ```
+
 This Win32 API function takes two integer parameters. As a general rule, Win32 API functions follow `STDCALL` calling convention. Hence, the `dwFlags` and `th32ProcessId` parameters are 0x2 (line 24) and 0x0 (line 23). This function enumerates all processes on the system and returns a handle to be used in `Process32Next`. Lines 27–28 save the return value in `EDI` and check if it is -1. If it is, the return value is set to 0 and it returns (lines 30–34); otherwise, execution continues at line 35. Line 36 sets `EAX` to the address of the local variable previously initialized to 0 in line 22; line 40 initializes it to 0x128. Lines 37–39 push `ESI`, `EAX`, and `EDI` on the stack. Line 41 calls `Process32First`:
+
 ```c
 // Function prototype
 
@@ -745,6 +824,7 @@ BOOL WINAPI Process32First(
     _Inout_ LPPROCESSENTRY32 lppe
 );
 ```
+
 ```c
 // Relevant structure definition
 
@@ -774,13 +854,17 @@ typedef struct tagPROCESSENTRY32 {
 00000024 szExeFile db 260 dup(?)
 00000128 PROCESSENTRY32 ends
 ```
+
 Because this API takes two parameters, `hSnapshot` is `EDI` (line 39, previously the returned handle from `CreateToolhelp32Snapshot` in line 27), and `lppe` is the address of a local variable (`EBP-0x130`). Because `lppe` points to a `PROCESSENTRY32` structure, we immediately know that the local variable at `EBP-0x130` is of the same type. It also makes sense because the documentation for `Process32First` states that before calling the function, the `dwSize` field must be set to the size of a `PROCESSENTRY32` structure (which is 0x128). We now know that lines 19–25 were simply initializing this structure to 0. In addition, we can say that this local variable starts at `EBP-0x130` and ends at `EBP-0x8`.
 
 Line 42 tests the return value of `Process32First`. If it is zero, execution begins at line 70; otherwise, it continues at line 43. Line 44 saves the address of the `stricmp` function in `ESI`. Line 45 sets `ECX` to the address of a local variable (`EBP-0x10C`), which happens to be a field in `PROCESSENTRY32` (see the previous paragraph). Lines 46–48 push `0x10007C50/ECX` on the stack and call `stricmp`. We know that `stricmp` takes two character strings as arguments; hence, `ECX` must be the `szExeFile` field in `PROCESSENTRY32` and 0x10007C50 is the address of a string:
+
 ```text
 .data:10007C50 65 78 70 6C 6F+Str2 db 'explorer.exe',0
 ```
+
 Line 49 cleans up the stack because `stricmp` uses `CDECL` calling convention. Line 50 checks `stricmp`'s return value. If it is zero, meaning that the string matched "`explorer.exe`", execution begins at line 66; otherwise, it continues execution at line 52. We can now decompile lines 18–51 as follows:
+
 ```c
 HANDLE h;
 PROCESSENTRY32 procentry;
@@ -799,16 +883,20 @@ if (stricmp(procentry.szExeFile, "explorer.exe") == 0) {
 }
 // line 52
 ```
+
 Lines 52–65 are nearly identical to the previous block except that they form a loop with two exit conditions. The first exit condition is when `Process32Next` returns `FALSE` (line 58) and the second is when `stricmp` returns zero. We can decompile lines 52–65 as follows:
+
 ```c
 while (Process32Next(h, &procentry) != FALSE) {
     if (stricmp(procentry.szExeFile, "explorer.exe") == 0)
         break;
 }
 ```
+
 After the loop exits, execution resumes at line 66. Lines 67–68 save the matching `PROCESSENTRY32`'s `th32ParentProcessID/th32ProcessID` in `EAX/ECX` and continue execution at 73. Notice that Line 66 is also a jump target in line 52.
 
 Lines 70–74 read the `fdwReason` parameter of `DllMain` (`EBP+C`) and check whether it is 0 (`DLL_PROCESS_DETACH`). If it is, the return value is set to 0 and it returns; otherwise, it goes to line 82. Lines 82–85 check if the `fdwReason` is greater than 1 (i.e., `DLL_THREAD_ATTACH`, `DLL_THREAD_DETACH`). If it is, the return value is set to 1 and it returns; otherwise, execution continues at line 86. Lines 86–92 call `CreateThread`:
+
 ```c
 HANDLE WINAPI CreateThread(
     _In_opt_    LPSECURITY_ATTRIBUTES lpThreadAttributes,
@@ -819,7 +907,9 @@ HANDLE WINAPI CreateThread(
     _Out_opt_   LPDWORD lpThreadId
 );
 ```
+
 with `lpStartAddress` as 0x100032D0. This block can be decompiled as follows:
+
 ```c
 if (fdwReason == DLL_PROCESS_DETACH) { return FALSE; }
 if (fdwReason == DLL_THREAD_ATTACH || fdwReason == DLL_THREAD_DETACH) {
@@ -827,16 +917,19 @@ if (fdwReason == DLL_THREAD_ATTACH || fdwReason == DLL_THREAD_DETACH) {
 CreateThread(0, 0, (LPTHREAD_START_ROUTINE) 0x100032D0, 0, 0, 0);
 return TRUE;
 ```
+
 Having analyzed the function, we can deduce that the developer’s original intention was this:
+
 1. Detect whether the target machine has a "sane" IDT.
 2. Check whether "explorer.exe" is running on the system—i.e., someone logged on.
 3. Create a main thread that infects the target machine.
 
-
 ## x64
+
 x64 is an extension of x86, so most of the architecture properties are the same, with minor differences such as register size and some instructions are unavailable (like PUSHAD).
 
 ### Register Set and Data Types
+
 The register set has 18 64-bit GPRs, note that 64-bit registers have the "R" prefix.
 
 ![Practical_Reverse5](./pic/Practical_Reverse5.png)
@@ -844,7 +937,9 @@ The register set has 18 64-bit GPRs, note that 64-bit registers have the "R" pre
 While RBP can still be used as the base frame pointer, it is rarely used for that purpose in real-life compiler-generated code. Most x64 compilers simply treat RBP as another GPR, and reference local variables relative to RSP.
 
 ### DATA Movement
+
 x64 supports a concept referred to as RIP-relative addressing, which allows instructions to reference data at a relative position to RIP. For example:
+
 ```text
 01: 0000000000000000 48 8B 05 00 00+    mov rax, qword ptr cs:loc_A
 02:                                     ; originally written as "mov rax, [rip]"
@@ -852,9 +947,11 @@ x64 supports a concept referred to as RIP-relative addressing, which allows inst
 04: 0000000000000007 48 31 C0           xor rax, rax
 05: 000000000000000A 90                 nop
 ```
+
 Line 1 reads the address of `loc_A` (which is 0x7) and saves it in RAX. RIP-relative addressing is primarily used to facilitate position-independent code.
 
 Most arithmetic instructions are automatically promoted to 64 bits even though the operands are only 32 bits. For example:
+
 ```text
 48 B8 88 77 66+     mov rax, 1122334455667788h
 31 C0               xor eax, eax ; will also clear the upper 32bits of RAX. i.e., RAX=0 after this
@@ -863,7 +960,9 @@ FF C0               inc eax ; RAX=0 after this
 ```
 
 ### Canonical Address
+
 On x64, virtual addresses are 64 bits in width, but most processors do not support a full 64-bit virtual address space. Current Intel/AMD processors only use 48 bits for the address space. All virtual memory addresses must be in canonical form. A virtual address is in canonical form if bits 63 to the most significant implemented bit are either all 1s or 0s. In practical terms, it means that bits 48–63 need to match bit 47. For example:
+
 ```text
 0xfffff801`c9c11000 = 11111111 11111111 11111000 00000001 11001001 11000001
     00010000 00000000 ; canonical
@@ -876,18 +975,21 @@ On x64, virtual addresses are 64 bits in width, but most processors do not suppo
 0xfffff960`000989f0 = 11111111 11111111 11111001 01100000 00000000 00001001
     10001001 11110000 ; canonical
 ```
+
 If code tries to dereference a non-canonical address, the system will cause an exception.
 
 ### Function Invocation
+
 Recall that some calling conventions require parameters to be passed on the stack on x86. On x64, most calling conventions pass parameters through registers. For example, on Windows x64, there is only one calling convention and the first four parameters are passed through `RCX ,  RDX ,  R8 , and  R9 ; the remaining
 are pushed on the stack from right to left. On Linux, the fi rst six parameters are
 passed on  RDI ,  RSI ,  RDX ,  RCX ,  R8 , and  R9
 
-
 ## Exercise
 
 ### Ex1
+
 This function uses a combination `SCAS` and `STOS` to do its work. First, explain what is the type of the `[EBP+8]` and `[EBP+C]` in line 1 and 8, respectively. Next, explain what this snippet does.
+
 ```text
 01: 8B 7D 08            mov     edi, [ebp+8]
 02: 8B D7               mov     edx, edi
@@ -902,7 +1004,8 @@ This function uses a combination `SCAS` and `STOS` to do its work. First, explai
 11: 8B C2               mov     eax, edx
 ```
 
-#### Solution:
+#### Solution
+
 `[EBP+8]` is of type pointer to a char, `[EBP+C]` is of type char. The snippet is a body of a function responsible for replacing every character from a given string with another predefined character.
 
 First, we look at a standard representation of the stack layout after a function call. We will know that `[EBP+8]` and `[EBP+C]` are used to point to the function arguments.
@@ -910,6 +1013,7 @@ First, we look at a standard representation of the stack layout after a function
 ![Practical_Reverse6](./pic/Practical_Reverse6.png)
 
 Now, let's put the function prologue and epilogue around it and added a caller to get a fully functional assembly code.
+
 ```text
 SECTION  .data
 my_str:
@@ -945,13 +1049,16 @@ TestFunc:
     pop  ebp            ; restore stack base pointer
     ret
 ```
+
 We can compiled the code on a 64bit machine with:
+
 ```text
 $ nasm -f elf32 -g -F dwarf code.asm
 $ ld -m elf_i386 -o code code.o
 ```
 
 Snippet walk-through:
+
 - Line 1 (`mov edi, [ebp+8]`): Load the first function argument to `EDI` (pointer to our string `The string will be replaced`).
 - Line 2 (`mov edx, edi`): Store the current `EDI` value into `EDX`for purpose clarified later.
 - Line 3 (`xor eax, eax`): EAX=0.
@@ -964,6 +1071,7 @@ Snippet walk-through:
 - Line 11 (`mov eax, edx`): `EDX` points to the first character of the modified string. Usually the result of a function is stored in `EAX` register. From here we can know that the snipped is part of a function body.
 
 The walk-through demonstrated that the function is overwriting every character in the string passed as the first function parameter with a character passed as the second argument. Here's a working C-Code, where the function `TestFunc` corresponds to the snippet in this exercise:
+
 ```text
 #include <stdio.h>
 
@@ -993,7 +1101,9 @@ int main (int argc, char *argv[] )
     }
 }
 ```
+
 The function can be simplified by using the strlen and memset functions:
+
 ```text
 char* TestFunc(char *str, char ch)
 {
@@ -1006,15 +1116,18 @@ char* TestFunc(char *str, char ch)
 ```
 
 ### Ex2
+
 1. Given what you learned about `CALL` and `RET`, explain how you would read the value of `EIP`? Why can’t you just do `MOV EAX, EIP`?
 2. Come up with at least two code sequences to set `EIP` to 0xAABBCCDD.
 3. In the example function, `addme`, what would happen if the stack pointer were not properly restored before executing `RET`?
 4. In all of the calling conventions explained, the return value is stored in a 32-bit register (EAX). What happens when the return value does not fit in a 32-bit register? Write a program to experiment and evaluate your answer. Does the mechanism change from compiler to compiler?
 
 #### Solution
+
 (1). According to the "Intel® 64 and IA-32 Architectures Developer's Manual: Vol. 1" the EIP register is not designed to be accessed directly by the software and could be affected implicitly only by handful of control flow instructions. In order to read the value of the EIP register one needs to execute CALL instruction to a function. CALL saves the EIP value in the stack as the function return address. While in the function body one could read the return address saved in the stack.
 
 We can therefor get the value of `EIP` by jumping to a dummy function `read_eip` (thereby placing `EIP` at the top of the stack), and then copying the value from the stack memory to a register, i.e., `EAX`:
+
 ```text
 SECTION  .data
 SECTION  .text
@@ -1029,7 +1142,9 @@ read_eip:
     mov  eax, [esp]
     ret
 ```
+
 Now let's test the code with gdb:
+
 ```text
 seed@ubuntu:~$ nasm -f elf32 -g -F dwarf xxx.asm
 seed@ubuntu:~$ ld -m elf_i386 -o xxx xxx.o
@@ -1066,6 +1181,7 @@ $4 = 0x8048065
 ```
 
 (2). We know the following three instructions that manipulate the `EIP`: `RET`, `JMP`, `C
+
 ```text
 // Based on RET
 
@@ -1077,6 +1193,7 @@ _start:
     push eax
     ret
 ```
+
 ```text
 // Based on JMP
 
@@ -1087,6 +1204,7 @@ _start:
     mov eax 0AABBCCDDh
     jmp eax
 ```
+
 ```text
 // Based on CALL
 
@@ -1099,6 +1217,7 @@ _start:
 ```
 
 (3). We can see the `addme` function below.
+
 ```text
 SECTION  .data
 SECTION  .text
@@ -1126,9 +1245,11 @@ add_me:
     pop   ebp
     retn
 ```
+
 The restore is part of the function epilogue, which is standard for C-style functions. Resetting the `ESP` ensures that any values placed on the stack whithin the function, but not cleaned up, don't mess with the `RET` statement. If, for instance, the function would have pushed a value on the stack but never retrieve it, then the `RET` instruction would jump to this location instead of the `EIP`. Restoring the `ESP` prevents this. But if the function properly cleans the stack there is no need to backup and restore the `ESP`. In the present `add_me` function there are not instruction that modify the `ESP` between the prologue and epilogue. So there is no need to restore the `ESP`, removing the instruction will have no effect.
 
 (4). I used the following C program to verify.
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -1149,7 +1270,9 @@ int main() {
    return 0;
 }
 ```
+
 I compiling the code with gcc and nasm, then analyse whih IDA Pro. Line 40 in the dissassembled function clearly indicate that the return value stored in EAX is a pointer to a memory location holding the function result.
+
 ```text
 .text:080484AB ; int __cdecl stringConcat(char *s, char *src)
 .text:080484AB                 public stringConcat
@@ -1198,19 +1321,20 @@ I compiling the code with gcc and nasm, then analyse whih IDA Pro. Line 40 in th
 ```
 
 ### Ex3
+
 1. Repeat the walk-through by yourself. Draw the stack layout, including parameters and local variables.
 2. In the example walk-through, we did a nearly one-to-one translation of the assembly code to C. As an exercise, re-decompile this whole function so that it looks more natural. What can you say about the developer’s skill level/experience? Explain your reasons. Can you do a better job?
 3. In some of the assembly listings, the function name has a `@` prefix followed by a number. Explain when and why this decoration exists.
 4. Implement the following functions in x86 assembly: `strlen`, `strchr`, `memcpy`, `memset`, `strcmp`, `strset`.
 5. Decompile the following kernel routines in Windows:
-  - KeInitializeDpc
-  - KeInitializeApc
-  - ObFastDereferenceObject (and explain its calling convention)
-  - KeInitializeQueue
-  - KxWaitForLockChainValid
-  - KeReadyThread
-  - KiInitializeTSS
-  - RtlValidateUnicodeString
+    - KeInitializeDpc
+    - KeInitializeApc
+    - ObFastDereferenceObject (and explain its calling convention)
+    - KeInitializeQueue
+    - KxWaitForLockChainValid
+    - KeReadyThread
+    - KiInitializeTSS
+    - RtlValidateUnicodeString
 6. Sample H (SHA1: cb3b2403e1d777c250210d4ed4567cb527cab0f4). The function `sub_13846` references several structures whose types are not entirely clear. Your task is to first recover the function prototype and then try to reconstruct the structure fi elds. After reading Chapter 3, return to this exercise to see if your understanding has changed. (Note:
 This sample is targeting Windows XP x86.)
 7. Sample H (SHA1: cb3b2403e1d777c250210d4ed4567cb527cab0f4). The function `sub_10BB6` has a loop searching for something. First recover the function prototype and then infer the types based on the context. Hint: You should probably have a copy of the PE specifi cation nearby.
@@ -1220,5 +1344,6 @@ This sample is targeting Windows XP x86.)
 11. Read the Virtual Memory chapter in `Intel Software Developer Manual, Volume 3` and `AMD64 Architecture Programmer's Manual, Volume 2: System Programming`. Perform a few virtual address to physical address translations yourself and verify the result with a kernel debugger. Explain how data execution prevention (DEP) works.
 
 ### Ex4
+
 1. Explain two methods to get the instruction pointer on x64. At least one of the methods must use RIP addressing.
 2. Perform a virtual-to-physical address translation on x64. Were there any major differences compared to x86?

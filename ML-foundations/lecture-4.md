@@ -5,24 +5,24 @@ Learning from ![D][1] (to infer something outside ![D][1]) is doomed if any 'unk
 
 ## 2. Probability to the Rescue -- probably approximately correct outside ![D][1]
 
-![](./static/lec4_1.png)
+![img](./pic/lec4_1.png)
 
 If ![N][14] is large, we can probably infer unknown ![mu][7] by known ![nu][8].
 
 ## 3. Connection to Learning -- verification possible if ![Einh][2] small for fixed ![h][3]
 
-![](./static/lec4_2.png)
+![img](./pic/lec4_2.png)
 
 So, if ![Einh][2] ![=][9] ![Eouth][10] and ![Einh][2] small ==> ![Eouth][10] small ==> ![h][3] ![=][9] ![f][6] with respect to ![P][11].
 
-![](./static/lec4_3.png)
+![img](./pic/lec4_3.png)
 
 Now, we can use 'historical records' (data) to verify 'one candidate formula' ![h][3].
 
 ## 4. Connection to Real Learning -- learning possible if ![H][4] finite and ![Eing][5] small
 But in real learning, we have to deal with some `BAD` sample: ![Ein][12] and ![Eout][13] far away --can get worse when involving 'choice'.
 
-![](./static/lec4_4.png)
+![img](./pic/lec4_4.png)
 
 - if ![H][4] = ![M][15] finite, ![N][14] large enough, for whatever ![g][16] picked by ![A][17], ![Eoutg][18] ![=][9] ![Eing][5].
 - if ![A][17] finds one ![g][16] with ![Eing][5] ![=][9] 0, `PAC` guarantee for ![Eoutg][18] ![=][9] 0 ==> learning possible.

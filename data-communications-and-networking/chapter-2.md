@@ -9,11 +9,11 @@
 ## TCP/IP Protocol Suite
 TCP/IP is a protocol suite used in the Internet today. It is a hierarchical protocol made up of interactive modules, each of which provides a specific functionality.
 
-![](./static/ch2_4.png)
+![img](./pic/ch2_4.png)
 
 ### Layered Architecture
 
-![](./static/ch2_5.png)
+![img](./pic/ch2_5.png)
 
 As the fingure shows:
 - Two hosts are involved in all five layers.
@@ -22,13 +22,13 @@ As the fingure shows:
 
 ### Layers in the TCP/IP Protocol Suite
 
-![](./static/ch2_6.png)
+![img](./pic/ch2_6.png)
 
 The duty of the application, transport, and network layers is end-to-end. However, the duty of the data-link and physical layers is hop-to-hop, in which a hop is a host or router. In other words, the domain of duty of the top three layers is the internet, and the domain of duty of the two lower layers is the link.
 
 In the top three layers, the data unit (packets) should not be changed by any router or link-layer switch. In the bottom two layers, the packet created by the host is changed only by the routers, not by the link-layer switches.
 
-![](./static/ch2_7.png)
+![img](./pic/ch2_7.png)
 
 Note that, although the logical connection at the network layer is between the two hosts, we can only say that identical objects exist between two hops in this case because a router may fragment the packet at the network layer and send more packets than received.
 
@@ -64,7 +64,7 @@ The Hypertext Transfer Protocol (HTTP) is a vehicle for accessing the World Wide
 
 ### Encapsulation and Decapsulation
 
-![](./static/ch2_8.png)
+![img](./pic/ch2_8.png)
 
 ##### Encapsulation at the source Host
 1. At the application layer, the data to be exchanged is referred to as a message. The message is passed to the transport layer.
@@ -82,11 +82,11 @@ At the destination host, each layer removes the payload, and delivers the payloa
 
 ### Addressing
 
-![](./static/ch2_9.png)
+![img](./pic/ch2_9.png)
 
 ### Multiplexing and Demultiplexing
 
-![](./static/ch2_10.png)
+![img](./pic/ch2_10.png)
 
 
 ## The OSI Model
@@ -96,7 +96,7 @@ At the destination host, each layer removes the payload, and delivers the payloa
 
 ### OSI versus TCP/IP
 
-![](./static/ch2_12.png)
+![img](./pic/ch2_12.png)
 
 
 ## Summary
