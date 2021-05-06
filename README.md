@@ -59,37 +59,19 @@ This is my personal study notes include computer science and mathematics. I hope
 22. (-) [Chapter 22: Next Generation IP](./data-communications-and-networking/chapter-22.md)
 23. (-) [Chapter 23: Introduction to Transport Layer](./data-communications-and-networking/chapter-23.md)
 
-### The Basics of Hacking and Penetration Testing 2nd
+### Android
 
-- [Note](./the-basics-of-hacking-and-penetration-testing/README.md)
+- [Android 安全攻防实战](./Attack-and-Defense-of-Android-Security/README.md)
+- [Android 安全架构深究](./Android-Security-Internals/README.md)
+- [Android 安全攻防权威指南](./Android-Hackers-Handbook/README.md)
+- [Android 软件安全与逆向分析](./Android-Security-and-Reverse/README.md)
 
-### Effective Debugging
+### 其他
 
-- [Note](./effective-debugging/README.md)
-
-### Binary Hacks
-
-- [Note](./Binary-Hacks/README.md)
-
-### 第一本 Docker 书
-
-- [Note](./The-Docker-Book/README.md)
-
-### Android 安全攻防实战
-
-- [Note](./Attack-and-Defense-of-Android-Security/README.md)
-
-### Android 安全架构深究
-
-- [Note](./Android-Security-Internals/README.md)
-
-### Android 安全攻防权威指南
-
-- [Note](./Android-Hackers-Handbook/README.md)
-
-### Android 软件安全与逆向分析
-
-- [Note](./Android-Security-and-Reverse/README.md)
+- [The Basics of Hacking and Penetration Testing 2nd](./the-basics-of-hacking-and-penetration-testing/README.md)
+- [Effective Debugging](./effective-debugging/README.md)
+- [Binary Hacks](./Binary-Hacks/README.md)
+- [第一本 Docker 书](./The-Docker-Book/README.md)
 
 ## Coursera's Notes
 
@@ -100,6 +82,16 @@ This is my personal study notes include computer science and mathematics. I hope
 - [Lecture 3: Types of Learning](./ML-foundations/lecture-3.md)
 - [Lecture 4: Feasibility of Learning](./ML-foundations/lecture-4.md)
 - [Homework 1](./ML-foundations/hw1_Sol.md)
+
+## SEED Labs
+
+- [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
+- [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
+- [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
+- [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
+- [Return-to-libc Attack Lab](./SEED-labs/return-to-libc-attack-lab.md)
+- [Race Condition Vulnerability Lab](./SEED-labs/race-condition-vulnerability-lab.md)
+- [Environment Variable and Set-UID Lab](./SEED-labs/environment-variable-and-set-uid-lab.md)
 
 ## Translation
 
@@ -123,16 +115,6 @@ This is my personal study notes include computer science and mathematics. I hope
 - [使用 Kdump 检查 Linux 内核崩溃](https://linux.cn/article-8737-1.html)
 - [网络分析利器：在 Ubuntu 16.04 上安装 Bro](https://linux.cn/article-8736-1.html)
 - [一周工作所用的日常 Git 命令](https://linux.cn/article-8841-1.html)
-
-## SEED Labs
-
-- [Set-UID Program Vulnerability Lab](./SEED-labs/set_uid-program-vulnerability-lab.md)
-- [Format-String Vulnerability Lab](./SEED-labs/format_string-vulnerability-lab.md)
-- [Shellshock Attack Lab](./SEED-labs/shellshock-attack-lab.md)
-- [Buffer Overflow Vulnerability Lab](./SEED-labs/buffer-overflow-vulnerability-lab.md)
-- [Return-to-libc Attack Lab](./SEED-labs/return-to-libc-attack-lab.md)
-- [Race Condition Vulnerability Lab](./SEED-labs/race-condition-vulnerability-lab.md)
-- [Environment Variable and Set-UID Lab](./SEED-labs/environment-variable-and-set-uid-lab.md)
 
 ## LICENSE
 

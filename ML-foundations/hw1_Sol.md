@@ -1,77 +1,85 @@
 # homework 1 solution
 
-### Questions 1
+## Questions 1
+
 `(ii), (iv) and (v)`
 
 Key essence of machine learning:
+
 1. exists some 'underlying pattern' to be learned
 2. but no programming (easy) definition
 3. somehow there is data about the pattern
 
-### Question 2
+## Question 2
+
 `reinforcement learning`
 
-### Question 3
+## Question 3
+
 `unsupervised learning`
 
-### Question 4
+## Question 4
+
 `supervised learning`
 
-### Question 5
+## Question 5
+
 `active learning`
 
 Type of learning:
-1. Learning with Different Output Space ![Y][1]
- - [classification], [regression], [structured]
-2. Learning with Different Data Label ![yn][2]
- - [supervised], un/semi-supervised, reinforcement
-3. Learning with Different Protocol ![f][3] => (![xn][4], ![yn][2])
- - [batch], online, active
-4. Learning with Different Input Space ![X][5]
- - [concrete], raw abstract
 
-### Question 6
+1. Learning with Different Output Space ![Y][1]
+    - [classification], [regression], [structured]
+2. Learning with Different Data Label ![yn][2]
+    - [supervised], un/semi-supervised, reinforcement
+3. Learning with Different Protocol ![f][3] => (![xn][4], ![yn][2])
+    - [batch], online, active
+4. Learning with Different Input Space ![X][5]
+    - [concrete], raw abstract
+
+## Question 6
 
 ![Sol][6]
 
 Can be converted to a question of how many even between ![N+1][7] and ![N+L][8].
 
-### Question 7
+## Question 7
 
 ![Sol][10]
 
 Obviously, the different values of ![f][3] depends on ![c][9].
 
-### Question 8
+## Question 8
 
 ![Sol][11]
 
-### Question 9
+## Question 9
 
 ![Sol][12]
 
-### Question 10
+## Question 10
 
 ![Sol][13]
 
-### Question 11
+## Question 11
 
 ![Sol][14]
 
-### Question 12
+## Question 12
 
 ![Sol][15]
 
-### Question 13
+## Question 13
 
 ![Sol][16]
 
-### Question 14
+## Question 14
 
 ![Sol][17]
 
-### Question 15
-```python
+## Question 15
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -105,7 +113,8 @@ w0 = np.zeros((row, 1))
 num = perceptron(X, Y, w0)
 print(num)
 ```
-```python
+
+```py
 In [1]: %timeit %run 15.py
 39
 ...
@@ -114,8 +123,9 @@ In [1]: %timeit %run 15.py
 100 loops, best of 3: 7.74 ms per loop
 ```
 
-### Question 16
-```python
+## Question 16
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -155,7 +165,8 @@ for i in range(2000):
     total += num
 print(total/2000)
 ```
-```python
+
+```py
 In [2]: %timeit %run 16.py
 39.5295
 39.8125
@@ -164,8 +175,9 @@ In [2]: %timeit %run 16.py
 1 loop, best of 3: 4.22 s per loop
 ```
 
-### Question 17
-```python
+## Question 17
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -205,7 +217,8 @@ for i in range(2000):
     total += num
 print(total/2000)
 ```
-```python
+
+```py
 In [3]: %timeit %run 17.py
 40.2405
 40.0065
@@ -214,8 +227,9 @@ In [3]: %timeit %run 17.py
 1 loop, best of 3: 4.21 s per loop
 ```
 
-### Question 18
-```python
+## Question 18
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -266,7 +280,8 @@ for i in range(2000):
     total += err
 print(total/2000)
 ```
-```python
+
+```py
 In [1]: %timeit %run 18.py
 0.133199
 0.13218
@@ -275,8 +290,9 @@ In [1]: %timeit %run 18.py
 1 loop, best of 3: 10.1 s per loop
 ```
 
-### Question 19
-```python
+## Question 19
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -327,7 +343,8 @@ for i in range(2000):
     total += err
 print(total/2000)
 ```
-```python
+
+```py
 In [2]: %timeit %run 19.py
 0.353636
 0.358305
@@ -336,8 +353,9 @@ In [2]: %timeit %run 19.py
 1 loop, best of 3: 10.3 s per loop
 ```
 
-### Question 20
-```python
+## Question 20
+
+```py
 import numpy as np
 
 def loadData(filename):
@@ -388,7 +406,8 @@ for i in range(2000):
     total += err
 print(total/2000)
 ```
-```python
+
+```py
 In [3]: %timeit %run 20.py
 0.115668
 0.115639
@@ -396,7 +415,6 @@ In [3]: %timeit %run 20.py
 0.115895
 1 loop, best of 3: 19.8 s per loop
 ```
-
 
   [1]: http://chart.apis.google.com/chart?cht=tx&chl=\mathcal{Y}
   [2]: http://chart.apis.google.com/chart?cht=tx&chl=y_n

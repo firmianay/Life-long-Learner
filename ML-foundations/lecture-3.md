@@ -16,7 +16,6 @@
 
 ![img](./pic/lec3_4.png)
 
-
   [1]: http://chart.apis.google.com/chart?cht=tx&chl=\mathcal{Y}
   [2]: http://chart.apis.google.com/chart?cht=tx&chl=y_n
   [3]: http://chart.apis.google.com/chart?cht=tx&chl=f

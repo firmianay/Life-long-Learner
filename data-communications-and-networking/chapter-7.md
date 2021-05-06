@@ -1,5 +1,7 @@
 # Chapter 7: Transmission Media
+
 ## Introduction
+
 Transmission media are actually located below the physical layer and are directly controlled by the physical layer.
 
 ![img](./pic/ch7_1.png)
@@ -8,9 +10,10 @@ In telecommunications, transmission media can be divided into two broad categori
 
 ![img](./pic/ch7_2.png)
 
-
 ## Guided Media
+
 Guided media, which are those that provide a conduit from one device to another, include twisted-pair cable, coaxial cable, and fiber-optic cable. A signal traveling along any of these media is directed and contained by the physical limits of the medium.
+
 - `Twisted-pair` and `coaxial cable`: use metallic (copper) conductors that accept and transport signals in the form of electric current.
 - `Optical fiber`: is a cable that accepts and transports signals in the form of light.
 
@@ -38,14 +41,14 @@ Guided media, which are those that provide a conduit from one device to another,
 
 ![img](./pic/ch7_16.png)
 
-
 ## Unguided Media: Wireless
+
 Unguided medium transport electromagnetic waves without using a physical conductor.
 
 ![img](./pic/ch7_17.png)
 
-
 ## Summary
+
 - Transmission media are actually located below the physical layer and are directly controlled by the physical layer. We could say that transmission media belong to layer zero.
 - A guided medium provides a physical conduit from one device to another.
 - Twisted-pair cable consists of two insulated copper wires twisted together. Twisted-pair cable is used for voice and data communications.

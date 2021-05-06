@@ -1,43 +1,55 @@
 # Chapter 9: Introduction to Data-Link Layer
+
 ## Introduction
+
 ### Nodes and Links
+
 Communication at the data-link layer is node-to-node. A data unit from one point in the Internet needs to pass through many networks (LANs and WANs) to reach another point. Theses LANs and WANs are connected by routers. It is customary to refer to the two end hosts and the routers as `nodes` and the networks in between as `links`.
 
 ![img](./pic/ch9_2.png)
 
 ### Services
+
 When a packet is travelling in the Internet, the data-link layer of a node (host or router) is responsible for delivering a datagram to the next node in the path. For this purpose, the data-link layer of the sending node needs to encapsulate the datagram received from the network in a frame, and the data-link layer of the receiving node needs to decapsulate the datagram fromthe frame.
 
 One may ask why we need encapsulation and decapsulation at each intermediate node. The reason is that each link may be using a different protocol with a different frame format. Even if one link and the next are using the same protocol, encapsulation and decapsulation are needed because the link-layer addresses are normally different.
 
 ![img](./pic/ch9_3.png)
 
-##### Framing
+#### Framing
+
 A packet at the data-link layer is normally called a `frame`. The data-link layer at each node needs to encapsulate the datagram in a frame before sending it to the next node. The node also needs to decapsulate the datagram from the frame received on the logical channel.
 
-##### Flow Control
+#### Flow Control
+
 If the rate of produced frames is higher than the rate of consumed frames, frames at the receiving end need to be buffered while waiting to be consumed. Definitely, we cannot have an unlimited buffer size at the receiving side.
+
 - The first choice is to let the receiving data-link layer drop the frames if its buffer is full.
 - The second choice is to let the receiving data-link layer send a feedback to the sending data-link layer to ask it to stop or slow down.
 
-##### Error Control
+#### Error Control
+
 The error needs first to be detected, then it needs to be either corrected at the receiver node or discarded and retransmitted by the sending node.
 
-##### Congestion Control
+#### Congestion Control
+
 Although a link may be congested with frames, which may result in frame loss, most data-link-layer protocols do not directly use a congestion control to alleviate congestion, although some wide-area networks do.
 
 ### Two Categories of Links
+
 We can have a `point-to-point link` or a `broadcast link`.
+
 - In a point-to-point link, the link is dedicated to the two devices
 - in a broadcast link, the link is shared between several pairs of devices.
 
 ### Two Sublayers
+
 We can divide the data-link layer into two sublayers: `data link control (DLC)` and `media access control (MAC)`. The data link control sublayer deals with all issues common to both point-to-point and broadcast links; the media access control sublayer deals only with issues specific to broadcast links.
 
 ![img](./pic/ch9_4.png)
 
-
 ## Link-Layer Addressing
+
 We need another addressing mechanism in a connectionless internetwork: the link-layer addresses of the two nodes. A `link-layer address` is sometimes called a `link address`, sometimes a `physical address`, and sometimes a `MAC address`.
 
 When a datagram passes from the network layer to the data-link layer, the datagram will be encapsulated in a frame and two data-link addresses are added to the frame header. These two addresses are changed every time the frame moves from one link to another.
@@ -45,18 +57,23 @@ When a datagram passes from the network layer to the data-link layer, the datagr
 ![img](./pic/ch9_5.png)
 
 ### Three Types of addresses
+
 Some link-layer protocols define three types of addresses: `unicast`, `multicast`, and `broadcast`.
 
-##### Unicast Address
+#### Unicast Address
+
 Each host or each interface of a router is assigned a unicast address. Unicasting means one-to-one communication. A frame with a unicast address destination is destined only for one entity in the link.
 
-##### Multicast Address
+#### Multicast Address
+
 Some link-layer protocols define multicast addresses. Multicasting means one-to-many communication. However, the jurisdiction is local (inside the link).
 
-##### Broadcast Address
+#### Broadcast Address
+
 Some link-layer protocols define a broadcast address. Broadcasting means one-to-aU communication. A frame with a destination broadcast address is sent to all entities in the link.
 
 ### Address Resolution Protocol (ARP)
+
 The `Address Resolution Protocol (ARP)` is defined in the network layer. ARP accepts an IP address from the IP protocol, maps the address to the corresponding link-layer address, and passes it to the data-link layer.
 
 ![img](./pic/ch9_6.png)
@@ -66,7 +83,7 @@ The `Address Resolution Protocol (ARP)` is defined in the network layer. ARP acc
 
 ![img](./pic/ch9_7.png)
 
-##### Packet Format
+#### Packet Format
 
 ![img](./pic/ch9_8.png)
 
@@ -89,8 +106,8 @@ An ARP packet is encapsulated directly into a data-link frame. The frame needs t
 
 ![img](./pic/ch9_14.png)
 
-
 ## Summary
+
 - The Internet is made of many hosts, networks, and connecting devices such as routers.
 - The hosts and connecting devices are referred to as nodes; the networks are referred to as links.
 - A path in the Internet from a source host to a destination host is a set of nodes and links through which a packet should travel.
