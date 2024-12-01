@@ -27,7 +27,7 @@ The `exit()` system call exits a program. This function terminates the process a
 
 ## Process Descriptor and the Task Structure
 
-The kernel stores the list of processes in a circular doubly linked list called the `task list`. Each element in the task list is a `process descriptor` of the type `struct task_struct`, which is defined in `<linux/sched.h>`. The process descriptor contains all teh information about a specific process.
+The kernel stores the list of processes in a circular doubly linked list called the `task list`. Each element in the task list is a `process descriptor` of the type `struct task_struct`, which is defined in `<linux/sched.h>`. The process descriptor contains all the information about a specific process.
 
 ![img](./pic/ch3_1.png)
 
