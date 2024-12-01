@@ -33,7 +33,7 @@ The kernel stores the list of processes in a circular doubly linked list called 
 
 ### Allocating the Process Descriptor
 
-The `task_struct` is allocate via the `slab allocator` to provide object reuse and cache coloring. The new structure, `struct thread_info`, was lives at the bottom of the stack (for stacks that grow dowm) and at the top of the stack (for stacks that grow up).
+The `task_struct` is allocated via the `slab allocator` to provide object reuse and cache coloring. The new structure, `struct thread_info`, lives at the bottom of the stack (for stacks that grow down) and at the top of the stack (for stacks that grow up).
 
 The `thread_info` structure is defined on  x86 in `<asm/thread_info.h>`:
 
